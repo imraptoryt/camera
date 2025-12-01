@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recensement Caméras – Interface High-Tech</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top, #031026, #000914 70%);
+      color: #cbe8ff;
+      overflow-x: hidden;
+    }
+
+    /* Neon blue glow */
+    :root {
+      --neon: #00baff;
+      --panel-bg: rgba(10, 25, 50, 0.45);
+      --panel-border: rgba(0, 186, 255, 0.5);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 2.4rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--neon);
+    }
+
+    /* Search bar */
+    .top-bar {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .top-bar input {
+      padding: 12px 18px;
+      font-size: 1rem;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      color: #cbe8ff;
+      outline: none;
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      width: 260px;
+      box-shadow: 0 0 10px rgba(0, 186, 255, 0.3);
+    }
+
+    /* Grid of cameras */
+    .grid {
+      width: 92%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .cam-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 15px;
+      padding: 10px;
+      cursor: pointer;
+      transition: 0.25s;
+      backdrop-filter: blur(6px);
+      position: relative;
+    }
+
+    .cam-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 0 20px var(--neon);
+    }
+
+    .cam-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .cam-title {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      text-shadow: 0 0 8px var(--neon);
+    }
+
+    /* Status dot */
+    .status {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #02293f;
+    }
+
+    .online { background: #00ff95; }
+    .offline { background: #ff3b3b; }
+
+    /* Lightbox viewer */
+    .modal-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal {
+      width: 80%;
+      max-width: 1100px;
+      background: linear-gradient(145deg, rgba(0,30,50,0.9), rgba(0,10,20,0.85));
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid var(--neon);
+      box-shadow: 0 0 30px var(--neon);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      float: right;
+      padding: 10px 18px;
+      background: rgba(0, 186, 255, 0.15);
+      border: 1px solid var(--neon);
+      border-radius: 8px;
+      cursor: pointer;
+      color: #cbe8ff;
+      transition: 0.2s;
+    }
+
+    .close-btn:hover {
+      background: rgba(0, 186, 255, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛡️ Interface de Recensement des Caméras — Mode High-Tech Néon</h1>
+
+  <div class="top-bar">
+    <input type="text" id="search" placeholder="🔍 Rechercher une caméra..." />
+  </div>
+
+  <div class="grid" id="camGrid"></div>
+
+  <!-- Modal viewer -->
+  <div id="modalContainer" style="display:none"></div>
+
+  <script>
+    const cameras = Array.from({ length: 20 }).map((_, i) => ({
+      id: `cam-${i+1}`,
+      name: `Caméra ${i+1}`,
+      status: Math.random() > 0.2 ? 'online' : 'offline',
+      stream: `https://picsum.photos/seed/${i+1}/900/500`,
+    }));
+
+    const grid = document.getElementById("camGrid");
+    const modal = document.getElementById("modalContainer");
+    const search = document.getElementById("search");
+
+    function render(list) {
+      grid.innerHTML = list.map(c => `
+        <div class='cam-card' onclick='openCam(${JSON.stringify(c.id)})'>
+          <div class='status ${c.status}'></div>
+          <img src='${c.stream}' />
+          <div class='cam-title'>${c.name}</div>
+        </div>
+      `).join("");
+    }
+
+    function openCam(id) {
+      const cam = cameras.find(c => c.id === id);
+      modal.innerHTML = `
+        <div class='modal-bg' onclick='closeCam(event)'>
+          <div class='modal'>
+            <h2>${cam.name}</h2>
+            <img src='${cam.stream}' />
+            <button class='close-btn' onclick='closeCam(event)'>Fermer</button>
+          </div>
+        </div>`;
+      modal.style.display = 'block';
+    }
+
+    function closeCam(e) {
+      if (e.target.classList.contains('modal-bg') || e.target.classList.contains('close-btn')) {
+        modal.style.display = 'none';
+      }
+    }
+
+    search.addEventListener('input', () => {
+      const val = search.value.toLowerCase();
+      render(cameras.filter(c => c.name.toLowerCase().includes(val)));
+    });
+
+    render(cameras);
+  </script>
+</body>
+</html>
