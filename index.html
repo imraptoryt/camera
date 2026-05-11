@@ -3,2189 +3,587 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TIG Guide — Bolingbroke Penitentiary</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Booling Broke — Portail TIG</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --orange: #FF6B00;
-    --orange-dim: #c45200;
-    --orange-glow: rgba(255,107,0,0.18);
-    --yellow: #FFD600;
-    --green: #4CAF50;
-    --red: #e53935;
-    --bg: #0e0e0f;
-    --bg2: #161618;
-    --bg3: #1f1f22;
-    --card: #1b1b1e;
-    --border: rgba(255,107,0,0.22);
-    --text: #d4cfc9;
-    --muted: #7a7570;
-    --white: #f0ece7;
+    --blue: #1A3A5C;
+    --blue2: #0F2540;
+    --blue3: #0A1929;
+    --blue4: #061220;
+    --accent: #2E6DA4;
+    --accent2: #3D8FD4;
+    --accent-light: #6AAFE6;
+    --steel: #4A7FA5;
+    --bg: #060E18;
+    --bg2: #0C1A28;
+    --bg3: #111F30;
+    --bg4: #172840;
+    --border: rgba(46,109,164,0.18);
+    --border2: rgba(46,109,164,0.45);
+    --text: #C8D8E8;
+    --text2: #7A9BB8;
+    --text3: #3A5A78;
+    --red: #C0392B;
+    --green: #1E8449;
+    --gold: #B8960A;
   }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
+  * { margin:0; padding:0; box-sizing:border-box; }
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Barlow', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
+    min-height: 100vh;
     overflow-x: hidden;
   }
-
-  /* ─── NOISE OVERLAY ─── */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    background-size: 180px;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.5;
+    content:'';
+    position:fixed; inset:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(46,109,164,0.03) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(46,109,164,0.03) 60px);
+    pointer-events:none; z-index:0;
   }
-
-  /* ─── HEADER ─── */
   header {
-    position: relative;
-    background: var(--bg2);
-    border-bottom: 2px solid var(--orange);
-    padding: 0;
-    overflow: hidden;
+    position:sticky; top:0; z-index:100;
+    background:rgba(6,14,24,0.97);
+    border-bottom:1px solid var(--border2);
+    backdrop-filter:blur(10px);
   }
-
-  .header-stripe {
-    height: 4px;
-    background: repeating-linear-gradient(90deg, var(--orange) 0px, var(--orange) 18px, transparent 18px, transparent 26px);
-    opacity: 0.7;
-  }
-
   .header-inner {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    padding: 28px 48px;
-  }
-
-  .prison-badge {
-    width: 72px; height: 72px;
-    border: 3px solid var(--orange);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Oswald', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--orange);
-    text-align: center;
-    line-height: 1.3;
-    flex-shrink: 0;
-    position: relative;
-    box-shadow: 0 0 20px var(--orange-glow);
-  }
-
-  .prison-badge::before {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border: 1px solid rgba(255,107,0,0.4);
-    border-radius: 50%;
-  }
-
-  .header-text h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    line-height: 1;
-  }
-
-  .header-text h1 span { color: var(--orange); }
-
-  .header-text p {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 3px;
-    margin-top: 6px;
-    text-transform: uppercase;
-  }
-
-  .header-meta {
-    margin-left: auto;
-    text-align: right;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .status-dot {
-    display: inline-block;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 8px var(--green);
-    margin-right: 6px;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* ─── INTRO BANNER ─── */
-  .intro-banner {
-    background: linear-gradient(135deg, #1a0a00 0%, #0e0e0f 60%);
-    border-bottom: 1px solid var(--border);
-    padding: 32px 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 24px;
-  }
-
-  .intro-stat {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--orange);
-    padding: 18px 22px;
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .intro-stat::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 60px; height: 100%;
-    background: linear-gradient(to left, var(--orange-glow), transparent);
-  }
-
-  .intro-stat .stat-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .intro-stat .stat-value {
-    font-family: 'Oswald', sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--orange);
-    margin-top: 4px;
-  }
-
-  .intro-stat .stat-desc {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  /* ─── NAV TABS ─── */
-  .tab-nav {
-    background: var(--bg2);
-    border-bottom: 2px solid var(--border);
-    padding: 0 48px;
-    display: flex;
-    gap: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    overflow-x: auto;
-  }
-
-  .tab-btn {
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    color: var(--muted);
-    font-family: 'Oswald', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 18px 28px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-    margin-bottom: -2px;
-  }
-
-  .tab-btn:hover { color: var(--white); }
-
-  .tab-btn.active {
-    color: var(--orange);
-    border-bottom-color: var(--orange);
-    background: linear-gradient(to bottom, transparent, var(--orange-glow));
-  }
-
-  .tab-btn .tab-icon {
-    font-size: 16px;
-    opacity: 0.9;
-  }
-
-  /* ─── CONTENT AREA ─── */
-  .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 48px 48px 80px;
-  }
-
-  .tab-panel { display: none; animation: fadeIn 0.3s ease; }
-  .tab-panel.active { display: block; }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-  /* ─── SECTION HEADER ─── */
-  .section-header {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-    margin-bottom: 36px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .section-icon {
-    width: 64px; height: 64px;
-    border: 2px solid var(--orange);
-    border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    flex-shrink: 0;
-    background: var(--bg3);
-    box-shadow: 0 0 24px var(--orange-glow);
-  }
-
-  .section-header h2 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1;
-  }
-
-  .section-header h2 span { color: var(--orange); }
-
-  .section-header p {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 6px;
-    max-width: 600px;
-  }
-
-  .section-badge {
-    margin-left: auto;
-    background: var(--orange);
-    color: #000;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 2px;
-    padding: 6px 14px;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-
-  /* ─── WORKFLOW STEPS ─── */
-  .workflow {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    margin-bottom: 48px;
-    position: relative;
-  }
-
-  .workflow-step {
-    flex: 1;
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 24px 20px;
-    position: relative;
-    cursor: default;
-    transition: border-color 0.2s;
-  }
-
-  .workflow-step:hover { border-color: var(--orange); }
-
-  .workflow-step:not(:last-child)::after {
-    content: '▶';
-    position: absolute;
-    right: -14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: var(--orange);
-    z-index: 2;
-    text-shadow: 0 0 10px var(--orange);
-  }
-
-  .step-num {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--orange);
-    margin-bottom: 8px;
-  }
-
-  .step-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--white);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .step-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .step-icon {
-    font-size: 26px;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  /* ─── 3-COLUMN GRID ─── */
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 36px;
-  }
-
-  .grid-2 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 36px;
-  }
-
-  /* ─── CARDS ─── */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 24px;
-    transition: all 0.2s;
-  }
-
-  .card:hover {
-    border-color: rgba(255,107,0,0.5);
-    box-shadow: 0 4px 24px rgba(255,107,0,0.08);
-    transform: translateY(-2px);
-  }
-
-  .card-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .card-title::before {
-    content: '';
-    display: block;
-    width: 3px;
-    height: 14px;
-    background: var(--orange);
-    border-radius: 2px;
-  }
-
-  /* ─── ITEM LIST ─── */
-  .item-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .item-list li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--text);
-    padding: 9px 12px;
-    background: var(--bg3);
-    border-radius: 2px;
-    border: 1px solid rgba(255,255,255,0.04);
-    transition: background 0.15s;
-  }
-
-  .item-list li:hover { background: rgba(255,107,0,0.07); }
-
-  .item-list li .emoji { font-size: 16px; flex-shrink: 0; }
-
-  .item-list li .qty {
-    margin-left: auto;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: var(--orange);
-    background: var(--orange-glow);
-    padding: 2px 8px;
-    border-radius: 2px;
-    border: 1px solid rgba(255,107,0,0.3);
-  }
-
-  /* ─── CRAFT TABLE ─── */
-  .craft-section {
-    margin-bottom: 36px;
-  }
-
-  .craft-section-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .craft-section-title span.icon { font-size: 20px; }
-
-  .craft-recipe {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 20px 24px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-  }
-
-  .craft-recipe:hover { border-color: rgba(255,107,0,0.5); }
-
-  .craft-recipe.open { border-color: var(--orange); }
-
-  .craft-recipe-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .craft-result {
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--white);
-    flex: 1;
-  }
-
-  .craft-result .craft-emoji { font-size: 20px; margin-right: 8px; }
-
-  .craft-time {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: var(--yellow);
-    background: rgba(255,214,0,0.1);
-    border: 1px solid rgba(255,214,0,0.25);
-    padding: 3px 10px;
-    border-radius: 2px;
-  }
-
-  .craft-expand {
-    color: var(--orange);
-    font-size: 12px;
-    transition: transform 0.2s;
-  }
-
-  .craft-recipe.open .craft-expand { transform: rotate(180deg); }
-
-  .craft-body {
-    display: none;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px dashed rgba(255,107,0,0.2);
-  }
-
-  .craft-recipe.open .craft-body { display: block; }
-
-  .craft-ingredients {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .craft-ing {
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 2px;
-    padding: 6px 12px;
-    font-size: 12px;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .craft-arrow {
-    color: var(--orange);
-    font-size: 18px;
-    margin: 0 8px;
-  }
-
-  .craft-output {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,107,0,0.12);
-    border: 1px solid rgba(255,107,0,0.4);
-    border-radius: 2px;
-    padding: 8px 16px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--orange);
-  }
-
-  .craft-note {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 10px;
-    font-style: italic;
-  }
-
-  /* ─── REDUCTION BADGE ─── */
-  .reduction-card {
-    background: linear-gradient(135deg, #1a1200 0%, #0e0e0f 100%);
-    border: 2px solid var(--yellow);
-    border-radius: 4px;
-    padding: 28px 32px;
-    margin-bottom: 36px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    box-shadow: 0 0 40px rgba(255,214,0,0.08);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .reduction-card::before {
-    content: '⭐';
-    position: absolute;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 80px;
-    opacity: 0.07;
-  }
-
-  .reduction-icon {
-    font-size: 48px;
-    flex-shrink: 0;
-  }
-
-  .reduction-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--yellow);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .reduction-item {
-    font-family: 'Oswald', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--white);
-  }
-
-  .reduction-effect {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .reduction-effect strong { color: var(--yellow); }
-
-  /* ─── COLLECT POINTS MAP ─── */
-  .collect-points {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 14px;
-    margin-bottom: 36px;
-  }
-
-  .collect-point {
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 3px;
-    padding: 16px;
-    position: relative;
-    transition: all 0.2s;
-  }
-
-  .collect-point:hover {
-    border-color: var(--orange);
-    background: rgba(255,107,0,0.05);
-  }
-
-  .collect-point::before {
-    content: attr(data-num);
-    position: absolute;
-    top: 10px; right: 12px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-
-  .collect-emoji { font-size: 24px; margin-bottom: 8px; }
-
-  .collect-name {
-    font-family: 'Oswald', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-  }
-
-  .collect-loc {
-    font-size: 11px;
-    color: var(--muted);
-    font-family: 'Share Tech Mono', monospace;
-  }
-
-  .collect-type {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 10px;
-    font-family: 'Share Tech Mono', monospace;
-    letter-spacing: 1px;
-    padding: 2px 8px;
-    border-radius: 2px;
-    border: 1px solid;
-  }
-
-  .type-recolte { color: var(--green); border-color: var(--green); background: rgba(76,175,80,0.1); }
-  .type-troc { color: var(--yellow); border-color: var(--yellow); background: rgba(255,214,0,0.1); }
-  .type-craft { color: var(--orange); border-color: var(--orange); background: var(--orange-glow); }
-
-  /* ─── TROC TABLE ─── */
-  .troc-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 36px;
-    font-size: 13px;
-  }
-
-  .troc-table thead tr {
-    background: var(--bg3);
-  }
-
-  .troc-table th {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--orange);
-    text-transform: uppercase;
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 2px solid var(--orange);
-  }
-
-  .troc-table td {
-    padding: 11px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    color: var(--text);
-    vertical-align: middle;
-  }
-
-  .troc-table tr:hover td { background: rgba(255,107,0,0.04); }
-
-  .troc-table .arrow-cell { color: var(--orange); font-size: 16px; }
-
-  /* ─── COSMETICS ─── */
-  .cosm-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-bottom: 36px;
-  }
-
-  .cosm-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-    transition: all 0.2s;
-  }
-
-  .cosm-card:hover {
-    border-color: rgba(255,107,0,0.5);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    transform: translateY(-3px);
-  }
-
-  .cosm-header {
-    background: linear-gradient(135deg, var(--bg3), var(--bg2));
-    border-bottom: 1px solid var(--border);
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .cosm-icon { font-size: 32px; }
-
-  .cosm-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: 1px;
-  }
-
-  .cosm-price {
-    margin-left: auto;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 13px;
-    color: var(--yellow);
-  }
-
-  .cosm-body { padding: 20px 24px; }
-
-  .cosm-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .cosm-option {
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 2px;
-    padding: 6px 14px;
-    font-size: 12px;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.15s;
-    user-select: none;
-  }
-
-  .cosm-option:hover, .cosm-option.selected {
-    background: var(--orange-glow);
-    border-color: var(--orange);
-    color: var(--orange);
-  }
-
-  .cosm-desc { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
-
-  /* ─── LOGISTIQUE ─── */
-  .logistics-flow {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 36px;
-    position: relative;
-  }
-
-  .logistics-flow::before {
-    content: '';
-    position: absolute;
-    left: 31px;
-    top: 0; bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--orange), rgba(255,107,0,0.1));
-  }
-
-  .logistics-node {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 0 0 32px 0;
-    position: relative;
-  }
-
-  .node-dot {
-    width: 64px; height: 64px;
-    background: var(--bg3);
-    border: 2px solid var(--orange);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 0 16px var(--orange-glow);
-  }
-
-  .node-content {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 20px 24px;
-    flex: 1;
-    margin-top: 8px;
-  }
-
-  .node-title {
-    font-family: 'Oswald', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-  }
-
-  .node-desc { font-size: 13px; color: var(--muted); }
-
-  .node-tags {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
-  }
-
-  .node-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 1px;
-    padding: 3px 10px;
-    border-radius: 2px;
-    border: 1px solid rgba(255,107,0,0.4);
-    color: var(--orange);
-    background: var(--orange-glow);
-  }
-
-  /* ─── ALERT BOX ─── */
-  .alert {
-    border-radius: 3px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-    font-size: 13px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .alert-warn {
-    background: rgba(229,57,53,0.08);
-    border: 1px solid rgba(229,57,53,0.35);
-    color: #ef9a9a;
-  }
-
-  .alert-info {
-    background: rgba(255,214,0,0.07);
-    border: 1px solid rgba(255,214,0,0.3);
-    color: #ffe57a;
-  }
-
-  .alert-ok {
-    background: rgba(76,175,80,0.08);
-    border: 1px solid rgba(76,175,80,0.3);
-    color: #a5d6a7;
-  }
-
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-  /* ─── DIVIDER ─── */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, var(--orange), transparent);
-    margin: 36px 0;
-    opacity: 0.3;
-  }
-
-  /* ─── SUBSECTION LABEL ─── */
-  .sub-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--orange);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed rgba(255,107,0,0.25);
-  }
-
-  /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 3px; }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    padding: 20px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  footer .logo { color: var(--orange); letter-spacing: 2px; }
-
-  /* ─── COSMETICS PROGRESS ─── */
-  .progress-bar {
-    height: 6px;
-    background: var(--bg3);
-    border-radius: 3px;
-    margin-top: 10px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--orange), var(--yellow));
-    border-radius: 3px;
-    transition: width 0.4s ease;
-  }
-
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  /* ─── UNLOCK TREE ─── */
-  .unlock-tree {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .unlock-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: var(--bg3);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 2px;
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-  }
-
-  .unlock-item:hover { border-color: var(--orange); }
-
-  .unlock-item.unlocked {
-    border-color: rgba(76,175,80,0.4);
-    background: rgba(76,175,80,0.05);
-  }
-
-  .unlock-item.locked { opacity: 0.5; }
-
-  .unlock-status {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    flex-shrink: 0;
-  }
-
-  .unlock-item.unlocked .unlock-status { background: var(--green); }
-  .unlock-item.locked .unlock-status { background: var(--muted); }
-
-  .unlock-name {
-    font-family: 'Oswald', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: 1px;
-  }
-
-  .unlock-req {
-    margin-left: auto;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-  }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 768px) {
-    .header-inner, .intro-banner, .content { padding: 20px; }
-    .intro-banner, .grid-3, .grid-2, .cosm-grid { grid-template-columns: 1fr; }
-    .workflow { flex-direction: column; }
-    .workflow-step:not(:last-child)::after { content: '▼'; right: 50%; bottom: -16px; top: auto; transform: translateX(50%); }
-    .tab-nav { padding: 0 16px; }
-  }
+    max-width:1280px; margin:0 auto; padding:0 2rem;
+    display:flex; align-items:center; gap:2rem; height:62px;
+  }
+  .logo {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px; letter-spacing:4px; color:#fff;
+    display:flex; align-items:center; gap:10px; white-space:nowrap;
+    border-right:1px solid var(--border2); padding-right:1.5rem;
+  }
+  .logo-icon {
+    width:32px; height:32px; background:var(--accent); border-radius:3px;
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+  }
+  nav { display:flex; gap:2px; flex:1; overflow-x:auto; scrollbar-width:none; }
+  nav::-webkit-scrollbar { display:none; }
+  nav button {
+    background:none; border:none; color:var(--text2);
+    font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:600;
+    letter-spacing:1.5px; text-transform:uppercase;
+    padding:6px 14px; border-radius:3px; cursor:pointer; transition:all .2s; white-space:nowrap;
+  }
+  nav button:hover { color:var(--text); background:rgba(46,109,164,0.1); }
+  nav button.active { color:var(--accent-light); background:rgba(46,109,164,0.18); border-bottom:2px solid var(--accent2); }
+  .status-dot { width:7px; height:7px; border-radius:50%; background:#1E8449; flex-shrink:0; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .page { display:none; }
+  .page.active { display:block; animation:fadein .25s ease; }
+  @keyframes fadein { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+  .container { max-width:1280px; margin:0 auto; padding:2.5rem 2rem; position:relative; z-index:1; }
+
+  /* HERO */
+  .hero {
+    position:relative; overflow:hidden;
+    background:linear-gradient(160deg, #0A1929 0%, #061525 60%, #040E1A 100%);
+    border-bottom:1px solid var(--border2); padding:6rem 2rem 5rem; text-align:center;
+  }
+  .hero-bars { position:absolute; inset:0; background:repeating-linear-gradient(90deg, transparent 0px, transparent 38px, rgba(46,109,164,0.07) 39px, rgba(46,109,164,0.07) 40px); }
+  .hero-bars2 { position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent 0px, transparent 78px, rgba(46,109,164,0.04) 79px, rgba(46,109,164,0.04) 80px); }
+  .hero-glow { position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:600px; height:300px; background:radial-gradient(ellipse, rgba(46,109,164,0.15) 0%, transparent 70%); pointer-events:none; }
+  .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(70px,12vw,130px); letter-spacing:10px; line-height:.88; color:#fff; position:relative; z-index:1; text-shadow:0 0 60px rgba(46,109,164,0.4); }
+  .hero-title span { color:var(--accent2); }
+  .hero-sub { font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:7px; text-transform:uppercase; color:var(--text3); margin-top:1.2rem; position:relative; z-index:1; }
+  .hero-divider { width:120px; height:1px; background:linear-gradient(90deg, transparent, var(--accent2), transparent); margin:1.5rem auto; position:relative; z-index:1; }
+  .hero-stats { display:flex; gap:3rem; justify-content:center; position:relative; z-index:1; flex-wrap:wrap; }
+  .hero-stat-num { font-family:'Bebas Neue',sans-serif; font-size:42px; color:var(--accent2); letter-spacing:2px; line-height:1; }
+  .hero-stat-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-top:3px; }
+
+  .page-header { border-bottom:1px solid var(--border); padding-bottom:1.5rem; margin-bottom:2.5rem; display:flex; align-items:flex-end; gap:1.5rem; }
+  .page-title { font-family:'Bebas Neue',sans-serif; font-size:50px; letter-spacing:4px; color:#fff; line-height:1; }
+  .page-title span { color:var(--accent2); }
+  .page-subtitle { font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:6px; }
+  .badge { background:rgba(46,109,164,0.2); border:1px solid rgba(46,109,164,0.4); color:var(--accent-light); font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:4px 10px; border-radius:2px; }
+  .info-panel { background:rgba(46,109,164,0.07); border-left:3px solid var(--accent); border-radius:0 4px 4px 0; padding:1rem 1.25rem; margin:1.5rem 0; font-size:13px; color:var(--text2); line-height:1.7; }
+  .info-panel strong { color:var(--accent-light); }
+
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:2.5rem; }
+  .card { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:1.5rem; transition:border-color .2s, transform .2s; position:relative; overflow:hidden; }
+  .card:hover { border-color:var(--border2); transform:translateY(-2px); }
+  .card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), transparent); }
+  .card-icon { font-size:30px; margin-bottom:1rem; display:block; }
+  .card-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:#fff; margin-bottom:.5rem; }
+  .card-desc { color:var(--text2); font-size:13.5px; line-height:1.7; }
+  .card-btn { display:inline-block; margin-top:1.2rem; background:var(--accent); color:#fff; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:7px 18px; border-radius:2px; border:none; cursor:pointer; transition:background .2s; }
+  .card-btn:hover { background:var(--accent2); }
+
+  .tig-layout { display:grid; grid-template-columns:1fr 360px; gap:2rem; align-items:start; }
+  @media(max-width:900px){ .tig-layout{grid-template-columns:1fr;} }
+  .section-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent2); margin-bottom:.8rem; }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:2px; color:#fff; margin-bottom:1.5rem; }
+
+  .step { display:flex; gap:1.2rem; margin-bottom:1.5rem; position:relative; }
+  .step-line { position:absolute; left:18px; top:40px; bottom:-16px; width:1px; background:linear-gradient(to bottom, var(--accent), transparent); }
+  .step-num { width:38px; height:38px; border-radius:50%; background:rgba(46,109,164,0.15); border:1px solid var(--accent); color:var(--accent-light); font-family:'Bebas Neue',sans-serif; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .step-body { flex:1; }
+  .step-name { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:1px; color:#fff; text-transform:uppercase; margin-bottom:4px; }
+  .step-desc { color:var(--text2); font-size:13px; line-height:1.6; }
+  .step-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .step-tag { background:var(--bg3); border:1px solid var(--border); color:var(--text2); font-size:11px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; padding:3px 10px; border-radius:2px; }
+  .step-tag.collect { border-color:rgba(30,132,73,.3); color:#4EC97C; background:rgba(30,132,73,.08); }
+  .step-tag.trade { border-color:rgba(46,109,164,.4); color:var(--accent-light); background:rgba(46,109,164,.1); }
+  .step-tag.craft { border-color:rgba(184,150,10,.3); color:#D4B432; background:rgba(184,150,10,.08); }
+  .step-tag.transform { border-color:rgba(100,140,200,.3); color:#90B8E0; background:rgba(100,140,200,.07); }
+  .arrow-step { display:flex; align-items:center; gap:.5rem; margin:6px 0 6px 1rem; color:var(--text3); font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
+
+  .recipe-card { background:var(--bg2); border:1px solid var(--border2); border-radius:6px; overflow:hidden; position:sticky; top:80px; }
+  .recipe-header { background:rgba(46,109,164,0.15); border-bottom:1px solid var(--border2); padding:1rem 1.25rem; display:flex; align-items:center; gap:.8rem; }
+  .recipe-header-icon { font-size:22px; }
+  .recipe-header-title { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:var(--accent-light); }
+  .recipe-header-sub { font-size:11px; color:var(--text3); font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; text-transform:uppercase; }
+  .recipe-body { padding:1.25rem; }
+  .ingredient { display:flex; align-items:center; gap:.8rem; padding:.6rem 0; border-bottom:1px solid var(--border); }
+  .ingredient:last-child { border-bottom:none; }
+  .ing-qty { min-width:32px; text-align:center; background:var(--accent); color:#fff; font-family:'Bebas Neue',sans-serif; font-size:18px; border-radius:3px; padding:2px 0; }
+  .ing-name { font-family:'Barlow Condensed',sans-serif; font-size:15px; letter-spacing:1px; text-transform:uppercase; color:var(--text); }
+  .ing-icon { font-size:16px; margin-left:auto; }
+
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1rem; margin-bottom:2rem; }
+  .stat-card { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:1.25rem; position:relative; overflow:hidden; }
+  .stat-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--accent), transparent); }
+  .stat-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text3); margin-bottom:.5rem; }
+  .stat-value { font-family:'Bebas Neue',sans-serif; font-size:44px; color:#fff; letter-spacing:2px; line-height:1; }
+  .stat-value.blue { color:var(--accent2); }
+  .stat-value.green { color:#1E8449; }
+  .stat-value.red { color:#C0392B; }
+  .stat-change { font-size:12px; color:var(--green); font-family:'Barlow Condensed',sans-serif; margin-top:4px; }
+  .stat-change.neg { color:var(--red); }
+
+  .chart-section { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:1.5rem; margin-bottom:1.5rem; }
+  .chart-title { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:1.2rem; }
+  .bar-row { display:flex; align-items:center; gap:1rem; margin-bottom:.8rem; }
+  .bar-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); min-width:100px; }
+  .bar-track { flex:1; height:7px; background:var(--bg3); border-radius:2px; overflow:hidden; }
+  .bar-fill { height:100%; background:linear-gradient(90deg, var(--blue), var(--accent2)); border-radius:2px; }
+  .bar-val { font-family:'Barlow Condensed',sans-serif; font-size:13px; color:var(--accent-light); min-width:40px; text-align:right; }
+  .divider { height:1px; background:linear-gradient(90deg, transparent, var(--border2), transparent); margin:2.5rem 0; }
+
+  /* ===== HIERARCHY ===== */
+  .hierarchy-wrap { margin:2rem 0; }
+  .dir-block { display:flex; justify-content:center; }
+  .dir-card {
+    background:linear-gradient(135deg, var(--bg3) 0%, var(--bg4) 100%);
+    border:1px solid var(--accent); border-radius:8px;
+    padding:1.5rem 2.5rem; text-align:center; min-width:220px;
+    position:relative; overflow:hidden;
+  }
+  .dir-card::before { content:''; position:absolute; inset:0; border-radius:8px; background:radial-gradient(ellipse at top, rgba(46,109,164,0.15), transparent 70%); pointer-events:none; }
+  .dir-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, transparent, var(--accent2), transparent); }
+  .dir-avatar { width:62px; height:62px; border-radius:50%; background:rgba(46,109,164,0.25); border:2px solid var(--accent2); margin:0 auto .8rem; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--accent2); }
+  .dir-name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#fff; }
+  .dir-rank { font-size:12px; color:var(--text3); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+  .dir-badge { display:inline-block; margin-top:10px; background:rgba(46,109,164,0.2); border:1px solid rgba(46,109,164,0.45); color:var(--accent-light); font-size:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:2px; }
+
+  /* vertical drop from Direction */
+  .v-drop { display:flex; justify-content:center; }
+  .v-drop-line { width:1px; height:28px; background:var(--accent2); }
+  /* horizontal bar connecting guards */
+  .h-bar-wrap { display:flex; justify-content:center; }
+  .h-bar { border-top:1px solid var(--accent); width:min(860px,86%); }
+
+  .guards-row { display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; }
+  .guard-col { display:flex; flex-direction:column; align-items:center; }
+  .guard-v-top { width:1px; height:22px; background:linear-gradient(to bottom, var(--accent), var(--accent)); }
+  .guard-card { background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:1.25rem 1.5rem; text-align:center; min-width:158px; transition:border-color .2s, transform .2s; }
+  .guard-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+  .guard-avatar { width:48px; height:48px; border-radius:50%; background:rgba(46,109,164,0.12); border:2px solid var(--accent); margin:0 auto .7rem; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--accent2); }
+  .guard-name { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#fff; }
+  .guard-rank { font-size:11px; color:var(--text3); letter-spacing:1.5px; text-transform:uppercase; margin-top:3px; }
+  .guard-sub-badge { display:inline-block; margin-top:8px; background:rgba(46,109,164,0.1); border:1px solid rgba(46,109,164,.25); color:var(--accent-light); font-size:9px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1.5px; text-transform:uppercase; padding:3px 8px; border-radius:2px; }
+
+  /* staff below guards */
+  .v-drop2 { display:flex; justify-content:center; }
+  .v-drop2-line { width:1px; height:30px; background:linear-gradient(to bottom, var(--accent2), rgba(46,109,164,0.2)); }
+  .h-bar2-wrap { display:flex; justify-content:center; }
+  .h-bar2 { border-top:1px solid rgba(46,109,164,0.22); width:min(1050px,92%); }
+  .staff-row { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+  .staff-col { display:flex; flex-direction:column; align-items:center; }
+  .staff-v { width:1px; height:22px; background:linear-gradient(to bottom, rgba(46,109,164,0.22), rgba(46,109,164,0.05)); }
+  .staff-card { background:var(--bg2); border:1px solid rgba(46,109,164,0.1); border-radius:6px; padding:.9rem 1.1rem; text-align:center; min-width:128px; transition:border-color .2s; }
+  .staff-card:hover { border-color:rgba(46,109,164,0.25); }
+  .staff-avatar { width:36px; height:36px; border-radius:50%; background:rgba(46,109,164,0.07); border:1px solid rgba(46,109,164,0.15); margin:0 auto .5rem; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:13px; color:var(--text3); }
+  .staff-name { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text2); }
+  .staff-rank { font-size:10px; color:var(--text3); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+
+  .rules-list { list-style:none; }
+  .rule-item { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .rule-num { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); opacity:.5; min-width:36px; line-height:1; }
+  .rule-title { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+  .rule-desc { color:var(--text2); font-size:13px; line-height:1.6; }
+
+  table.log-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .log-table th { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text3); text-align:left; padding:8px 12px; border-bottom:1px solid var(--border); }
+  .log-table td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:middle; }
+  .log-table tr:hover td { background:rgba(46,109,164,0.04); }
+  .log-table td:first-child { color:var(--text3); font-size:11px; font-family:monospace; }
+  .log-type { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; padding:2px 8px; border-radius:2px; }
+  .log-type.cuisine { background:rgba(46,109,164,.1); color:var(--accent-light); border:1px solid rgba(46,109,164,.2); }
+  .log-type.linge { background:rgba(61,143,212,.1); color:#7DC4F0; border:1px solid rgba(61,143,212,.2); }
+  .log-type.ferraille { background:rgba(74,127,165,.1); color:#92BEDD; border:1px solid rgba(74,127,165,.2); }
+  .log-ok { color:#1E8449; font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
+  .log-fail { color:#C0392B; font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
+  .log-pending { color:#B8960A; font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
+  ::-webkit-scrollbar { width:4px; height:4px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:var(--bg3); border-radius:2px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-  <div class="header-stripe"></div>
   <div class="header-inner">
-    <div class="prison-badge">BNKR<br>Ω<br>PENIT</div>
-    <div class="header-text">
-      <h1>TRAVAUX D'INTÉRÊT <span>GÉNÉRAL</span></h1>
-      <p>Bolingbroke Penitentiary — Programme de Réhabilitation</p>
+    <div class="logo">
+      <div class="logo-icon">🏢</div>
+      BOOLING&nbsp;<span style="color:var(--accent2)">BROKE</span>
     </div>
-    <div class="header-meta">
-      <div><span class="status-dot"></span> SYSTÈME ACTIF</div>
-      <div>DIVISION TRAVAUX</div>
-      <div>REV. 2.4.1</div>
-    </div>
+    <nav id="nav">
+      <button class="active" onclick="goto('home',this)">Accueil</button>
+      <button onclick="goto('cuisine',this)">🍲 Cuisine</button>
+      <button onclick="goto('linge',this)">👕 Linge</button>
+      <button onclick="goto('ferraille',this)">⛏ Ferraille</button>
+      <button onclick="goto('gardes',this)">🛡 Gardes</button>
+      <button onclick="goto('stats',this)">📊 Statistiques</button>
+      <button onclick="goto('regles',this)">📋 Règlement</button>
+      <button onclick="goto('logs',this)">📁 Registre</button>
+    </nav>
+    <div class="status-dot" title="En ligne"></div>
   </div>
 </header>
 
-<!-- INTRO STATS -->
-<div class="intro-banner">
-  <div class="intro-stat">
-    <div class="stat-label">Zones de Travail</div>
-    <div class="stat-value">03</div>
-    <div class="stat-desc">Cuisine · Blanchisserie · Ferronnerie</div>
+<!-- ACCUEIL -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bars"></div><div class="hero-bars2"></div><div class="hero-glow"></div>
+    <div class="hero-title">BOOLING<br><span>BROKE</span></div>
+    <div class="hero-sub">Portail de Gestion des Travaux d'Intérêt Général</div>
+    <div class="hero-divider"></div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num">3</div><div class="hero-stat-label">TIG Actifs</div></div>
+      <div><div class="hero-stat-num">24</div><div class="hero-stat-label">Détenus Assignés</div></div>
+      <div><div class="hero-stat-num">4</div><div class="hero-stat-label">Agents Pénitentiaires</div></div>
+      <div><div class="hero-stat-num">842</div><div class="hero-stat-label">Heures de TIG</div></div>
+    </div>
   </div>
-  <div class="intro-stat">
-    <div class="stat-label">Mécanisme Principal</div>
-    <div class="stat-value">CRAFT</div>
-    <div class="stat-desc">Récolte → Troc → Craft → Réduction de peine</div>
-  </div>
-  <div class="intro-stat">
-    <div class="stat-label">Débouché Final</div>
-    <div class="stat-value">G6 EXPORT</div>
-    <div class="stat-desc">Quai d'exportation via convoi gouvernemental</div>
+  <div class="container">
+    <div class="page-header" style="margin-top:0"><div><div class="page-subtitle">Vue d'ensemble</div><div class="page-title">Tableau de <span>Bord</span></div></div></div>
+    <div class="info-panel"><strong>Portail officiel de gestion TIG.</strong> Ce système centralise la gestion des trois travaux d'intérêt général disponibles en détention. Chaque TIG dispose de son propre processus de collecte, transformation et fabrication. Les détenus assignés doivent suivre les étapes dans l'ordre indiqué sous supervision obligatoire.</div>
+    <div class="cards-grid">
+      <div class="card"><span class="card-icon">🍲</span><div class="card-title">La Cuisine</div><div class="card-desc">Collecte de légumes, échange de tomates contre de la viande, préparation des carottes et confection d'une soupe complète à la cuisine pénitentiaire.</div><button class="card-btn" onclick="goto('cuisine',document.querySelectorAll('nav button')[1])">Accéder au TIG →</button></div>
+      <div class="card"><span class="card-icon">👕</span><div class="card-title">Le Linge</div><div class="card-desc">Collecte du linge sale, des produits chimiques et nettoyants. Processus de lavage, repassage et confection du linge propre à la buanderie.</div><button class="card-btn" onclick="goto('linge',document.querySelectorAll('nav button')[2])">Accéder au TIG →</button></div>
+      <div class="card"><span class="card-icon">⛏</span><div class="card-title">La Ferraille</div><div class="card-desc">Extraction minière de pierres, ferraille et bois. Fonderie pour plaques de métal, sciage des planches et fabrication d'une pioche à l'atelier.</div><button class="card-btn" onclick="goto('ferraille',document.querySelectorAll('nav button')[3])">Accéder au TIG →</button></div>
+    </div>
+    <div class="divider"></div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">TIG Actifs</div><div class="stat-value blue">3</div><div class="stat-change">↑ Opérationnel</div></div>
+      <div class="stat-card"><div class="stat-label">Détenus Assignés</div><div class="stat-value">24</div><div class="stat-change">↑ +3 cette semaine</div></div>
+      <div class="stat-card"><div class="stat-label">Soupes Craftées</div><div class="stat-value green">187</div><div class="stat-change">↑ +12 aujourd'hui</div></div>
+      <div class="stat-card"><div class="stat-label">Agents Actifs</div><div class="stat-value">8</div><div class="stat-change">↑ Tous en service</div></div>
+    </div>
   </div>
 </div>
 
-<!-- TAB NAV -->
-<nav class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('overview')">
-    <span class="tab-icon">📋</span> Vue d'ensemble
-  </button>
-  <button class="tab-btn" onclick="switchTab('cuisine')">
-    <span class="tab-icon">🍳</span> Cuisine
-  </button>
-  <button class="tab-btn" onclick="switchTab('blanchisserie')">
-    <span class="tab-icon">👕</span> Blanchisserie
-  </button>
-  <button class="tab-btn" onclick="switchTab('ferronnerie')">
-    <span class="tab-icon">⚒️</span> Ferronnerie
-  </button>
-  <button class="tab-btn" onclick="switchTab('logistique')">
-    <span class="tab-icon">🚚</span> Logistique
-  </button>
-  <button class="tab-btn" onclick="switchTab('cosmetiques')">
-    <span class="tab-icon">✨</span> Cosmétiques
-  </button>
-</nav>
-
-<!-- CONTENT -->
-<div class="content">
-
-  <!-- ══════════════════════════════════
-       TAB: VUE D'ENSEMBLE
-  ══════════════════════════════════ -->
-  <div class="tab-panel active" id="tab-overview">
-    <div class="section-header">
-      <div class="section-icon">📋</div>
+<!-- CUISINE -->
+<div class="page" id="page-cuisine">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">Travaux d'Intérêt Général</div><div class="page-title">🍲 La <span>Cuisine</span></div></div><span class="badge">TIG N°01</span></div>
+    <div class="info-panel"><strong>Objectif :</strong> Produire une soupe complète en collectant des ingrédients bruts, en effectuant les échanges nécessaires et en craftant le plat final dans la cuisine pénitentiaire.</div>
+    <div class="tig-layout">
       <div>
-        <h2>Vue d'<span>Ensemble</span></h2>
-        <p>Principe général du programme TIG — comment fonctionne chaque zone et comment obtenir une réduction de peine.</p>
+        <div class="section-label">Processus complet</div>
+        <div class="section-title">Étapes du TIG Cuisine</div>
+        <div class="steps">
+          <div class="step"><div style="position:relative"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Collecte des ressources brutes</div><div class="step-desc">Récupérer les légumes disponibles ainsi que l'eau dans les zones désignées de la cuisine pénitentiaire.</div><div class="step-tags"><span class="step-tag collect">🥕 Carottes</span><span class="step-tag collect">🍅 Tomates</span><span class="step-tag collect">🧅 Oignon</span><span class="step-tag collect">🧄 Ail</span><span class="step-tag collect">💧 Eau</span></div></div></div>
+          <div class="step"><div style="position:relative"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Échange — Tomates contre Viande</div><div class="step-desc">Apporter les tomates au point d'échange officiel. Elles sont trocquées contre de la viande crue nécessaire à la recette finale.</div><div class="step-tags"><span class="step-tag trade">🍅 Tomates (entrée)</span><span class="step-tag trade">🥩 Viande (sortie)</span></div><div class="arrow-step">→ Troc au point d'échange désigné</div></div></div>
+          <div class="step"><div style="position:relative"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Préparation des Carottes</div><div class="step-desc">Couper les carottes brutes sur le plan de travail pour obtenir des carottes préparées, indispensables au craft.</div><div class="step-tags"><span class="step-tag transform">🥕 Carotte brute (entrée)</span><span class="step-tag craft">✂️ Carotte préparée (sortie)</span></div></div></div>
+          <div class="step"><div><div class="step-num">4</div></div><div class="step-body"><div class="step-name">Craft de la Soupe</div><div class="step-desc">Assembler tous les ingrédients dans la table de craft de la cuisine. Respecter scrupuleusement les quantités indiquées.</div><div class="step-tags"><span class="step-tag craft">🍲 Soupe complète</span></div></div></div>
+        </div>
       </div>
-      <div class="section-badge">MANUEL OFFICIEL</div>
-    </div>
-
-    <div class="alert alert-info">
-      <span class="alert-icon">ℹ️</span>
-      <div>Chaque zone de travail suit le même cycle : <strong>Récolte → Troc → Craft</strong>. Completez ce cycle pour obtenir un <strong>item de réduction de peine</strong> à remettre à un gardien ou au guichet logistique.</div>
-    </div>
-
-    <div class="sub-label">// Cycle de production universel</div>
-    <div class="workflow">
-      <div class="workflow-step">
-        <span class="step-icon">📍</span>
-        <div class="step-num">ÉTAPE 01</div>
-        <div class="step-title">Récolte</div>
-        <div class="step-desc">Rendez-vous aux points de récolte de votre zone. Collectez les matières premières disponibles. Cooldown par point.</div>
-      </div>
-      <div class="workflow-step">
-        <span class="step-icon">🔄</span>
-        <div class="step-num">ÉTAPE 02</div>
-        <div class="step-title">Troc</div>
-        <div class="step-desc">Échangez vos matières avec d'autres détenus ou aux bornes de troc. Optimisez votre stock pour le craft.</div>
-      </div>
-      <div class="workflow-step">
-        <span class="step-icon">⚙️</span>
-        <div class="step-num">ÉTAPE 03</div>
-        <div class="step-title">Craft</div>
-        <div class="step-desc">Utilisez la table de craft de votre zone. Assemblez les ingrédients requis pour créer l'item final.</div>
-      </div>
-      <div class="workflow-step">
-        <span class="step-icon">📦</span>
-        <div class="step-num">ÉTAPE 04</div>
-        <div class="step-title">Livraison</div>
-        <div class="step-desc">Déposez la production à la zone Logistique centrale pour validation et réduction de peine.</div>
-      </div>
-      <div class="workflow-step" style="border-left: 3px solid var(--yellow);">
-        <span class="step-icon">⭐</span>
-        <div class="step-num">RÉSULTAT</div>
-        <div class="step-title">Réduction</div>
-        <div class="step-desc">Votre peine est réduite. Chaque production compte. Plus vous produisez, plus vite vous sortez.</div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="sub-label">// Résumé des trois zones</div>
-
-    <div class="grid-3">
-      <div class="card" style="cursor:pointer" onclick="switchTab('cuisine')">
-        <div class="card-title">🍳 Cuisine</div>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Préparation de repas à partir de légumes récoltés dans les jardins de la prison.</p>
-        <ul class="item-list">
-          <li><span class="emoji">📍</span> Points de récolte <span class="qty">4 ZONES</span></li>
-          <li><span class="emoji">🔄</span> Tables de troc <span class="qty">2 BORNES</span></li>
-          <li><span class="emoji">⚙️</span> Tables de craft <span class="qty">3 RECETTES</span></li>
-        </ul>
-        <div style="margin-top:14px; font-size:11px; color:var(--orange); font-family:'Share Tech Mono',monospace;">→ CLIQUER POUR DETAILS</div>
-      </div>
-      <div class="card" style="cursor:pointer" onclick="switchTab('blanchisserie')">
-        <div class="card-title">👕 Blanchisserie</div>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Gestion du linge de la prison — collecte, lavage, séchage, repassage.</p>
-        <ul class="item-list">
-          <li><span class="emoji">📍</span> Points de récolte <span class="qty">5 ZONES</span></li>
-          <li><span class="emoji">🔄</span> Tables de troc <span class="qty">2 BORNES</span></li>
-          <li><span class="emoji">⚙️</span> Tables de craft <span class="qty">4 RECETTES</span></li>
-        </ul>
-        <div style="margin-top:14px; font-size:11px; color:var(--orange); font-family:'Share Tech Mono',monospace;">→ CLIQUER POUR DETAILS</div>
-      </div>
-      <div class="card" style="cursor:pointer" onclick="switchTab('ferronnerie')">
-        <div class="card-title">⚒️ Ferronnerie</div>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Travail du métal en conditions difficiles — fabrication de pièces métalliques diverses.</p>
-        <ul class="item-list">
-          <li><span class="emoji">📍</span> Points de récolte <span class="qty">4 ZONES</span></li>
-          <li><span class="emoji">🔄</span> Tables de troc <span class="qty">3 BORNES</span></li>
-          <li><span class="emoji">⚙️</span> Tables de craft <span class="qty">3 RECETTES</span></li>
-        </ul>
-        <div style="margin-top:14px; font-size:11px; color:var(--orange); font-family:'Share Tech Mono',monospace;">→ CLIQUER POUR DETAILS</div>
-      </div>
-    </div>
-
-    <div class="alert alert-warn">
-      <span class="alert-icon">⚠️</span>
-      <div>Toute tentative de sabotage, vol de matières premières ou perturbation des zones de travail entraîne une <strong>augmentation de peine</strong>. Respectez le règlement intérieur.</div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════
-       TAB: CUISINE
-  ══════════════════════════════════ -->
-  <div class="tab-panel" id="tab-cuisine">
-    <div class="section-header">
-      <div class="section-icon">🍳</div>
       <div>
-        <h2>Zone <span>Cuisine</span></h2>
-        <p>Préparez des repas à partir de légumes récoltés. Ces repas approvisionnent les services publics et valident votre autorisation de sortie.</p>
-      </div>
-      <div class="section-badge">ZONE ALIMENTAIRE</div>
-    </div>
-
-    <div class="reduction-card">
-      <div class="reduction-icon">🍱</div>
-      <div>
-        <div class="reduction-label">Item de réduction de peine</div>
-        <div class="reduction-item">Plateau Repas Complet</div>
-        <div class="reduction-effect">Remet ce plateau à la <strong>zone Logistique</strong> pour valider une réduction de peine. Chaque plateau compte.</div>
-      </div>
-    </div>
-
-    <div class="sub-label">// Points de récolte — Cuisine</div>
-    <div class="collect-points">
-      <div class="collect-point" data-num="C-01">
-        <div class="collect-emoji">🥬</div>
-        <div class="collect-name">Jardin Potager</div>
-        <div class="collect-loc">Cour Nord — Parcelle A</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="C-02">
-        <div class="collect-emoji">🧅</div>
-        <div class="collect-name">Entrepôt Légumes</div>
-        <div class="collect-loc">Bloc Cuisine — Réserve</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="C-03">
-        <div class="collect-emoji">🌿</div>
-        <div class="collect-name">Herbes Aromatiques</div>
-        <div class="collect-loc">Serre Intérieure</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="C-04">
-        <div class="collect-emoji">💧</div>
-        <div class="collect-name">Point d'Eau</div>
-        <div class="collect-loc">Bloc Cuisine — Bacs</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="C-T1">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Alpha</div>
-        <div class="collect-loc">Couloir Cuisine — Accès B</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="C-T2">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Bêta</div>
-        <div class="collect-loc">Réfectoire — Mur Ouest</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="C-F1">
-        <div class="collect-emoji">⚙️</div>
-        <div class="collect-name">Plan de Travail Cuisine</div>
-        <div class="collect-loc">Cuisine Centrale</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-      <div class="collect-point" data-num="C-F2">
-        <div class="collect-emoji">⚙️</div>
-        <div class="collect-name">Fourneau Principal</div>
-        <div class="collect-loc">Cuisine Centrale — Zone Feux</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-    </div>
-
-    <div class="sub-label">// Tableau de troc — Cuisine</div>
-    <table class="troc-table">
-      <thead>
-        <tr>
-          <th>Vous donnez</th>
-          <th>QTÉ</th>
-          <th></th>
-          <th>Vous recevez</th>
-          <th>QTÉ</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>🥬 Légumes Bruts</td>
-          <td><span class="qty">x5</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🧄 Légumes Préparés</td>
-          <td><span class="qty">x3</span></td>
-          <td style="color:var(--muted); font-size:11px;">Avec couteau</td>
-        </tr>
-        <tr>
-          <td>💧 Eau x3 + 🥬 Légumes x2</td>
-          <td><span class="qty">x1 lot</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🫕 Bouillon</td>
-          <td><span class="qty">x2</span></td>
-          <td style="color:var(--muted); font-size:11px;">Échange NPC</td>
-        </tr>
-        <tr>
-          <td>🌿 Herbes x4</td>
-          <td><span class="qty">x1 lot</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🧂 Assaisonnement</td>
-          <td><span class="qty">x1</span></td>
-          <td style="color:var(--muted); font-size:11px;">Qualité +</td>
-        </tr>
-        <tr>
-          <td>🍱 Plateau Complet x1</td>
-          <td><span class="qty">x1</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>⭐ Jeton Réduction</td>
-          <td><span class="qty">x1</span></td>
-          <td style="color:var(--yellow); font-size:11px;">Logistique uniquement</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="craft-section">
-      <div class="craft-section-title"><span class="icon">⚙️</span> Tables de Craft — Cuisine</div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🍲</span> Soupe Légumes</div>
-          <span class="craft-time">⏱ 3 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🥬 Légumes Préparés x3</div>
-            <div class="craft-ing">💧 Eau x2</div>
-            <div class="craft-ing">🧂 Assaisonnement x1</div>
+        <div class="recipe-card">
+          <div class="recipe-header"><div class="recipe-header-icon">📋</div><div><div class="recipe-header-title">Recette — Soupe</div><div class="recipe-header-sub">Table de Craft · Cuisine</div></div></div>
+          <div class="recipe-body">
+            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Carotte Préparée</div><div class="ing-icon">🥕</div></div>
+            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Viande</div><div class="ing-icon">🥩</div></div>
+            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Ail</div><div class="ing-icon">🧄</div></div>
+            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Eau</div><div class="ing-icon">💧</div></div>
+            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Oignon</div><div class="ing-icon">🧅</div></div>
           </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🍲 Soupe Légumes (x2)</div>
-          </div>
-          <div class="craft-note">Réduction peine : faible. Sert de base pour la recette Plateau Complet.</div>
         </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🥗</span> Salade Fraîche</div>
-          <span class="craft-time">⏱ 2 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🥬 Légumes Bruts x4</div>
-            <div class="craft-ing">🌿 Herbes x1</div>
-            <div class="craft-ing">💧 Eau x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🥗 Salade Fraîche (x2)</div>
-          </div>
-          <div class="craft-note">Rapide à produire, faible valeur. Idéal pour compléter un plateau.</div>
-        </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🍱</span> ★ Plateau Repas Complet</div>
-          <span class="craft-time">⏱ 8 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🍲 Soupe Légumes x1</div>
-            <div class="craft-ing">🥗 Salade Fraîche x1</div>
-            <div class="craft-ing">🧂 Assaisonnement x1</div>
-            <div class="craft-ing">🫕 Bouillon x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🍱 Plateau Repas Complet (x1)</div>
-          </div>
-          <div class="craft-note">⭐ ITEM PRINCIPAL — Livrez ce plateau à la Logistique pour obtenir votre réduction de peine.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="alert alert-ok">
-      <span class="alert-icon">✅</span>
-      <div>Le Plateau Repas Complet est l'item final de la zone Cuisine. Une fois crafté, rendez-vous à la <strong>Zone Logistique</strong> pour le remettre et valider la réduction.</div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════
-       TAB: BLANCHISSERIE
-  ══════════════════════════════════ -->
-  <div class="tab-panel" id="tab-blanchisserie">
-    <div class="section-header">
-      <div class="section-icon">👕</div>
-      <div>
-        <h2>Zone <span>Blanchisserie</span></h2>
-        <p>Gérez le linge de la prison du début à la fin : collecte, lavage, séchage, repassage. Utilisez les machines et consommables disponibles.</p>
-      </div>
-      <div class="section-badge">ZONE TEXTILE</div>
-    </div>
-
-    <div class="reduction-card">
-      <div class="reduction-icon">📦</div>
-      <div>
-        <div class="reduction-label">Item de réduction de peine</div>
-        <div class="reduction-item">Lot de Linge Traité</div>
-        <div class="reduction-effect">Déposez ce lot à la <strong>zone Logistique</strong> pour réduire votre peine. Cycle complet requis : lavage → séchage → repassage.</div>
-      </div>
-    </div>
-
-    <div class="alert alert-warn">
-      <span class="alert-icon">⚠️</span>
-      <div>Les machines (laveuse, sécheuse, presse) nécessitent des <strong>consommables</strong> pour fonctionner. Pensez à vous approvisionner avant de lancer un cycle.</div>
-    </div>
-
-    <div class="sub-label">// Points de récolte — Blanchisserie</div>
-    <div class="collect-points">
-      <div class="collect-point" data-num="B-01">
-        <div class="collect-emoji">👔</div>
-        <div class="collect-name">Bacs Linge Sale</div>
-        <div class="collect-loc">Couloir Cellules — Bacs R</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="B-02">
-        <div class="collect-emoji">🧴</div>
-        <div class="collect-name">Stock Lessive</div>
-        <div class="collect-loc">Réserve Blanchisserie</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="B-03">
-        <div class="collect-emoji">🪣</div>
-        <div class="collect-name">Point Eau Chaude</div>
-        <div class="collect-loc">Conduite Centrale B</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="B-04">
-        <div class="collect-emoji">⚡</div>
-        <div class="collect-name">Jetons Machine</div>
-        <div class="collect-loc">Distributeur — Hall B</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="B-05">
-        <div class="collect-emoji">🌬️</div>
-        <div class="collect-name">Assouplissant</div>
-        <div class="collect-loc">Réserve Blanchisserie</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="B-T1">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Textiles</div>
-        <div class="collect-loc">Entrée Blanchisserie</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="B-T2">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Consommables</div>
-        <div class="collect-loc">Couloir Machines</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="B-F1">
-        <div class="collect-emoji">🫧</div>
-        <div class="collect-name">Laveuses Industrielles</div>
-        <div class="collect-loc">Salle Machines — Rangée A</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-      <div class="collect-point" data-num="B-F2">
-        <div class="collect-emoji">💨</div>
-        <div class="collect-name">Sécheuses</div>
-        <div class="collect-loc">Salle Machines — Rangée B</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-      <div class="collect-point" data-num="B-F3">
-        <div class="collect-emoji">🫳</div>
-        <div class="collect-name">Tables de Repassage</div>
-        <div class="collect-loc">Finition — Zone C</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-    </div>
-
-    <div class="sub-label">// Tableau de troc — Blanchisserie</div>
-    <table class="troc-table">
-      <thead>
-        <tr>
-          <th>Vous donnez</th>
-          <th>QTÉ</th>
-          <th></th>
-          <th>Vous recevez</th>
-          <th>QTÉ</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>👔 Linge Sale x6</td>
-          <td><span class="qty">x6</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🧴 Lessive x2</td>
-          <td><span class="qty">x2</span></td>
-          <td style="color:var(--muted); font-size:11px;">Borne Alpha</td>
-        </tr>
-        <tr>
-          <td>🧴 Lessive x1 + ⚡ Jeton x1</td>
-          <td><span class="qty">x1 lot</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🫧 Linge Lavé x4</td>
-          <td><span class="qty">x4</span></td>
-          <td style="color:var(--muted); font-size:11px;">Via laveuse</td>
-        </tr>
-        <tr>
-          <td>🌬️ Assouplissant x2</td>
-          <td><span class="qty">x2</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>⚡ Jeton Machine x1</td>
-          <td><span class="qty">x1</span></td>
-          <td style="color:var(--muted); font-size:11px;">Borne Bêta</td>
-        </tr>
-        <tr>
-          <td>📦 Lot Traité x1</td>
-          <td><span class="qty">x1</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>⭐ Jeton Réduction</td>
-          <td><span class="qty">x1</span></td>
-          <td style="color:var(--yellow); font-size:11px;">Logistique uniquement</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="craft-section">
-      <div class="craft-section-title"><span class="icon">🫧</span> Cycle de Production — Blanchisserie</div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🫧</span> Linge Lavé</div>
-          <span class="craft-time">⏱ 5 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">👔 Linge Sale x4</div>
-            <div class="craft-ing">🧴 Lessive x1</div>
-            <div class="craft-ing">🪣 Eau Chaude x2</div>
-            <div class="craft-ing">⚡ Jeton Machine x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🫧 Linge Lavé (x4)</div>
-          </div>
-          <div class="craft-note">Utilisez la laveuse industrielle. Étape 1/3 du cycle complet.</div>
-        </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">💨</span> Linge Séché</div>
-          <span class="craft-time">⏱ 4 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🫧 Linge Lavé x4</div>
-            <div class="craft-ing">🌬️ Assouplissant x1</div>
-            <div class="craft-ing">⚡ Jeton Machine x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">💨 Linge Séché (x4)</div>
-          </div>
-          <div class="craft-note">Utilisez la sécheuse. Étape 2/3 du cycle complet.</div>
-        </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🫳</span> Linge Repassé</div>
-          <span class="craft-time">⏱ 3 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">💨 Linge Séché x4</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🫳 Linge Repassé (x4)</div>
-          </div>
-          <div class="craft-note">Table de repassage. Pas de consommable requis. Étape 3/3.</div>
-        </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">📦</span> ★ Lot de Linge Traité</div>
-          <span class="craft-time">⏱ 2 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🫳 Linge Repassé x4</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">📦 Lot de Linge Traité (x1)</div>
-          </div>
-          <div class="craft-note">⭐ ITEM PRINCIPAL — Conditionnement du linge. Livrez à la Logistique pour votre réduction de peine.</div>
-        </div>
+        <div class="info-panel" style="margin-top:1rem"><strong>Rappel :</strong> Les tomates doivent être échangées <strong>avant</strong> de lancer le craft. Vérifier les quantités pour éviter toute perte.</div>
       </div>
     </div>
   </div>
-
-  <!-- ══════════════════════════════════
-       TAB: FERRONNERIE
-  ══════════════════════════════════ -->
-  <div class="tab-panel" id="tab-ferronnerie">
-    <div class="section-header">
-      <div class="section-icon">⚒️</div>
-      <div>
-        <h2>Zone <span>Ferronnerie</span></h2>
-        <p>Travaillez le métal à partir de matières premières récupérées. Conditions difficiles — chaleur, fumées. Fabrication de plaques, rails et pièces automobiles.</p>
-      </div>
-      <div class="section-badge">ZONE INDUSTRIELLE</div>
-    </div>
-
-    <div class="reduction-card">
-      <div class="reduction-icon">🔩</div>
-      <div>
-        <div class="reduction-label">Item de réduction de peine</div>
-        <div class="reduction-item">Pièce Forgée Certifiée</div>
-        <div class="reduction-effect">Remettez cette pièce à la <strong>zone Logistique</strong>. Valeur supérieure aux autres zones — réduction de peine plus importante.</div>
-      </div>
-    </div>
-
-    <div class="alert alert-warn">
-      <span class="alert-icon">🌡️</span>
-      <div>La ferronnerie présente des <strong>conditions environnementales difficiles</strong> : chaleur extrême, fumées toxiques. Votre santé peut diminuer si vous restez trop longtemps sans pause. Gérez vos pauses.</div>
-    </div>
-
-    <div class="sub-label">// Points de récolte — Ferronnerie</div>
-    <div class="collect-points">
-      <div class="collect-point" data-num="F-01">
-        <div class="collect-emoji">🪨</div>
-        <div class="collect-name">Déchetterie Métaux</div>
-        <div class="collect-loc">Cour Arrière — Zone Ind.</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="F-02">
-        <div class="collect-emoji">⛏️</div>
-        <div class="collect-name">Ferrailles Brutes</div>
-        <div class="collect-loc">Entrepôt Ferronnerie</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="F-03">
-        <div class="collect-emoji">🪵</div>
-        <div class="collect-name">Stock Combustible</div>
-        <div class="collect-loc">Réserve Charbon — Ext.</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="F-04">
-        <div class="collect-emoji">🛢️</div>
-        <div class="collect-name">Huile de Trempe</div>
-        <div class="collect-loc">Stocks Liquides Ferre.</div>
-        <span class="collect-type type-recolte">RÉCOLTE</span>
-      </div>
-      <div class="collect-point" data-num="F-T1">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Métaux</div>
-        <div class="collect-loc">Entrée Ferronnerie</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="F-T2">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Outils</div>
-        <div class="collect-loc">Salle Outils Ferre.</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="F-T3">
-        <div class="collect-emoji">🔄</div>
-        <div class="collect-name">Borne Troc Pièces</div>
-        <div class="collect-loc">Zone Assemblage</div>
-        <span class="collect-type type-troc">TROC</span>
-      </div>
-      <div class="collect-point" data-num="F-F1">
-        <div class="collect-emoji">🔥</div>
-        <div class="collect-name">Forge Principale</div>
-        <div class="collect-loc">Salle Forge — Position 1</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-      <div class="collect-point" data-num="F-F2">
-        <div class="collect-emoji">🔨</div>
-        <div class="collect-name">Enclume d'Assemblage</div>
-        <div class="collect-loc">Zone Assemblage — Post B</div>
-        <span class="collect-type type-craft">CRAFT</span>
-      </div>
-    </div>
-
-    <div class="sub-label">// Tableau de troc — Ferronnerie</div>
-    <table class="troc-table">
-      <thead>
-        <tr>
-          <th>Vous donnez</th>
-          <th>QTÉ</th>
-          <th></th>
-          <th>Vous recevez</th>
-          <th>QTÉ</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>🪨 Métaux Bruts x5</td>
-          <td><span class="qty">x5</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>⛏️ Ferrailles Triées x3</td>
-          <td><span class="qty">x3</span></td>
-          <td style="color:var(--muted); font-size:11px;">Tri nécessaire</td>
-        </tr>
-        <tr>
-          <td>⛏️ Ferrailles Triées x3</td>
-          <td><span class="qty">x3</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🔶 Lingot Brut x1</td>
-          <td><span class="qty">x1</span></td>
-          <td style="color:var(--muted); font-size:11px;">Fusion forge</td>
-        </tr>
-        <tr>
-          <td>🪵 Combustible x4</td>
-          <td><span class="qty">x4</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🔥 Charge Forge x2</td>
-          <td><span class="qty">x2</span></td>
-          <td style="color:var(--muted); font-size:11px;">1 cycle forge</td>
-        </tr>
-        <tr>
-          <td>🛢️ Huile Trempe x1</td>
-          <td><span class="qty">x1</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>🔩 Pièce Durcie x2</td>
-          <td><span class="qty">x2</span></td>
-          <td style="color:var(--muted); font-size:11px;">Post-forge</td>
-        </tr>
-        <tr>
-          <td>🔩 Pièce Forgée x1</td>
-          <td><span class="qty">x1</span></td>
-          <td class="arrow-cell">⇌</td>
-          <td>⭐ Jeton Réduction</td>
-          <td><span class="qty">x1</span></td>
-          <td style="color:var(--yellow); font-size:11px;">Logistique uniquement</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="craft-section">
-      <div class="craft-section-title"><span class="icon">🔥</span> Tables de Craft — Ferronnerie</div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🟫</span> Plaque Métallique</div>
-          <span class="craft-time">⏱ 6 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🔶 Lingot Brut x2</div>
-            <div class="craft-ing">🔥 Charge Forge x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🟫 Plaque Métallique (x2)</div>
-          </div>
-          <div class="craft-note">Base de nombreuses recettes avancées. Composant intermédiaire.</div>
-        </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🛤️</span> Rail de Voie</div>
-          <span class="craft-time">⏱ 9 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🔶 Lingot Brut x3</div>
-            <div class="craft-ing">🔥 Charge Forge x2</div>
-            <div class="craft-ing">🛢️ Huile Trempe x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🛤️ Rail de Voie (x1)</div>
-          </div>
-          <div class="craft-note">Valeur élevée. Contribue aux infrastructures gouvernementales exportées.</div>
-        </div>
-      </div>
-
-      <div class="craft-recipe" onclick="toggleCraft(this)">
-        <div class="craft-recipe-header">
-          <div class="craft-result"><span class="craft-emoji">🔩</span> ★ Pièce Forgée Certifiée</div>
-          <span class="craft-time">⏱ 12 MIN</span>
-          <span class="craft-expand">▼</span>
-        </div>
-        <div class="craft-body">
-          <div class="craft-ingredients">
-            <div class="craft-ing">🟫 Plaque Métallique x2</div>
-            <div class="craft-ing">🛤️ Rail de Voie x1</div>
-            <div class="craft-ing">🛢️ Huile Trempe x1</div>
-            <div class="craft-ing">🔥 Charge Forge x1</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="craft-arrow">→</span>
-            <div class="craft-output">🔩 Pièce Forgée Certifiée (x1)</div>
-          </div>
-          <div class="craft-note">⭐ ITEM PRINCIPAL — Valeur supérieure. Réduction de peine plus importante que les autres zones. Livrez à la Logistique.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════
-       TAB: LOGISTIQUE
-  ══════════════════════════════════ -->
-  <div class="tab-panel" id="tab-logistique">
-    <div class="section-header">
-      <div class="section-icon">🚚</div>
-      <div>
-        <h2>Zone <span>Logistique</span></h2>
-        <p>Point central de collecte des productions. Toutes les marchandises y transitent avant le convoi gouvernemental vers le quai d'exportation.</p>
-      </div>
-      <div class="section-badge">HUB CENTRAL</div>
-    </div>
-
-    <div class="alert alert-info">
-      <span class="alert-icon">🏭</span>
-      <div>La zone Logistique est le <strong>point de dépôt obligatoire</strong> pour valider toute réduction de peine. Apportez votre item final ici après l'avoir crafté dans votre zone de travail.</div>
-    </div>
-
-    <div class="sub-label">// Flux de la chaîne logistique</div>
-    <div class="logistics-flow">
-      <div class="logistics-node">
-        <div class="node-dot">🍳</div>
-        <div class="node-content">
-          <div class="node-title">Production — Zone Cuisine</div>
-          <div class="node-desc">Le Plateau Repas Complet est crafté en cuisine et acheminé vers la logistique.</div>
-          <div class="node-tags"><span class="node-tag">PLATEAU REPAS</span><span class="node-tag">RÉDUCTION ★</span></div>
-        </div>
-      </div>
-      <div class="logistics-node">
-        <div class="node-dot">👕</div>
-        <div class="node-content">
-          <div class="node-title">Production — Zone Blanchisserie</div>
-          <div class="node-desc">Le Lot de Linge Traité est conditionné et livré à la logistique.</div>
-          <div class="node-tags"><span class="node-tag">LOT LINGE</span><span class="node-tag">RÉDUCTION ★</span></div>
-        </div>
-      </div>
-      <div class="logistics-node">
-        <div class="node-dot">⚒️</div>
-        <div class="node-content">
-          <div class="node-title">Production — Zone Ferronnerie</div>
-          <div class="node-desc">La Pièce Forgée Certifiée est livrée à la logistique. Valeur supérieure.</div>
-          <div class="node-tags"><span class="node-tag">PIÈCE FORGÉE</span><span class="node-tag">RÉDUCTION ★★</span></div>
-        </div>
-      </div>
-      <div class="logistics-node">
-        <div class="node-dot">🏭</div>
-        <div class="node-content">
-          <div class="node-title">Centralisation — Hub Logistique</div>
-          <div class="node-desc">Toutes les productions sont centralisées, inventoriées et stockées dans l'entrepôt logistique de la prison. Chaque dépôt génère un jeton de réduction de peine pour le détenu.</div>
-          <div class="node-tags"><span class="node-tag">STOCKAGE</span><span class="node-tag">INVENTAIRE</span><span class="node-tag">VALIDATION PEINE</span></div>
-        </div>
-      </div>
-      <div class="logistics-node">
-        <div class="node-dot">🚐</div>
-        <div class="node-content">
-          <div class="node-title">Convoi G6 — Départ Prison</div>
-          <div class="node-desc">Un convoi blindé G6 est dépêché régulièrement pour transporter les marchandises depuis la prison vers l'extérieur. Ce convoi est escorté et peut être une cible.</div>
-          <div class="node-tags"><span class="node-tag">CONVOI G6</span><span class="node-tag">SÉCURISÉ</span><span class="node-tag">GOUVERNEMENTAL</span></div>
-        </div>
-      </div>
-      <div class="logistics-node" style="padding-bottom:0;">
-        <div class="node-dot" style="border-color:var(--yellow); box-shadow:0 0 16px rgba(255,214,0,0.3);">⚓</div>
-        <div class="node-content" style="border-color:rgba(255,214,0,0.4); background:rgba(255,214,0,0.04);">
-          <div class="node-title" style="color:var(--yellow);">Quai d'Exportation — Revenus Gouvernement</div>
-          <div class="node-desc">Les marchandises arrivent au quai et sont exportées. Génère des revenus pour le gouvernement de l'État. Chaque cargaison complète valorise le programme TIG.</div>
-          <div class="node-tags">
-            <span class="node-tag" style="border-color:var(--yellow); color:var(--yellow); background:rgba(255,214,0,0.1);">EXPORT</span>
-            <span class="node-tag" style="border-color:var(--yellow); color:var(--yellow); background:rgba(255,214,0,0.1);">REVENUS ÉTAT</span>
-            <span class="node-tag" style="border-color:var(--yellow); color:var(--yellow); background:rgba(255,214,0,0.1);">OBJECTIF FINAL</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="sub-label">// Points de dépôt logistique</div>
-    <div class="collect-points">
-      <div class="collect-point" data-num="L-01">
-        <div class="collect-emoji">📋</div>
-        <div class="collect-name">Guichet Dépôt</div>
-        <div class="collect-loc">Hall Logistique — Entrée</div>
-        <span class="collect-type type-craft">DÉPÔT</span>
-      </div>
-      <div class="collect-point" data-num="L-02">
-        <div class="collect-emoji">📦</div>
-        <div class="collect-name">Zone de Stockage A</div>
-        <div class="collect-loc">Entrepôt Logistique</div>
-        <span class="collect-type type-craft">STOCKAGE</span>
-      </div>
-      <div class="collect-point" data-num="L-03">
-        <div class="collect-emoji">🚛</div>
-        <div class="collect-name">Quai de Chargement</div>
-        <div class="collect-loc">Portail Sud — Accès G6</div>
-        <span class="collect-type type-craft">CHARGEMENT</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════
-       TAB: COSMÉTIQUES
-  ══════════════════════════════════ -->
-  <div class="tab-panel" id="tab-cosmetiques">
-    <div class="section-header">
-      <div class="section-icon">✨</div>
-      <div>
-        <h2>Zone <span>Cosmétiques</span></h2>
-        <p>Dépensez vos jetons de travail pour personnaliser votre apparence. Coiffures, tatouages, tenues et accessoires — gagnés par le mérite.</p>
-      </div>
-      <div class="section-badge">PERSONNALISATION</div>
-    </div>
-
-    <div class="alert alert-info">
-      <span class="alert-icon">💡</span>
-      <div>Les cosmétiques s'achètent avec des <strong>Jetons de Mérite</strong> gagnés en livrant vos productions à la Logistique. Plus vous travaillez, plus vous débloquez d'options.</div>
-    </div>
-
-    <!-- UNLOCK PROGRESSION -->
-    <div class="sub-label">// Progression de déblocage</div>
-    <div class="unlock-tree" style="margin-bottom:36px;">
-      <div class="unlock-item unlocked" onclick="this.classList.toggle('selected')">
-        <div class="unlock-status">✓</div>
-        <div>
-          <div class="unlock-name">🟠 Niveau 1 — Travailleur</div>
-          <div style="font-size:12px; color:var(--muted);">Accès : Coiffures de base, tenues de travail basiques</div>
-        </div>
-        <div class="unlock-req">0 JETONS</div>
-      </div>
-      <div class="unlock-item" onclick="this.classList.toggle('selected')">
-        <div class="unlock-status" style="background:var(--orange-dim)">2</div>
-        <div>
-          <div class="unlock-name">🟡 Niveau 2 — Appliqué</div>
-          <div style="font-size:12px; color:var(--muted);">Accès : Tatouages mineurs, accessoires de base</div>
-        </div>
-        <div class="unlock-req">10 JETONS</div>
-      </div>
-      <div class="unlock-item locked">
-        <div class="unlock-status">🔒</div>
-        <div>
-          <div class="unlock-name">🔴 Niveau 3 — Artisan</div>
-          <div style="font-size:12px; color:var(--muted);">Accès : Tatouages complexes, tenues rares</div>
-        </div>
-        <div class="unlock-req">25 JETONS</div>
-      </div>
-      <div class="unlock-item locked">
-        <div class="unlock-status">🔒</div>
-        <div>
-          <div class="unlock-name">⚫ Niveau 4 — Expert</div>
-          <div style="font-size:12px; color:var(--muted);">Accès : Cosmétiques exclusifs, coiffures signature</div>
-        </div>
-        <div class="unlock-req">50 JETONS</div>
-      </div>
-      <div class="unlock-item locked">
-        <div class="unlock-status">🔒</div>
-        <div>
-          <div class="unlock-name">🌟 Niveau 5 — Légende TIG</div>
-          <div style="font-size:12px; color:var(--muted);">Accès : Tenue spéciale sortie, badge honorifique</div>
-        </div>
-        <div class="unlock-req">100 JETONS</div>
-      </div>
-    </div>
-
-    <div class="cosm-grid">
-      <!-- COIFFURES -->
-      <div class="cosm-card">
-        <div class="cosm-header">
-          <span class="cosm-icon">💈</span>
-          <div>
-            <div class="cosm-title">Coiffures</div>
-            <div style="font-size:11px; color:var(--muted);">Salon de la prison</div>
-          </div>
-          <div class="cosm-price">2–8 🪙</div>
-        </div>
-        <div class="cosm-body">
-          <div class="cosm-desc">Choisissez votre coupe disponible au salon intérieur. Les styles premium se débloquent avec le niveau.</div>
-          <div class="cosm-options">
-            <div class="cosm-option selected">✂️ Brosse Militaire</div>
-            <div class="cosm-option">🌀 Dégradé Court</div>
-            <div class="cosm-option">🔱 Crâne Rasé</div>
-            <div class="cosm-option">🪒 Coupe Nette</div>
-            <div class="cosm-option">🌊 Ondulé Plaqué</div>
-            <div class="cosm-option">⭐ Signature [Niv.4]</div>
-          </div>
-          <div class="progress-bar" style="margin-top:16px;">
-            <div class="progress-fill" style="width:40%"></div>
-          </div>
-          <div class="progress-label">
-            <span>Progression coiffures</span>
-            <span>2/6 débloquées</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- TATOUAGES -->
-      <div class="cosm-card">
-        <div class="cosm-header">
-          <span class="cosm-icon">🖋️</span>
-          <div>
-            <div class="cosm-title">Tatouages</div>
-            <div style="font-size:11px; color:var(--muted);">Encre de prison</div>
-          </div>
-          <div class="cosm-price">5–20 🪙</div>
-        </div>
-        <div class="cosm-body">
-          <div class="cosm-desc">Tatouages faits à la main par un détenu artiste. De discrets à très visibles — votre choix.</div>
-          <div class="cosm-options">
-            <div class="cosm-option">🔹 Barre Poignet</div>
-            <div class="cosm-option">🕊️ Colombe Épaule</div>
-            <div class="cosm-option">⛓️ Chaîne Cou [Niv.2]</div>
-            <div class="cosm-option">🔥 Flamme Avant-bras [Niv.2]</div>
-            <div class="cosm-option">💀 Crâne Dos [Niv.3]</div>
-            <div class="cosm-option">🌿 Mandala [Niv.3]</div>
-            <div class="cosm-option">👑 Couronne [Niv.4]</div>
-            <div class="cosm-option">🦅 Aigle Full Back [Niv.5]</div>
-          </div>
-          <div class="progress-bar" style="margin-top:16px;">
-            <div class="progress-fill" style="width:25%"></div>
-          </div>
-          <div class="progress-label">
-            <span>Progression tatouages</span>
-            <span>2/8 débloqués</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- TENUES -->
-      <div class="cosm-card">
-        <div class="cosm-header">
-          <span class="cosm-icon">👗</span>
-          <div>
-            <div class="cosm-title">Tenues & Uniformes</div>
-            <div style="font-size:11px; color:var(--muted);">Personnalisation combinaison</div>
-          </div>
-          <div class="cosm-price">8–30 🪙</div>
-        </div>
-        <div class="cosm-body">
-          <div class="cosm-desc">Variantes de votre combinaison de prisonnier. Certains marquent votre statut de travailleur exemplaire.</div>
-          <div class="cosm-options">
-            <div class="cosm-option selected">🟠 Combinaison Standard</div>
-            <div class="cosm-option">🔄 Manches Retroussées</div>
-            <div class="cosm-option">🔵 Bleu Travail [Niv.2]</div>
-            <div class="cosm-option">⬛ Gris Artisan [Niv.3]</div>
-            <div class="cosm-option">🔴 Rouge Senior [Niv.4]</div>
-            <div class="cosm-option">⚪ Blanc Exemplaire [Niv.5]</div>
-          </div>
-          <div class="progress-bar" style="margin-top:16px;">
-            <div class="progress-fill" style="width:33%"></div>
-          </div>
-          <div class="progress-label">
-            <span>Progression tenues</span>
-            <span>2/6 débloquées</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ACCESSOIRES -->
-      <div class="cosm-card">
-        <div class="cosm-header">
-          <span class="cosm-icon">🎒</span>
-          <div>
-            <div class="cosm-title">Accessoires</div>
-            <div style="font-size:11px; color:var(--muted);">Bijoux & équipement</div>
-          </div>
-          <div class="cosm-price">3–15 🪙</div>
-        </div>
-        <div class="cosm-body">
-          <div class="cosm-desc">Petits détails qui font la différence. Certains accessoires affichent votre zone de travail.</div>
-          <div class="cosm-options">
-            <div class="cosm-option">🧤 Gants Travail</div>
-            <div class="cosm-option">🧢 Bonnet Laine</div>
-            <div class="cosm-option">⌚ Montre Plastique [Niv.2]</div>
-            <div class="cosm-option">📿 Collier Prison [Niv.2]</div>
-            <div class="cosm-option">🕶️ Lunettes [Niv.3]</div>
-            <div class="cosm-option">🔑 Porte-clé TIG [Niv.4]</div>
-            <div class="cosm-option">🏅 Médaille Mérite [Niv.5]</div>
-          </div>
-          <div class="progress-bar" style="margin-top:16px;">
-            <div class="progress-fill" style="width:20%"></div>
-          </div>
-          <div class="progress-label">
-            <span>Progression accessoires</span>
-            <span>2/7 débloqués</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-    <div class="sub-label">// Cosmétiques de sortie — Exclusifs</div>
-
-    <div class="alert alert-ok">
-      <span class="alert-icon">🌟</span>
-      <div>À votre sortie de prison, si vous avez atteint le <strong>Niveau 5 Légende TIG</strong>, vous obtenez la <strong>Tenue de Sortie Honorifique</strong> — une tenue exclusive que vous conservez hors de prison, visible de tous.</div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card" style="border-color:rgba(255,214,0,0.3);">
-        <div class="card-title" style="color:var(--yellow);">🌟 Tenue Sortie Honorifique</div>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Tenue exclusive portée à la sortie par les détenus exemplaires. Reconnue par les forces de l'ordre et la population.</p>
-        <ul class="item-list">
-          <li><span class="emoji">✅</span> Conservée hors prison <span class="qty">PERMANENT</span></li>
-          <li><span class="emoji">🏅</span> Badge TIG visible <span class="qty">VISIBLE</span></li>
-          <li><span class="emoji">🔓</span> Accès zones spéciales <span class="qty">BONUS</span></li>
-        </ul>
-      </div>
-      <div class="card" style="border-color:rgba(255,214,0,0.3);">
-        <div class="card-title" style="color:var(--yellow);">🪙 Shop Jeton de Mérite</div>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Dépensez vos jetons au guichet cosmétique. Prix indicatifs.</p>
-        <ul class="item-list">
-          <li><span class="emoji">💈</span> Coiffure standard <span class="qty">2-4 🪙</span></li>
-          <li><span class="emoji">🖋️</span> Tatouage simple <span class="qty">5-10 🪙</span></li>
-          <li><span class="emoji">👗</span> Variante tenue <span class="qty">8-15 🪙</span></li>
-          <li><span class="emoji">🎒</span> Accessoire <span class="qty">3-12 🪙</span></li>
-          <li><span class="emoji">🌟</span> Cosmétique Niv.5 <span class="qty">25-50 🪙</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="logo">BOLINGBROKE PENITENTIARY — TIG SYSTEM v2.4</div>
-  <div>Document interne — Usage serveur FiveM uniquement</div>
-  <div><span class="status-dot"></span> Mise à jour : 2026</div>
-</footer>
+<!-- LINGE -->
+<div class="page" id="page-linge">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">Travaux d'Intérêt Général</div><div class="page-title">👕 Le <span>Linge</span></div></div><span class="badge">TIG N°02</span></div>
+    <div class="info-panel"><strong>Objectif :</strong> Traiter le linge de l'établissement en passant par les étapes de collecte, lavage et repassage pour finalement confectionner du linge propre prêt à être distribué.</div>
+    <div class="tig-layout">
+      <div>
+        <div class="section-label">Processus complet</div>
+        <div class="section-title">Étapes du TIG Linge</div>
+        <div class="steps">
+          <div class="step"><div style="position:relative"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Collecte des fournitures</div><div class="step-desc">Récupérer le linge sale dans les cellules, ainsi que les produits nettoyants, chimiques et la brosse dans la réserve.</div><div class="step-tags"><span class="step-tag collect">👕 Linge Sale</span><span class="step-tag collect">🧴 Produit Nettoyant</span><span class="step-tag collect">🧪 Produit Chimique</span><span class="step-tag collect">🪥 Brosse</span><span class="step-tag collect">💧 Eau</span></div></div></div>
+          <div class="step"><div style="position:relative"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Lavage — Linge Mouillé</div><div class="step-desc">Apporter le linge sale au point de lavage pour le troquer contre du linge mouillé. Étape obligatoire avant le repassage.</div><div class="step-tags"><span class="step-tag trade">👕 Linge Sale (entrée)</span><span class="step-tag trade">💦 Linge Mouillé (sortie)</span></div><div class="arrow-step">→ Troc au poste de lavage</div></div></div>
+          <div class="step"><div style="position:relative"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Repassage — Linge Repassé</div><div class="step-desc">Apporter le linge mouillé à la table de repassage pour obtenir du linge repassé, prêt pour le craft final.</div><div class="step-tags"><span class="step-tag transform">💦 Linge Mouillé (entrée)</span><span class="step-tag craft">🔥 Linge Repassé (sortie)</span></div><div class="arrow-step">→ Troc à la table de repassage</div></div></div>
+          <div class="step"><div><div class="step-num">4</div></div><div class="step-body"><div class="step-name">Craft du Linge Propre</div><div class="step-desc">Assembler tous les éléments dans la table de craft pour produire le linge propre final prêt à être livré.</div><div class="step-tags"><span class="step-tag craft">✅ Linge Propre</span></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="recipe-card">
+          <div class="recipe-header"><div class="recipe-header-icon">📋</div><div><div class="recipe-header-title">Recette — Linge Propre</div><div class="recipe-header-sub">Table de Craft · Buanderie</div></div></div>
+          <div class="recipe-body">
+            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Produit Chimique</div><div class="ing-icon">🧪</div></div>
+            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Produit Nettoyant</div><div class="ing-icon">🧴</div></div>
+            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Brosse</div><div class="ing-icon">🪥</div></div>
+            <div class="ingredient"><div class="ing-qty">4</div><div class="ing-name">Linge Repassé</div><div class="ing-icon">🔥</div></div>
+            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Eau</div><div class="ing-icon">💧</div></div>
+          </div>
+        </div>
+        <div class="info-panel" style="margin-top:1rem"><strong>Important :</strong> Le linge doit impérativement passer par le lavage <strong>puis</strong> le repassage dans cet ordre strict avant le craft.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FERRAILLE -->
+<div class="page" id="page-ferraille">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">Travaux d'Intérêt Général</div><div class="page-title">⛏ La <span>Ferraille</span></div></div><span class="badge">TIG N°03</span></div>
+    <div class="info-panel"><strong>Objectif :</strong> Travailler dans la mine pour extraire des matériaux bruts, les transformer en composants et fabriquer une pioche à l'atelier. Présence d'un agent obligatoire en tout temps.</div>
+    <div class="tig-layout">
+      <div>
+        <div class="section-label">Processus complet</div>
+        <div class="section-title">Étapes du TIG Ferraille</div>
+        <div class="steps">
+          <div class="step"><div style="position:relative"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Extraction Minière</div><div class="step-desc">Se rendre dans la mine sous escorte et extraire les matières premières disponibles. Récupérer le marteau sur place.</div><div class="step-tags"><span class="step-tag collect">🪨 Pierre</span><span class="step-tag collect">🔩 Ferraille</span><span class="step-tag collect">🪵 Bout de Bois</span><span class="step-tag collect">🔨 Marteau</span></div></div></div>
+          <div class="step"><div style="position:relative"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Fonte — Plaques de Métal</div><div class="step-desc">Amener la ferraille au four de fonderie. Elle est transformée par fusion en plaques de métal utilisables pour la fabrication.</div><div class="step-tags"><span class="step-tag transform">🔩 Ferraille (entrée)</span><span class="step-tag craft">🔧 Plaque de Métal (sortie)</span></div><div class="arrow-step">→ Fonderie de l'atelier</div></div></div>
+          <div class="step"><div style="position:relative"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Sciage — Planches</div><div class="step-desc">Transformer les bouts de bois bruts en planches au poste de sciage. Les planches servent de manche à la pioche.</div><div class="step-tags"><span class="step-tag transform">🪵 Bout de Bois (entrée)</span><span class="step-tag craft">🪵 Planche (sortie)</span></div><div class="arrow-step">→ Poste de sciage de l'atelier</div></div></div>
+          <div class="step"><div><div class="step-num">4</div></div><div class="step-body"><div class="step-name">Craft de la Pioche</div><div class="step-desc">Assembler tous les composants dans la table de craft de l'atelier. La pioche est remise à l'agent superviseur en fin de session.</div><div class="step-tags"><span class="step-tag craft">⛏ Pioche</span></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="recipe-card">
+          <div class="recipe-header"><div class="recipe-header-icon">📋</div><div><div class="recipe-header-title">Recette — Pioche</div><div class="recipe-header-sub">Table de Craft · Atelier Mine</div></div></div>
+          <div class="recipe-body">
+            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Planche</div><div class="ing-icon">🪵</div></div>
+            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Eau</div><div class="ing-icon">💧</div></div>
+            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Marteau</div><div class="ing-icon">🔨</div></div>
+            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Plaque de Métal</div><div class="ing-icon">🔧</div></div>
+            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Pierre</div><div class="ing-icon">🪨</div></div>
+          </div>
+        </div>
+        <div class="info-panel" style="margin-top:1rem"><strong>Sécurité :</strong> L'accès à la mine est <strong>conditionné par la présence d'un agent</strong>. Aucun détenu ne peut entrer seul. Le marteau est récupéré sur place.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GARDES -->
+<div class="page" id="page-gardes">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">Personnel de l'établissement</div><div class="page-title">🛡 Gardes &amp; <span>Hiérarchie</span></div></div></div>
+
+    <div class="section-label">Organigramme</div>
+    <div class="section-title">Structure de Commandement</div>
+
+    <div class="hierarchy-wrap">
+      <!-- DIRECTION -->
+      <div class="dir-block">
+        <div class="dir-card">
+          <div class="dir-avatar">DG</div>
+          <div class="dir-name">Direction Générale</div>
+          <div class="dir-rank">Administration Pénitentiaire</div>
+          <div class="dir-badge">Commandement Suprême</div>
+        </div>
+      </div>
+
+      <!-- Vertical drop -->
+      <div class="v-drop"><div class="v-drop-line"></div></div>
+      <!-- Horizontal bar -->
+      <div class="h-bar-wrap"><div class="h-bar"></div></div>
+
+      <!-- 4 GUARDS SAME LEVEL -->
+      <div class="guards-row">
+        <div class="guard-col">
+          <div class="guard-v-top"></div>
+          <div class="guard-card">
+            <div class="guard-avatar">SA</div>
+            <div class="guard-name">Sergio Almada</div>
+            <div class="guard-rank">Officier Principal</div>
+            <div class="guard-sub-badge">TIG Cuisine</div>
+          </div>
+        </div>
+        <div class="guard-col">
+          <div class="guard-v-top"></div>
+          <div class="guard-card">
+            <div class="guard-avatar">MS</div>
+            <div class="guard-name">Mathew Smith</div>
+            <div class="guard-rank">Officier Principal</div>
+            <div class="guard-sub-badge">TIG Linge</div>
+          </div>
+        </div>
+        <div class="guard-col">
+          <div class="guard-v-top"></div>
+          <div class="guard-card">
+            <div class="guard-avatar">EW</div>
+            <div class="guard-name">Emma Winter</div>
+            <div class="guard-rank">Officier Principal</div>
+            <div class="guard-sub-badge">TIG Ferraille</div>
+          </div>
+        </div>
+        <div class="guard-col">
+          <div class="guard-v-top"></div>
+          <div class="guard-card">
+            <div class="guard-avatar">BK</div>
+            <div class="guard-name">Bob Kayak</div>
+            <div class="guard-rank">Officier Principal</div>
+            <div class="guard-sub-badge">Ronde Générale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vertical drop to staff -->
+      <div class="v-drop2" style="margin-top:0"><div class="v-drop2-line"></div></div>
+      <div class="h-bar2-wrap"><div class="h-bar2"></div></div>
+
+      <!-- SUB STAFF -->
+      <div class="staff-row">
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">RC</div><div class="staff-name">R. Castellano</div><div class="staff-rank">Agent de Surveillance</div></div></div>
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">LM</div><div class="staff-name">L. Moretti</div><div class="staff-rank">Agent de Surveillance</div></div></div>
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">JD</div><div class="staff-name">J. Devereux</div><div class="staff-rank">Agent de Surveillance</div></div></div>
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">KR</div><div class="staff-name">K. Reyes</div><div class="staff-rank">Stagiaire</div></div></div>
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">PT</div><div class="staff-name">P. Torres</div><div class="staff-rank">Stagiaire</div></div></div>
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">NB</div><div class="staff-name">N. Bauer</div><div class="staff-rank">Stagiaire</div></div></div>
+        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">VG</div><div class="staff-name">V. Granger</div><div class="staff-rank">Stagiaire</div></div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Fiches agents</div>
+    <div class="section-title">Officiers Principaux</div>
+    <div class="cards-grid">
+      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">SA</div><div><div class="card-title" style="font-size:18px;margin:0">Sergio Almada</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — TIG Cuisine</div></div></div><div class="card-desc">Supervise le TIG Cuisine. Valide les échanges de tomates et contrôle les crafts de soupe remis en fin de session.</div></div>
+      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">MS</div><div><div class="card-title" style="font-size:18px;margin:0">Mathew Smith</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — TIG Linge</div></div></div><div class="card-desc">Responsable du TIG Linge. Contrôle les étapes de lavage, repassage et valide le linge propre produit en fin de session.</div></div>
+      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">EW</div><div><div class="card-title" style="font-size:18px;margin:0">Emma Winter</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — TIG Ferraille</div></div></div><div class="card-desc">Responsable du TIG Ferraille. Accompagne les détenus dans la mine, gère l'accès à la fonderie et valide les pioches craftées.</div></div>
+      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">BK</div><div><div class="card-title" style="font-size:18px;margin:0">Bob Kayak</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — Ronde Générale</div></div></div><div class="card-desc">Effectue les rondes générales sur tous les secteurs TIG. Peut intervenir en soutien sur n'importe quel secteur et signale les anomalies.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="page" id="page-stats">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">Données de la saison</div><div class="page-title">📊 <span>Statistiques</span></div></div></div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Soupes Produites</div><div class="stat-value blue">187</div><div class="stat-change">↑ +12 ce jour</div></div>
+      <div class="stat-card"><div class="stat-label">Linge Propre</div><div class="stat-value">143</div><div class="stat-change">↑ +8 ce jour</div></div>
+      <div class="stat-card"><div class="stat-label">Pioches Craftées</div><div class="stat-value green">96</div><div class="stat-change">↑ +5 ce jour</div></div>
+      <div class="stat-card"><div class="stat-label">Incidents</div><div class="stat-value red">3</div><div class="stat-change neg">↑ +1 ce jour</div></div>
+      <div class="stat-card"><div class="stat-label">Détenus Actifs</div><div class="stat-value">24</div><div class="stat-change">↑ Stable</div></div>
+      <div class="stat-card"><div class="stat-label">Heures TIG</div><div class="stat-value blue">842</div><div class="stat-change">↑ Saison courante</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div class="chart-section"><div class="chart-title">Production par TIG — semaine courante</div>
+        <div class="bar-row"><div class="bar-label">🍲 Cuisine</div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><div class="bar-val">78%</div></div>
+        <div class="bar-row"><div class="bar-label">👕 Linge</div><div class="bar-track"><div class="bar-fill" style="width:61%"></div></div><div class="bar-val">61%</div></div>
+        <div class="bar-row"><div class="bar-label">⛏ Ferraille</div><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><div class="bar-val">44%</div></div>
+      </div>
+      <div class="chart-section"><div class="chart-title">Répartition détenus par TIG</div>
+        <div class="bar-row"><div class="bar-label">🍲 Cuisine</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="bar-val">12</div></div>
+        <div class="bar-row"><div class="bar-label">👕 Linge</div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><div class="bar-val">8</div></div>
+        <div class="bar-row"><div class="bar-label">⛏ Ferraille</div><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><div class="bar-val">4</div></div>
+      </div>
+    </div>
+    <div class="chart-section" style="margin-top:1.5rem">
+      <div class="chart-title">Sessions complétées — 7 derniers jours</div>
+      <div style="display:flex;align-items:flex-end;gap:8px;height:80px;margin-top:.5rem">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:46px;opacity:.7"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">LUN</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:56px;opacity:.8"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">MAR</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:38px;opacity:.7"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">MER</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent2);border-radius:2px 2px 0 0;height:64px"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">JEU</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:49px;opacity:.8"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">VEN</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent2);border-radius:2px 2px 0 0;height:68px"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">SAM</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:35px;opacity:.6"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">DIM</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGLEMENT -->
+<div class="page" id="page-regles">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">À respecter obligatoirement</div><div class="page-title">📋 <span>Règlement</span></div></div></div>
+    <div class="info-panel"><strong>Avertissement :</strong> Le non-respect du règlement peut entraîner la suspension ou l'annulation immédiate du TIG, ainsi que des sanctions supplémentaires à l'appréciation de l'agent superviseur.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem">
+      <div>
+        <div class="section-label">Règles générales</div>
+        <ul class="rules-list">
+          <li class="rule-item"><div class="rule-num">01</div><div><div class="rule-title">Présence d'un agent obligatoire</div><div class="rule-desc">Aucun TIG ne peut démarrer sans la supervision d'un agent habilité. Toute activité non supervisée est invalide et sanctionnée.</div></div></li>
+          <li class="rule-item"><div class="rule-num">02</div><div><div class="rule-title">Respect de l'ordre des étapes</div><div class="rule-desc">Chaque TIG doit être réalisé dans l'ordre strict des étapes définies. Aucun raccourci n'est toléré.</div></div></li>
+          <li class="rule-item"><div class="rule-num">03</div><div><div class="rule-title">Quantités exactes pour le craft</div><div class="rule-desc">Les recettes doivent être respectées à la lettre. Vérifier les quantités avant de lancer le craft pour éviter la perte de matériaux.</div></div></li>
+          <li class="rule-item"><div class="rule-num">04</div><div><div class="rule-title">Interdiction de fuite</div><div class="rule-desc">Toute tentative de fuite pendant un TIG entraîne l'annulation immédiate de la session et un retour en cellule avec sanctions.</div></div></li>
+          <li class="rule-item"><div class="rule-num">05</div><div><div class="rule-title">Remise des produits finaux</div><div class="rule-desc">Les items craftés doivent obligatoirement être remis à l'agent superviseur à la fin de chaque session sans exception.</div></div></li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">Règles spécifiques</div>
+        <ul class="rules-list">
+          <li class="rule-item"><div class="rule-num">06</div><div><div class="rule-title">Accès mine — escorte obligatoire</div><div class="rule-desc">L'accès à la zone minière est conditionné à la présence d'un officier principal. Aucune entrée non accompagnée autorisée.</div></div></li>
+          <li class="rule-item"><div class="rule-num">07</div><div><div class="rule-title">Trocs aux points officiels uniquement</div><div class="rule-desc">Les échanges doivent être effectués aux points officiels désignés sous contrôle d'un agent pénitentiaire.</div></div></li>
+          <li class="rule-item"><div class="rule-num">08</div><div><div class="rule-title">Interdiction de stockage personnel</div><div class="rule-desc">Les ressources collectées durant un TIG appartiennent à l'établissement. Toute rétention de matériaux constitue un vol.</div></div></li>
+          <li class="rule-item"><div class="rule-num">09</div><div><div class="rule-title">Signalement immédiat des incidents</div><div class="rule-desc">Tout incident ou anomalie doit immédiatement être signalé à l'agent présent. Le détenu ne doit pas intervenir seul.</div></div></li>
+          <li class="rule-item"><div class="rule-num">10</div><div><div class="rule-title">Comportement et respect</div><div class="rule-desc">L'irrespect envers le personnel entraîne la suspension immédiate du TIG. Le TIG est un privilège accordé, pas un droit acquis.</div></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTRE -->
+<div class="page" id="page-logs">
+  <div class="container">
+    <div class="page-header"><div><div class="page-subtitle">Historique des sessions</div><div class="page-title">📁 <span>Registre</span></div></div></div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden">
+      <table class="log-table">
+        <thead><tr><th>Date / Heure</th><th>TIG</th><th>Détenu</th><th>Agent Superviseur</th><th>Items Craftés</th><th>Statut</th></tr></thead>
+        <tbody>
+          <tr><td>11/05 — 14:32</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0042</td><td>Sergio Almada</td><td style="color:var(--text)">3x Soupe</td><td><span class="log-ok">✓ Complété</span></td></tr>
+          <tr><td>11/05 — 13:15</td><td><span class="log-type ferraille">Ferraille</span></td><td style="color:var(--text)">Détenu #0017</td><td>Emma Winter</td><td style="color:var(--text)">2x Pioche</td><td><span class="log-ok">✓ Complété</span></td></tr>
+          <tr><td>11/05 — 11:50</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0031</td><td>Mathew Smith</td><td style="color:var(--text)">5x Linge Propre</td><td><span class="log-ok">✓ Complété</span></td></tr>
+          <tr><td>11/05 — 10:05</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0008</td><td>Bob Kayak</td><td style="color:var(--text)">—</td><td><span class="log-fail">✗ Incident</span></td></tr>
+          <tr><td>10/05 — 17:40</td><td><span class="log-type ferraille">Ferraille</span></td><td style="color:var(--text)">Détenu #0055</td><td>Emma Winter</td><td style="color:var(--text)">1x Pioche</td><td><span class="log-ok">✓ Complété</span></td></div></tr>
+          <tr><td>10/05 — 15:20</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0022</td><td>Sergio Almada</td><td style="color:var(--text)">3x Linge Propre</td><td><span class="log-ok">✓ Complété</span></td></tr>
+          <tr><td>10/05 — 12:00</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0037</td><td>Mathew Smith</td><td style="color:var(--text)">4x Soupe</td><td><span class="log-ok">✓ Complété</span></td></tr>
+          <tr><td>10/05 — 09:15</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0013</td><td>Bob Kayak</td><td style="color:var(--text)">—</td><td><span class="log-pending">⏳ En cours</span></td></tr>
+          <tr><td>09/05 — 16:10</td><td><span class="log-type ferraille">Ferraille</span></td><td style="color:var(--text)">Détenu #0011</td><td>Emma Winter</td><td style="color:var(--text)">—</td><td><span class="log-fail">✗ Abandon</span></td></tr>
+          <tr><td>09/05 — 09:30</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0048</td><td>Mathew Smith</td><td style="color:var(--text)">6x Linge Propre</td><td><span class="log-ok">✓ Complété</span></td></tr>
+          <tr><td>08/05 — 14:00</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0003</td><td>Sergio Almada</td><td style="color:var(--text)">2x Soupe</td><td><span class="log-ok">✓ Complété</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <script>
-  function switchTab(id) {
-    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-      btn.classList.remove('active');
-    });
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-
-    const panels = ['overview','cuisine','blanchisserie','ferronnerie','logistique','cosmetiques'];
-    const idx = panels.indexOf(id);
-    if (idx >= 0) document.querySelectorAll('.tab-btn')[idx].classList.add('active');
-    
-    const panel = document.getElementById('tab-' + id);
-    if (panel) panel.classList.add('active');
-  }
-
-  function toggleCraft(el) {
-    el.classList.toggle('open');
-  }
-
-  // Cosmetic option toggle
-  document.querySelectorAll('.cosm-option').forEach(opt => {
-    opt.addEventListener('click', function() {
-      this.classList.toggle('selected');
-    });
-  });
-
-  // Animate progress bars on tab switch
-  function animateProgress() {
-    document.querySelectorAll('.progress-fill').forEach(bar => {
-      const target = bar.style.width;
-      bar.style.width = '0%';
-      setTimeout(() => { bar.style.width = target; }, 100);
-    });
-  }
-
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => setTimeout(animateProgress, 100));
-  });
-
-  // Initial animation
-  setTimeout(animateProgress, 300);
+function goto(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
 </script>
 </body>
 </html>
