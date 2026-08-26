@@ -2,588 +2,2784 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booling Broke — Portail TIG</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Une petite surprise pour toi ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #1A3A5C;
-    --blue2: #0F2540;
-    --blue3: #0A1929;
-    --blue4: #061220;
-    --accent: #2E6DA4;
-    --accent2: #3D8FD4;
-    --accent-light: #6AAFE6;
-    --steel: #4A7FA5;
-    --bg: #060E18;
-    --bg2: #0C1A28;
-    --bg3: #111F30;
-    --bg4: #172840;
-    --border: rgba(46,109,164,0.18);
-    --border2: rgba(46,109,164,0.45);
-    --text: #C8D8E8;
-    --text2: #7A9BB8;
-    --text3: #3A5A78;
-    --red: #C0392B;
-    --green: #1E8449;
-    --gold: #B8960A;
+/* ============================================================
+   UNE PETITE SURPRISE POUR TOI — style.css
+   Design : rose pastel / rouge doux / violet léger / blanc
+   ============================================================ */
+
+/* ---------- Reset & tokens ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--color-plum-deep);
+  background: var(--color-blush);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:root{
+  --color-blush:        #fff6f9;
+  --color-blush-2:      #ffeaf3;
+  --color-pink:         #ff8fb4;
+  --color-pink-deep:    #ff5c8a;
+  --color-rose:         #e63969;
+  --color-lavender:     #c9a7eb;
+  --color-lavender-soft:#efe3fb;
+  --color-gold:         #ffd27a;
+  --color-plum:         #6b3a63;
+  --color-plum-deep:    #3a1a3a;
+  --color-white:        #ffffff;
+
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body: 'Quicksand', 'Segoe UI', sans-serif;
+
+  --shadow-soft: 0 20px 60px -22px rgba(230, 57, 105, 0.38);
+  --shadow-card: 0 16px 40px -18px rgba(154, 60, 109, 0.28);
+  --shadow-btn:  0 14px 34px -10px rgba(230, 57, 105, 0.55);
+
+  --radius-lg: 30px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  --radius-pill: 999px;
+
+  --ease-out-soft: cubic-bezier(.16,1,.3,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+}
+
+::selection { background: var(--color-pink); color: #fff; }
+
+button { font-family: inherit; cursor: pointer; }
+button:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--color-lavender);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+h1, h2, h3 { font-family: var(--font-display); margin: 0; }
+p { margin: 0; }
+
+/* ---------- Fond animé ---------- */
+#bg-canvas{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-glow{
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: .55;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+.glow-1{
+  width: 42vw; height: 42vw;
+  top: -12vw; left: -10vw;
+  background: radial-gradient(circle, rgba(255,143,180,.65), transparent 70%);
+  animation: driftGlow1 26s ease-in-out infinite;
+}
+.glow-2{
+  width: 36vw; height: 36vw;
+  bottom: -10vw; right: -8vw;
+  background: radial-gradient(circle, rgba(201,167,235,.55), transparent 70%);
+  animation: driftGlow2 32s ease-in-out infinite;
+}
+.glow-3{
+  width: 26vw; height: 26vw;
+  top: 38%; left: 55%;
+  background: radial-gradient(circle, rgba(255,210,122,.4), transparent 70%);
+  animation: driftGlow3 22s ease-in-out infinite;
+}
+@keyframes driftGlow1{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(4vw, 5vw) scale(1.12); }
+}
+@keyframes driftGlow2{
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(-5vw,-3vw) scale(1.08); }
+}
+@keyframes driftGlow3{
+  0%,100%{ transform: translate(0,0) scale(1); opacity:.4;}
+  50%{ transform: translate(-3vw,4vw) scale(1.2); opacity:.6;}
+}
+
+.grain-overlay{
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image: radial-gradient(rgba(230,57,105,.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+  opacity: .5;
+}
+
+.svg-defs{ position:absolute; width:0; height:0; overflow:hidden; }
+
+/* ---------- Cœurs réutilisables ---------- */
+.heart, .deco-heart, .v-heart, .final-big-heart, .node-heart{
+  display:block;
+}
+
+/* ---------- Barre de progression ---------- */
+.progress-wrap{
+  position: fixed;
+  top: 18px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: min(420px, 88vw);
+}
+.progress-ribbon{
+  position: relative;
+  width: 100%;
+  height: 14px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px -10px rgba(154,60,109,.35);
+}
+.progress-track{
+  position: absolute; inset: 0;
+  border-radius: var(--radius-pill);
+}
+.progress-fill{
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--color-pink), var(--color-rose) 60%, var(--color-lavender));
+  box-shadow: 0 0 14px rgba(230,57,105,.6);
+  transition: width 1.1s var(--ease-out-soft);
+}
+.progress-nodes{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 -2px;
+}
+.progress-node{
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-pink);
+  display: flex; align-items: center; justify-content: center;
+  transform: translateX(0);
+  box-shadow: 0 4px 10px -3px rgba(154,60,109,.4);
+  transition: transform .5s var(--ease-spring), border-color .4s, background .4s;
+}
+.progress-node:first-child{ margin-left: -2px; }
+.progress-node:last-child{ margin-right: -2px; }
+.progress-node .node-heart{ width: 12px; height: 11px; fill: var(--color-pink); opacity: .5; }
+.progress-node.reached{
+  background: linear-gradient(145deg, var(--color-pink-deep), var(--color-rose));
+  border-color: var(--color-rose);
+  animation: nodePop .55s var(--ease-spring);
+}
+.progress-node.reached .node-heart{ fill: #fff; opacity: 1; }
+@keyframes nodePop{
+  0%{ transform: scale(1); }
+  45%{ transform: scale(1.55); }
+  100%{ transform: scale(1); }
+}
+.progress-label{
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: var(--color-plum);
+  background: rgba(255,255,255,.6);
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- Toast ---------- */
+.toast{
+  position: fixed;
+  bottom: 22px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 50;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.9);
+  color: var(--color-plum);
+  font-weight: 600;
+  font-size: .88rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s var(--ease-out-soft), transform .5s var(--ease-out-soft);
+  max-width: 86vw;
+  text-align: center;
+}
+.toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Cœurs secrets cachés ---------- */
+.secret-heart{
+  position: absolute;
+  width: 16px; height: 15px;
+  border: none;
+  background: none;
+  padding: 0;
+  opacity: .15;
+  cursor: pointer;
+  z-index: 5;
+  transition: opacity .35s, transform .35s;
+}
+.secret-heart svg{ width: 100%; height: 100%; }
+.secret-heart:hover{ opacity: .6; transform: scale(1.35) rotate(-8deg); }
+.secret-heart.found{
+  opacity: .85;
+  pointer-events: none;
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.secrets-badge{
+  position: fixed;
+  bottom: 18px; left: 18px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.9);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--color-plum);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .5s var(--ease-out-soft), transform .5s var(--ease-out-soft);
+}
+.secrets-badge.show{ opacity: 1; transform: translateY(0); }
+
+/* ---------- Écrans ---------- */
+#app{ position: relative; z-index: 2; }
+.screen{
+  position: relative;
+  display: none;
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 60px;
+  opacity: 0;
+}
+.screen.active{
+  display: flex;
+  animation: screenIn .7s var(--ease-out-soft) both;
+}
+.screen.screen-exit{
+  animation: screenOut .35s var(--ease-out-soft) both;
+}
+@keyframes screenIn{
+  from{ opacity: 0; transform: translateY(18px) scale(.985); }
+  to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes screenOut{
+  from{ opacity: 1; transform: translateY(0) scale(1); }
+  to{ opacity: 0; transform: translateY(-14px) scale(.98); }
+}
+
+.eyebrow{
+  display: inline-block;
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--color-rose);
+  margin-bottom: 10px;
+}
+
+.section-title{
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 600;
+  color: var(--color-plum-deep);
+  margin-bottom: 6px;
+}
+
+/* ---------- ÉCRAN INTRO ---------- */
+.screen-intro{ text-align: center; }
+.intro-decor{ position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.deco-heart{
+  position: absolute;
+  width: 56px; height: 50px;
+  opacity: .8;
+  animation: floatSlow 7s ease-in-out infinite;
+}
+.deco-h1{ top: 14%; left: 10%; animation-delay: 0s; width: 44px; height:40px;}
+.deco-h2{ top: 68%; right: 12%; animation-delay: 1.4s; width: 60px; height: 54px;}
+.deco-h3{ top: 22%; right: 18%; animation-delay: .7s; width: 34px; height: 30px;}
+@keyframes floatSlow{
+  0%,100%{ transform: translateY(0) rotate(-4deg); }
+  50%{ transform: translateY(-22px) rotate(4deg); }
+}
+
+.intro-card{
+  position: relative;
+  max-width: 620px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.85);
+  backdrop-filter: blur(18px);
+  border-radius: var(--radius-lg);
+  padding: clamp(36px, 6vw, 64px) clamp(24px, 6vw, 56px);
+  box-shadow: var(--shadow-soft);
+}
+
+.intro-title{
+  font-size: clamp(2.1rem, 6vw, 3.4rem);
+  line-height: 1.15;
+  font-weight: 600;
+  color: var(--color-plum-deep);
+  margin-bottom: 18px;
+}
+.heart-inline{ color: var(--color-rose); }
+
+.intro-subtitle{
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--color-plum);
+  font-style: italic;
+  font-family: var(--font-display);
+  max-width: 460px;
+  margin: 0 auto 34px;
+  line-height: 1.55;
+}
+
+.intro-hint{
+  margin-top: 22px;
+  font-size: .8rem;
+  color: var(--color-plum);
+  opacity: .65;
+  letter-spacing: .03em;
+}
+
+/* ---------- Boutons ---------- */
+.btn-primary{
+  position: relative;
+  border: none;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 18px 44px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--color-pink) 0%, var(--color-rose) 55%, #c8306a 100%);
+  box-shadow: var(--shadow-btn);
+  overflow: hidden;
+  transition: transform .35s var(--ease-spring), box-shadow .35s;
+}
+.btn-primary:hover{
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 20px 44px -10px rgba(230,57,105,.65);
+}
+.btn-primary:active{ transform: translateY(0) scale(.98); }
+.btn-label{ position: relative; z-index: 2; display:inline-flex; align-items:center; gap:8px;}
+.btn-glow{
+  position: absolute; inset: -40%;
+  background: radial-gradient(circle, rgba(255,255,255,.55), transparent 60%);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.btn-primary:hover .btn-glow{ opacity: 1; animation: sweepGlow 1.4s ease-in-out infinite; }
+@keyframes sweepGlow{
+  0%{ transform: translateX(-30%) rotate(0deg); }
+  100%{ transform: translateX(30%) rotate(8deg); }
+}
+.btn-sparkle{
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+}
+.btn-primary:hover .btn-sparkle{ animation: sparkleUp 1.2s ease-out infinite; }
+.s1{ left: 18%; top: 60%; animation-delay: 0s !important; }
+.s2{ left: 52%; top: 70%; animation-delay: .3s !important; }
+.s3{ left: 78%; top: 55%; animation-delay: .6s !important; }
+@keyframes sparkleUp{
+  0%{ opacity: 0; transform: translateY(0) scale(.4); }
+  40%{ opacity: 1; }
+  100%{ opacity: 0; transform: translateY(-26px) scale(1); }
+}
+
+.btn-secondary{
+  border: 2px solid var(--color-pink);
+  background: rgba(255,255,255,.7);
+  color: var(--color-rose);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 34px;
+  border-radius: var(--radius-pill);
+  margin-top: 26px;
+  transition: all .3s var(--ease-out-soft);
+  opacity: .5;
+  pointer-events: none;
+}
+.btn-secondary.enabled{
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 10px 26px -10px rgba(230,57,105,.5);
+}
+.btn-secondary.enabled:hover{
+  background: var(--color-rose);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-back{
+  border: none;
+  background: rgba(255,255,255,.6);
+  color: var(--color-plum);
+  font-weight: 600;
+  font-size: .85rem;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+  transition: background .3s, transform .3s;
+}
+.btn-back:hover{ background: #fff; transform: translateX(-3px); }
+
+.btn-link{
+  margin-top: 16px;
+  background: none;
+  border: none;
+  color: var(--color-plum);
+  font-weight: 600;
+  font-size: .85rem;
+  text-decoration: underline;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s var(--ease-out-soft), transform 1s var(--ease-out-soft);
+}
+.btn-link.show{ opacity: .75; transform: translateY(0); }
+.btn-link:hover{ opacity: 1; }
+
+/* ---------- ÉCRAN SÉLECTION ---------- */
+.screen-selection{ padding-top: 120px; }
+.selection-head{ text-align: center; margin-bottom: 40px; max-width: 640px; }
+
+.message-preview{
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.mp-part{
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 600;
+  color: var(--color-plum-deep);
+  letter-spacing: .02em;
+  transition: all .5s var(--ease-spring);
+}
+.mp-part.locked{
+  color: var(--color-pink);
+  opacity: .55;
+  letter-spacing: .18em;
+}
+.mp-part.revealed{
+  background: linear-gradient(120deg, var(--color-rose), var(--color-lavender));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: mpReveal .6s var(--ease-spring);
+}
+@keyframes mpReveal{
+  0%{ transform: scale(.5); opacity: 0; }
+  60%{ transform: scale(1.18); opacity: 1; }
+  100%{ transform: scale(1); }
+}
+
+.cards-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
+  width: min(1000px, 100%);
+}
+
+.game-card{
+  position: relative;
+  text-align: left;
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(255,255,255,.9);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px 26px;
+  box-shadow: var(--shadow-card);
+  transition: transform .4s var(--ease-spring), box-shadow .4s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.game-card:not(.is-locked):hover{
+  transform: translateY(-8px);
+  box-shadow: 0 26px 50px -18px rgba(230,57,105,.42);
+}
+.game-card.is-locked{
+  filter: grayscale(.15);
+  cursor: not-allowed;
+}
+.game-card.is-locked .card-icon-wrap{ filter: blur(1.5px) saturate(.7); opacity: .75; }
+.game-card.is-completed{
+  border-color: rgba(230,57,105,.5);
+  background: linear-gradient(160deg, rgba(255,255,255,.75), rgba(255,223,238,.6));
+}
+.game-card.card-secret{
+  border-color: rgba(255,210,122,.65);
+  background: linear-gradient(160deg, rgba(255,255,255,.72), rgba(255,241,214,.55));
+}
+.game-card.card-secret .card-status-pill{
+  background: linear-gradient(120deg, var(--color-gold), #f2a94a);
+  color: #fff;
+}
+.game-card.card-secret.reveal{
+  animation: mpReveal .7s var(--ease-spring);
+}
+
+.card-status-pill{
+  position: absolute;
+  top: 18px; right: 18px;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-lavender-soft);
+  color: var(--color-plum);
+}
+.game-card[data-status="available"] .card-status-pill{
+  background: linear-gradient(120deg, var(--color-pink), var(--color-rose));
+  color: #fff;
+}
+.game-card[data-status="completed"] .card-status-pill{
+  background: linear-gradient(120deg, #7fd8a0, #3fae6f);
+  color: #fff;
+}
+
+.card-icon-wrap{
+  width: 84px; height: 84px;
+  margin-bottom: 6px;
+}
+.card-icon{ width: 100%; height: 100%; }
+.icon-ring{
+  fill: none;
+  stroke: rgba(230,57,105,.18);
+  stroke-width: 2;
+}
+.icon-spark{ fill: var(--color-gold); opacity: .9; }
+.card-shape-back, .card-shape-front{ opacity: .95; }
+.icon-seam{ stroke: rgba(255,255,255,.9); stroke-width: 2; stroke-dasharray: 3 3; }
+
+.card-number{
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--color-rose);
+  text-transform: uppercase;
+}
+.card-title{
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-plum-deep);
+  margin: 2px 0 4px;
+}
+.card-desc{
+  font-size: .88rem;
+  color: var(--color-plum);
+  opacity: .85;
+  line-height: 1.5;
+  min-height: 40px;
+}
+.card-reward{
+  margin-top: 14px;
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.locked-reward{
+  background: rgba(201,167,235,.18);
+  color: var(--color-plum);
+  filter: blur(.2px);
+}
+.card-reward.unlocked{
+  background: linear-gradient(120deg, rgba(255,143,180,.25), rgba(255,210,122,.25));
+  color: var(--color-rose);
+}
+
+/* ---------- Zones de jeu communes ---------- */
+.game-topbar{
+  width: min(760px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.game-heading{ text-align: center; flex: 1; }
+.game-counter{
+  background: rgba(255,255,255,.65);
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-card);
+  min-width: 120px;
+}
+.counter-label{ font-size: .65rem; text-transform: uppercase; letter-spacing: .06em; color: var(--color-plum); opacity: .7;}
+.counter-value{ font-weight: 700; color: var(--color-rose); font-size: 1.05rem; }
+
+.game-instructions{
+  margin: 10px 0 26px;
+  color: var(--color-plum);
+  font-style: italic;
+  font-family: var(--font-display);
+  text-align: center;
+}
+
+/* ---------- JEU 1 : Attrape mon amour ---------- */
+.game1-area{
+  position: relative;
+  width: min(760px, 100%);
+  height: min(52vh, 420px);
+  min-height: 320px;
+  background: linear-gradient(160deg, rgba(255,255,255,.55), rgba(255,235,244,.4));
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.float-heart{
+  position: absolute;
+  width: 46px; height: 42px;
+  border: none;
+  background: none;
+  padding: 0;
+  transform-origin: center;
+  animation: heartFloat var(--float-dur, 4s) ease-in-out infinite;
+  filter: drop-shadow(0 6px 14px rgba(230,57,105,.35));
+  transition: transform .22s var(--ease-spring);
+}
+.float-heart:hover{ transform: scale(1.12); }
+.float-heart svg{ width: 100%; height: 100%; }
+@keyframes heartFloat{
+  0%,100%{ transform: translateY(0) rotate(var(--rot-a, -6deg)); }
+  50%{ transform: translateY(-16px) rotate(var(--rot-b, 6deg)); }
+}
+.float-heart.popping{
+  animation: heartPop .45s var(--ease-out-soft) forwards;
+  pointer-events: none;
+}
+@keyframes heartPop{
+  0%{ transform: scale(1); opacity: 1; }
+  50%{ transform: scale(1.5); opacity: 1; }
+  100%{ transform: scale(0.2); opacity: 0; }
+}
+
+.plus-one{
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--color-rose);
+  pointer-events: none;
+  animation: plusFloat 1s var(--ease-out-soft) forwards;
+  text-shadow: 0 2px 8px rgba(255,255,255,.8);
+}
+@keyframes plusFloat{
+  0%{ transform: translateY(0); opacity: 1; }
+  100%{ transform: translateY(-46px); opacity: 0; }
+}
+
+/* ---------- JEU 2 : Nos petits souvenirs ---------- */
+.game2-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(80px, 120px));
+  gap: 16px;
+  perspective: 1000px;
+}
+.mem-card{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  border: none;
+  background: none;
+  padding: 0;
+}
+.mem-card-inner{
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s var(--ease-spring);
+}
+.mem-card.flipped .mem-card-inner{ transform: rotateY(180deg); }
+.mem-face{
+  position: absolute; inset: 0;
+  border-radius: var(--radius-md);
+  backface-visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-card);
+}
+.mem-face-back{
+  background: linear-gradient(150deg, var(--color-pink), var(--color-lavender));
+  border: 1px solid rgba(255,255,255,.6);
+}
+.mem-face-back::after{
+  content:"";
+  width: 34%; height: 34%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 90"><path d="M50 87 C 21 65.5, 3 44.5, 3 24.5 C 3 8.5, 16.5 -1.5, 31.5 4 C 41 7.5, 47 15, 50 21 C 53 15, 59 7.5, 68.5 4 C 83.5 -1.5, 97 8.5, 97 24.5 C 97 44.5, 79 65.5, 50 87 Z" fill="white" fill-opacity="0.55"/></svg>') center/contain no-repeat;
+}
+.mem-face-front{
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(255,255,255,.9);
+  transform: rotateY(180deg);
+  padding: 14%;
+}
+.mem-face-front svg{ width: 100%; height: 100%; }
+.mem-card.matched .mem-face-front{
+  background: linear-gradient(160deg, #fff, #ffe3ee);
+  box-shadow: 0 0 0 3px var(--color-rose), 0 14px 30px -10px rgba(230,57,105,.5);
+  animation: matchGlow 1s ease-in-out infinite alternate;
+}
+@keyframes matchGlow{
+  from{ box-shadow: 0 0 0 3px rgba(230,57,105,.5), 0 14px 30px -10px rgba(230,57,105,.4); }
+  to{ box-shadow: 0 0 0 3px rgba(230,57,105,.9), 0 18px 36px -8px rgba(230,57,105,.6); }
+}
+.mem-card.shake .mem-card-inner{ animation: cardShake .4s; }
+@keyframes cardShake{
+  0%,100%{ transform: rotateY(180deg) translateX(0); }
+  25%{ transform: rotateY(180deg) translateX(-4px); }
+  75%{ transform: rotateY(180deg) translateX(4px); }
+}
+
+/* ---------- JEU 3 : La dernière question ---------- */
+@keyframes zoneShake{
+  0%,100%{ transform: translateX(0); }
+  20%{ transform: translateX(-8px); }
+  40%{ transform: translateX(8px); }
+  60%{ transform: translateX(-6px); }
+  80%{ transform: translateX(6px); }
+}
+
+.love-question-stage{
+  text-align: center;
+  max-width: 520px;
+  width: 100%;
+}
+.love-question-text{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 3.6vw, 2rem);
+  color: var(--color-plum-deep);
+  margin-bottom: 34px;
+  min-height: 2.6em;
+  transition: opacity .2s;
+}
+.love-question-buttons{
+  position: relative;
+  width: min(440px, 92vw);
+  height: 180px;
+  margin: 0 auto;
+}
+.btn-love-yes{
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-130%, -50%) scale(var(--yes-scale, 1));
+  transition: transform .4s var(--ease-spring), box-shadow .35s;
+}
+.btn-love-yes:hover{
+  transform: translate(-130%, -50%) scale(calc(var(--yes-scale, 1) * 1.05));
+  box-shadow: 0 20px 44px -10px rgba(230,57,105,.65);
+}
+.btn-love-no{
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(30%, -50%) scale(var(--no-scale, 1));
+  border: 2px solid rgba(154,60,109,.25);
+  background: rgba(255,255,255,.72);
+  color: var(--color-plum);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 16px 30px;
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-card);
+  transition: left .3s var(--ease-spring), top .3s var(--ease-spring), transform .3s var(--ease-spring);
+}
+
+.love-meter-stage{
+  text-align: center;
+  max-width: 460px;
+  width: 100%;
+}
+.love-meter-text{
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-plum);
+  margin-bottom: 28px;
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+}
+.love-meter-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.love-meter-wrap.shake{ animation: zoneShake .42s; }
+.love-meter-track{
+  position: relative;
+  width: 100%;
+  height: 22px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.85);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+}
+.love-meter-fill{
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--color-pink), var(--color-rose) 60%, var(--color-lavender));
+  box-shadow: 0 0 14px rgba(230,57,105,.5);
+}
+.love-meter-heart{
+  position: absolute;
+  top: 50%; left: 0%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+  filter: drop-shadow(0 2px 6px rgba(230,57,105,.5));
+}
+.love-meter-range{
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(201,167,235,.3);
+  outline: none;
+  cursor: pointer;
+}
+.love-meter-range::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, var(--color-pink), var(--color-rose));
+  box-shadow: 0 4px 12px -2px rgba(230,57,105,.6);
+  cursor: pointer;
+  border: 3px solid #fff;
+}
+.love-meter-range::-moz-range-thumb{
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, var(--color-pink), var(--color-rose));
+  box-shadow: 0 4px 12px -2px rgba(230,57,105,.6);
+  cursor: pointer;
+  border: 3px solid #fff;
+}
+.love-meter-value{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--color-rose);
+}
+
+.g3-feedback{
+  min-height: 22px;
+  color: var(--color-rose);
+  font-style: italic;
+  font-family: var(--font-display);
+  margin-top: 14px;
+  text-align: center;
+}
+
+#btn-check-love{ margin-top: 6px; }
+
+/* ---------- JEU BONUS : Le mot secret (façon Wordle) ---------- */
+.legend-chip{
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: .76rem;
+  margin: 0 1px;
+}
+.legend-correct{ background: linear-gradient(120deg, var(--color-pink-deep), var(--color-rose)); color: #fff; }
+.legend-present{ background: linear-gradient(120deg, var(--color-gold), #f2a94a); color: #fff; }
+.legend-absent{ background: rgba(154,60,109,.15); color: var(--color-plum); }
+
+.word-grid{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0 24px;
+}
+.word-row{ display: flex; gap: 8px; justify-content: center; }
+.word-row.shake{ animation: zoneShake .4s; }
+.word-tile{
+  width: 52px; height: 52px;
+  border: 2px solid rgba(230,57,105,.25);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.6);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--color-plum-deep);
+  text-transform: uppercase;
+  transition: transform .25s var(--ease-spring), background .3s, border-color .3s, color .3s;
+}
+.word-tile.filled{ border-color: rgba(230,57,105,.55); }
+.word-tile.correct{
+  background: linear-gradient(150deg, var(--color-pink-deep), var(--color-rose));
+  border-color: var(--color-rose);
+  color: #fff;
+  animation: tileFlip .5s var(--ease-spring);
+}
+.word-tile.present{
+  background: linear-gradient(150deg, var(--color-gold), #f2a94a);
+  border-color: #f2a94a;
+  color: #fff;
+  animation: tileFlip .5s var(--ease-spring);
+}
+.word-tile.absent{
+  background: rgba(154,60,109,.12);
+  border-color: rgba(154,60,109,.15);
+  color: var(--color-plum);
+  opacity: .75;
+  animation: tileFlip .5s var(--ease-spring);
+}
+@keyframes tileFlip{
+  0%{ transform: rotateX(0); }
+  50%{ transform: rotateX(90deg); }
+  100%{ transform: rotateX(0); }
+}
+.word-row.win .word-tile{ animation: tileBounce .6s var(--ease-spring) both; }
+@keyframes tileBounce{
+  0%,100%{ transform: translateY(0); }
+  30%{ transform: translateY(-14px); }
+  50%{ transform: translateY(0); }
+  70%{ transform: translateY(-6px); }
+}
+
+.word-feedback{
+  min-height: 22px;
+  color: var(--color-rose);
+  font-style: italic;
+  font-family: var(--font-display);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.word-keyboard{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.kb-row{ display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+.kb-key{
+  min-width: 34px;
+  height: 44px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,.75);
+  color: var(--color-plum-deep);
+  font-weight: 700;
+  font-size: .85rem;
+  box-shadow: 0 4px 10px -4px rgba(154,60,109,.3);
+  transition: transform .2s, background .3s, color .3s;
+}
+.kb-key:hover{ transform: translateY(-2px); }
+.kb-key.key-wide{ min-width: 62px; font-size: .7rem; }
+.kb-key.key-correct{ background: linear-gradient(150deg, var(--color-pink-deep), var(--color-rose)); color: #fff; }
+.kb-key.key-present{ background: linear-gradient(150deg, var(--color-gold), #f2a94a); color: #fff; }
+.kb-key.key-absent{ background: rgba(154,60,109,.15); color: var(--color-plum); opacity: .6; }
+
+/* ---------- Écran de victoire (overlay) ---------- */
+.victory-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.victory-overlay.show{ display: flex; }
+.victory-backdrop{
+  position: absolute; inset: 0;
+  background: rgba(60, 20, 45, .38);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity .4s;
+}
+.victory-overlay.show .victory-backdrop{ opacity: 1; }
+
+.victory-card{
+  position: relative;
+  width: min(480px, 100%);
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(255,255,255,.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 44px 32px 38px;
+  text-align: center;
+  box-shadow: 0 40px 90px -20px rgba(154,60,109,.5);
+  transform: scale(.85) translateY(30px);
+  opacity: 0;
+  transition: all .55s var(--ease-spring);
+}
+.victory-overlay.show .victory-card{
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.victory-hearts{ position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: var(--radius-lg); }
+.v-heart{ position: absolute; width: 34px; height: 30px; opacity: .55; animation: floatSlow 6s ease-in-out infinite; }
+.v-heart.v1{ top: 8%; left: 6%; }
+.v-heart.v2{ bottom: 10%; right: 8%; animation-delay: 1s; width: 26px; height: 23px;}
+.v-heart.v3{ top: 14%; right: 14%; animation-delay: 2s; width: 20px; height: 18px;}
+
+.victory-title{
+  font-size: clamp(1.4rem, 4vw, 1.85rem);
+  color: var(--color-plum-deep);
+  margin-bottom: 10px;
+}
+.victory-subtitle{
+  font-size: .95rem;
+  color: var(--color-plum);
+  font-style: italic;
+  font-family: var(--font-display);
+  margin-bottom: 24px;
+}
+
+.reveal-zone{
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.reveal-letter{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  background: linear-gradient(120deg, var(--color-rose), var(--color-lavender), var(--color-gold));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: scale(.4);
+  filter: drop-shadow(0 0 18px rgba(230,57,105,.45));
+}
+.reveal-letter.pop{
+  animation: letterReveal 1s var(--ease-spring) forwards, shimmerText 2.4s linear infinite 1s;
+}
+@keyframes letterReveal{
+  0%{ opacity: 0; transform: scale(.3) rotate(-8deg); }
+  55%{ opacity: 1; transform: scale(1.25) rotate(3deg); }
+  100%{ opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes shimmerText{
+  to{ background-position: 200% center; }
+}
+
+.victory-message-preview{ margin-bottom: 26px; justify-content: center; }
+
+.btn-victory-continue{ padding: 15px 34px; font-size: .98rem; }
+
+/* ---------- Écran final ---------- */
+.screen-final{ text-align: center; overflow: hidden; }
+.final-decor{ position: absolute; inset: 0; pointer-events: none; z-index: -1; }
+
+.final-content{ position: relative; z-index: 2; max-width: 680px; }
+
+.final-message{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 9vw, 5rem);
+  color: var(--color-plum-deep);
+  margin-bottom: 26px;
+  line-height: 1.1;
+}
+.final-word{
+  display: inline-block;
+  margin: 0 .12em;
+  opacity: 0;
+  transform: translateY(30px) scale(.7);
+  background: linear-gradient(120deg, var(--color-rose), var(--color-pink-deep), var(--color-lavender));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(230,57,105,.35));
+}
+.final-word.reveal{
+  animation: finalWordReveal 1s var(--ease-spring) forwards;
+}
+@keyframes finalWordReveal{
+  0%{ opacity: 0; transform: translateY(30px) scale(.6) rotate(-6deg); }
+  60%{ opacity: 1; transform: translateY(-6px) scale(1.15) rotate(2deg); }
+  100%{ opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+.final-emoji{ -webkit-text-fill-color: initial; background: none; color: initial; filter: none; }
+
+.final-paragraph{
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.7;
+  color: var(--color-plum);
+  font-style: italic;
+  font-family: var(--font-display);
+  max-width: 560px;
+  margin: 0 auto 30px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s var(--ease-out-soft), transform 1s var(--ease-out-soft);
+}
+.final-paragraph.show{ opacity: 1; transform: translateY(0); }
+
+.final-heart-zone{
+  width: 120px; height: 108px;
+  margin: 0 auto 30px;
+  opacity: 0;
+  transform: scale(.6);
+  transition: all 1.1s var(--ease-spring);
+}
+.final-heart-zone.show{
+  opacity: 1; transform: scale(1);
+  animation: heartbeat 2.4s ease-in-out infinite 1.1s;
+}
+.final-big-heart{ width: 100%; height: 100%; }
+@keyframes heartbeat{
+  0%,100%{ transform: scale(1); }
+  15%{ transform: scale(1.08); }
+  30%{ transform: scale(1); }
+  45%{ transform: scale(1.1); }
+  60%{ transform: scale(1); }
+}
+
+.btn-replay{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1s var(--ease-out-soft), transform 1s var(--ease-out-soft);
+}
+.btn-replay.show{ opacity: 1; transform: translateY(0); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px){
+  .progress-wrap{ top: 12px; width: 92vw; }
+  .screen{ padding-top: 84px; }
+  .screen-selection{ padding-top: 96px; }
+  .cards-grid{ grid-template-columns: 1fr; }
+  .game-topbar{ flex-direction: column; text-align: center; }
+  .game2-grid{ grid-template-columns: repeat(3, minmax(78px, 1fr)); }
+  .love-question-buttons{ height: 160px; }
+  .intro-card{ padding: 34px 22px; }
+  .final-message{ line-height: 1.25; }
+}
+@media (max-width: 420px){
+  .game1-area{ height: 46vh; min-height: 280px; }
+  .float-heart{ width: 38px; height: 34px; }
+  .word-tile{ width: 42px; height: 42px; font-size: 1.15rem; }
+  .kb-key{ min-width: 27px; height: 38px; font-size: .72rem; padding: 0 5px; }
+  .kb-key.key-wide{ min-width: 50px; }
+}
+
+/* ---------- Accessibilité : mouvement réduit ---------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content:'';
-    position:fixed; inset:0;
-    background:
-      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(46,109,164,0.03) 60px),
-      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(46,109,164,0.03) 60px);
-    pointer-events:none; z-index:0;
-  }
-  header {
-    position:sticky; top:0; z-index:100;
-    background:rgba(6,14,24,0.97);
-    border-bottom:1px solid var(--border2);
-    backdrop-filter:blur(10px);
-  }
-  .header-inner {
-    max-width:1280px; margin:0 auto; padding:0 2rem;
-    display:flex; align-items:center; gap:2rem; height:62px;
-  }
-  .logo {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:26px; letter-spacing:4px; color:#fff;
-    display:flex; align-items:center; gap:10px; white-space:nowrap;
-    border-right:1px solid var(--border2); padding-right:1.5rem;
-  }
-  .logo-icon {
-    width:32px; height:32px; background:var(--accent); border-radius:3px;
-    display:flex; align-items:center; justify-content:center; font-size:16px;
-  }
-  nav { display:flex; gap:2px; flex:1; overflow-x:auto; scrollbar-width:none; }
-  nav::-webkit-scrollbar { display:none; }
-  nav button {
-    background:none; border:none; color:var(--text2);
-    font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:600;
-    letter-spacing:1.5px; text-transform:uppercase;
-    padding:6px 14px; border-radius:3px; cursor:pointer; transition:all .2s; white-space:nowrap;
-  }
-  nav button:hover { color:var(--text); background:rgba(46,109,164,0.1); }
-  nav button.active { color:var(--accent-light); background:rgba(46,109,164,0.18); border-bottom:2px solid var(--accent2); }
-  .status-dot { width:7px; height:7px; border-radius:50%; background:#1E8449; flex-shrink:0; animation:pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  .page { display:none; }
-  .page.active { display:block; animation:fadein .25s ease; }
-  @keyframes fadein { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
-  .container { max-width:1280px; margin:0 auto; padding:2.5rem 2rem; position:relative; z-index:1; }
+}
 
-  /* HERO */
-  .hero {
-    position:relative; overflow:hidden;
-    background:linear-gradient(160deg, #0A1929 0%, #061525 60%, #040E1A 100%);
-    border-bottom:1px solid var(--border2); padding:6rem 2rem 5rem; text-align:center;
-  }
-  .hero-bars { position:absolute; inset:0; background:repeating-linear-gradient(90deg, transparent 0px, transparent 38px, rgba(46,109,164,0.07) 39px, rgba(46,109,164,0.07) 40px); }
-  .hero-bars2 { position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent 0px, transparent 78px, rgba(46,109,164,0.04) 79px, rgba(46,109,164,0.04) 80px); }
-  .hero-glow { position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:600px; height:300px; background:radial-gradient(ellipse, rgba(46,109,164,0.15) 0%, transparent 70%); pointer-events:none; }
-  .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(70px,12vw,130px); letter-spacing:10px; line-height:.88; color:#fff; position:relative; z-index:1; text-shadow:0 0 60px rgba(46,109,164,0.4); }
-  .hero-title span { color:var(--accent2); }
-  .hero-sub { font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:7px; text-transform:uppercase; color:var(--text3); margin-top:1.2rem; position:relative; z-index:1; }
-  .hero-divider { width:120px; height:1px; background:linear-gradient(90deg, transparent, var(--accent2), transparent); margin:1.5rem auto; position:relative; z-index:1; }
-  .hero-stats { display:flex; gap:3rem; justify-content:center; position:relative; z-index:1; flex-wrap:wrap; }
-  .hero-stat-num { font-family:'Bebas Neue',sans-serif; font-size:42px; color:var(--accent2); letter-spacing:2px; line-height:1; }
-  .hero-stat-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-top:3px; }
-
-  .page-header { border-bottom:1px solid var(--border); padding-bottom:1.5rem; margin-bottom:2.5rem; display:flex; align-items:flex-end; gap:1.5rem; }
-  .page-title { font-family:'Bebas Neue',sans-serif; font-size:50px; letter-spacing:4px; color:#fff; line-height:1; }
-  .page-title span { color:var(--accent2); }
-  .page-subtitle { font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:6px; }
-  .badge { background:rgba(46,109,164,0.2); border:1px solid rgba(46,109,164,0.4); color:var(--accent-light); font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; padding:4px 10px; border-radius:2px; }
-  .info-panel { background:rgba(46,109,164,0.07); border-left:3px solid var(--accent); border-radius:0 4px 4px 0; padding:1rem 1.25rem; margin:1.5rem 0; font-size:13px; color:var(--text2); line-height:1.7; }
-  .info-panel strong { color:var(--accent-light); }
-
-  .cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:2.5rem; }
-  .card { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:1.5rem; transition:border-color .2s, transform .2s; position:relative; overflow:hidden; }
-  .card:hover { border-color:var(--border2); transform:translateY(-2px); }
-  .card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), transparent); }
-  .card-icon { font-size:30px; margin-bottom:1rem; display:block; }
-  .card-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:#fff; margin-bottom:.5rem; }
-  .card-desc { color:var(--text2); font-size:13.5px; line-height:1.7; }
-  .card-btn { display:inline-block; margin-top:1.2rem; background:var(--accent); color:#fff; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:7px 18px; border-radius:2px; border:none; cursor:pointer; transition:background .2s; }
-  .card-btn:hover { background:var(--accent2); }
-
-  .tig-layout { display:grid; grid-template-columns:1fr 360px; gap:2rem; align-items:start; }
-  @media(max-width:900px){ .tig-layout{grid-template-columns:1fr;} }
-  .section-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent2); margin-bottom:.8rem; }
-  .section-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:2px; color:#fff; margin-bottom:1.5rem; }
-
-  .step { display:flex; gap:1.2rem; margin-bottom:1.5rem; position:relative; }
-  .step-line { position:absolute; left:18px; top:40px; bottom:-16px; width:1px; background:linear-gradient(to bottom, var(--accent), transparent); }
-  .step-num { width:38px; height:38px; border-radius:50%; background:rgba(46,109,164,0.15); border:1px solid var(--accent); color:var(--accent-light); font-family:'Bebas Neue',sans-serif; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .step-body { flex:1; }
-  .step-name { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:1px; color:#fff; text-transform:uppercase; margin-bottom:4px; }
-  .step-desc { color:var(--text2); font-size:13px; line-height:1.6; }
-  .step-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-  .step-tag { background:var(--bg3); border:1px solid var(--border); color:var(--text2); font-size:11px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; padding:3px 10px; border-radius:2px; }
-  .step-tag.collect { border-color:rgba(30,132,73,.3); color:#4EC97C; background:rgba(30,132,73,.08); }
-  .step-tag.trade { border-color:rgba(46,109,164,.4); color:var(--accent-light); background:rgba(46,109,164,.1); }
-  .step-tag.craft { border-color:rgba(184,150,10,.3); color:#D4B432; background:rgba(184,150,10,.08); }
-  .step-tag.transform { border-color:rgba(100,140,200,.3); color:#90B8E0; background:rgba(100,140,200,.07); }
-  .arrow-step { display:flex; align-items:center; gap:.5rem; margin:6px 0 6px 1rem; color:var(--text3); font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
-
-  .recipe-card { background:var(--bg2); border:1px solid var(--border2); border-radius:6px; overflow:hidden; position:sticky; top:80px; }
-  .recipe-header { background:rgba(46,109,164,0.15); border-bottom:1px solid var(--border2); padding:1rem 1.25rem; display:flex; align-items:center; gap:.8rem; }
-  .recipe-header-icon { font-size:22px; }
-  .recipe-header-title { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:var(--accent-light); }
-  .recipe-header-sub { font-size:11px; color:var(--text3); font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; text-transform:uppercase; }
-  .recipe-body { padding:1.25rem; }
-  .ingredient { display:flex; align-items:center; gap:.8rem; padding:.6rem 0; border-bottom:1px solid var(--border); }
-  .ingredient:last-child { border-bottom:none; }
-  .ing-qty { min-width:32px; text-align:center; background:var(--accent); color:#fff; font-family:'Bebas Neue',sans-serif; font-size:18px; border-radius:3px; padding:2px 0; }
-  .ing-name { font-family:'Barlow Condensed',sans-serif; font-size:15px; letter-spacing:1px; text-transform:uppercase; color:var(--text); }
-  .ing-icon { font-size:16px; margin-left:auto; }
-
-  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1rem; margin-bottom:2rem; }
-  .stat-card { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:1.25rem; position:relative; overflow:hidden; }
-  .stat-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--accent), transparent); }
-  .stat-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text3); margin-bottom:.5rem; }
-  .stat-value { font-family:'Bebas Neue',sans-serif; font-size:44px; color:#fff; letter-spacing:2px; line-height:1; }
-  .stat-value.blue { color:var(--accent2); }
-  .stat-value.green { color:#1E8449; }
-  .stat-value.red { color:#C0392B; }
-  .stat-change { font-size:12px; color:var(--green); font-family:'Barlow Condensed',sans-serif; margin-top:4px; }
-  .stat-change.neg { color:var(--red); }
-
-  .chart-section { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:1.5rem; margin-bottom:1.5rem; }
-  .chart-title { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text3); margin-bottom:1.2rem; }
-  .bar-row { display:flex; align-items:center; gap:1rem; margin-bottom:.8rem; }
-  .bar-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); min-width:100px; }
-  .bar-track { flex:1; height:7px; background:var(--bg3); border-radius:2px; overflow:hidden; }
-  .bar-fill { height:100%; background:linear-gradient(90deg, var(--blue), var(--accent2)); border-radius:2px; }
-  .bar-val { font-family:'Barlow Condensed',sans-serif; font-size:13px; color:var(--accent-light); min-width:40px; text-align:right; }
-  .divider { height:1px; background:linear-gradient(90deg, transparent, var(--border2), transparent); margin:2.5rem 0; }
-
-  /* ===== HIERARCHY ===== */
-  .hierarchy-wrap { margin:2rem 0; }
-  .dir-block { display:flex; justify-content:center; }
-  .dir-card {
-    background:linear-gradient(135deg, var(--bg3) 0%, var(--bg4) 100%);
-    border:1px solid var(--accent); border-radius:8px;
-    padding:1.5rem 2.5rem; text-align:center; min-width:220px;
-    position:relative; overflow:hidden;
-  }
-  .dir-card::before { content:''; position:absolute; inset:0; border-radius:8px; background:radial-gradient(ellipse at top, rgba(46,109,164,0.15), transparent 70%); pointer-events:none; }
-  .dir-card::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, transparent, var(--accent2), transparent); }
-  .dir-avatar { width:62px; height:62px; border-radius:50%; background:rgba(46,109,164,0.25); border:2px solid var(--accent2); margin:0 auto .8rem; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--accent2); }
-  .dir-name { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#fff; }
-  .dir-rank { font-size:12px; color:var(--text3); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
-  .dir-badge { display:inline-block; margin-top:10px; background:rgba(46,109,164,0.2); border:1px solid rgba(46,109,164,0.45); color:var(--accent-light); font-size:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:2px; }
-
-  /* vertical drop from Direction */
-  .v-drop { display:flex; justify-content:center; }
-  .v-drop-line { width:1px; height:28px; background:var(--accent2); }
-  /* horizontal bar connecting guards */
-  .h-bar-wrap { display:flex; justify-content:center; }
-  .h-bar { border-top:1px solid var(--accent); width:min(860px,86%); }
-
-  .guards-row { display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; }
-  .guard-col { display:flex; flex-direction:column; align-items:center; }
-  .guard-v-top { width:1px; height:22px; background:linear-gradient(to bottom, var(--accent), var(--accent)); }
-  .guard-card { background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:1.25rem 1.5rem; text-align:center; min-width:158px; transition:border-color .2s, transform .2s; }
-  .guard-card:hover { border-color:var(--border2); transform:translateY(-2px); }
-  .guard-avatar { width:48px; height:48px; border-radius:50%; background:rgba(46,109,164,0.12); border:2px solid var(--accent); margin:0 auto .7rem; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--accent2); }
-  .guard-name { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#fff; }
-  .guard-rank { font-size:11px; color:var(--text3); letter-spacing:1.5px; text-transform:uppercase; margin-top:3px; }
-  .guard-sub-badge { display:inline-block; margin-top:8px; background:rgba(46,109,164,0.1); border:1px solid rgba(46,109,164,.25); color:var(--accent-light); font-size:9px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1.5px; text-transform:uppercase; padding:3px 8px; border-radius:2px; }
-
-  /* staff below guards */
-  .v-drop2 { display:flex; justify-content:center; }
-  .v-drop2-line { width:1px; height:30px; background:linear-gradient(to bottom, var(--accent2), rgba(46,109,164,0.2)); }
-  .h-bar2-wrap { display:flex; justify-content:center; }
-  .h-bar2 { border-top:1px solid rgba(46,109,164,0.22); width:min(1050px,92%); }
-  .staff-row { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
-  .staff-col { display:flex; flex-direction:column; align-items:center; }
-  .staff-v { width:1px; height:22px; background:linear-gradient(to bottom, rgba(46,109,164,0.22), rgba(46,109,164,0.05)); }
-  .staff-card { background:var(--bg2); border:1px solid rgba(46,109,164,0.1); border-radius:6px; padding:.9rem 1.1rem; text-align:center; min-width:128px; transition:border-color .2s; }
-  .staff-card:hover { border-color:rgba(46,109,164,0.25); }
-  .staff-avatar { width:36px; height:36px; border-radius:50%; background:rgba(46,109,164,0.07); border:1px solid rgba(46,109,164,0.15); margin:0 auto .5rem; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:13px; color:var(--text3); }
-  .staff-name { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text2); }
-  .staff-rank { font-size:10px; color:var(--text3); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
-
-  .rules-list { list-style:none; }
-  .rule-item { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); align-items:flex-start; }
-  .rule-num { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); opacity:.5; min-width:36px; line-height:1; }
-  .rule-title { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#fff; margin-bottom:4px; }
-  .rule-desc { color:var(--text2); font-size:13px; line-height:1.6; }
-
-  table.log-table { width:100%; border-collapse:collapse; font-size:13px; }
-  .log-table th { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text3); text-align:left; padding:8px 12px; border-bottom:1px solid var(--border); }
-  .log-table td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:middle; }
-  .log-table tr:hover td { background:rgba(46,109,164,0.04); }
-  .log-table td:first-child { color:var(--text3); font-size:11px; font-family:monospace; }
-  .log-type { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; padding:2px 8px; border-radius:2px; }
-  .log-type.cuisine { background:rgba(46,109,164,.1); color:var(--accent-light); border:1px solid rgba(46,109,164,.2); }
-  .log-type.linge { background:rgba(61,143,212,.1); color:#7DC4F0; border:1px solid rgba(61,143,212,.2); }
-  .log-type.ferraille { background:rgba(74,127,165,.1); color:#92BEDD; border:1px solid rgba(74,127,165,.2); }
-  .log-ok { color:#1E8449; font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
-  .log-fail { color:#C0392B; font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
-  .log-pending { color:#B8960A; font-size:12px; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
-  ::-webkit-scrollbar { width:4px; height:4px; }
-  ::-webkit-scrollbar-track { background:var(--bg); }
-  ::-webkit-scrollbar-thumb { background:var(--bg3); border-radius:2px; }
-  ::-webkit-scrollbar-thumb:hover { background:var(--accent); }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <div class="logo-icon">🏢</div>
-      BOOLING&nbsp;<span style="color:var(--accent2)">BROKE</span>
-    </div>
-    <nav id="nav">
-      <button class="active" onclick="goto('home',this)">Accueil</button>
-      <button onclick="goto('cuisine',this)">🍲 Cuisine</button>
-      <button onclick="goto('linge',this)">👕 Linge</button>
-      <button onclick="goto('ferraille',this)">⛏ Ferraille</button>
-      <button onclick="goto('gardes',this)">🛡 Gardes</button>
-      <button onclick="goto('stats',this)">📊 Statistiques</button>
-      <button onclick="goto('regles',this)">📋 Règlement</button>
-      <button onclick="goto('logs',this)">📁 Registre</button>
-    </nav>
-    <div class="status-dot" title="En ligne"></div>
-  </div>
-</header>
+  <!-- ============ FOND ANIMÉ ============ -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
 
-<!-- ACCUEIL -->
-<div class="page active" id="page-home">
-  <div class="hero">
-    <div class="hero-bars"></div><div class="hero-bars2"></div><div class="hero-glow"></div>
-    <div class="hero-title">BOOLING<br><span>BROKE</span></div>
-    <div class="hero-sub">Portail de Gestion des Travaux d'Intérêt Général</div>
-    <div class="hero-divider"></div>
-    <div class="hero-stats">
-      <div><div class="hero-stat-num">3</div><div class="hero-stat-label">TIG Actifs</div></div>
-      <div><div class="hero-stat-num">24</div><div class="hero-stat-label">Détenus Assignés</div></div>
-      <div><div class="hero-stat-num">4</div><div class="hero-stat-label">Agents Pénitentiaires</div></div>
-      <div><div class="hero-stat-num">842</div><div class="hero-stat-label">Heures de TIG</div></div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="page-header" style="margin-top:0"><div><div class="page-subtitle">Vue d'ensemble</div><div class="page-title">Tableau de <span>Bord</span></div></div></div>
-    <div class="info-panel"><strong>Portail officiel de gestion TIG.</strong> Ce système centralise la gestion des trois travaux d'intérêt général disponibles en détention. Chaque TIG dispose de son propre processus de collecte, transformation et fabrication. Les détenus assignés doivent suivre les étapes dans l'ordre indiqué sous supervision obligatoire.</div>
-    <div class="cards-grid">
-      <div class="card"><span class="card-icon">🍲</span><div class="card-title">La Cuisine</div><div class="card-desc">Collecte de légumes, échange de tomates contre de la viande, préparation des carottes et confection d'une soupe complète à la cuisine pénitentiaire.</div><button class="card-btn" onclick="goto('cuisine',document.querySelectorAll('nav button')[1])">Accéder au TIG →</button></div>
-      <div class="card"><span class="card-icon">👕</span><div class="card-title">Le Linge</div><div class="card-desc">Collecte du linge sale, des produits chimiques et nettoyants. Processus de lavage, repassage et confection du linge propre à la buanderie.</div><button class="card-btn" onclick="goto('linge',document.querySelectorAll('nav button')[2])">Accéder au TIG →</button></div>
-      <div class="card"><span class="card-icon">⛏</span><div class="card-title">La Ferraille</div><div class="card-desc">Extraction minière de pierres, ferraille et bois. Fonderie pour plaques de métal, sciage des planches et fabrication d'une pioche à l'atelier.</div><button class="card-btn" onclick="goto('ferraille',document.querySelectorAll('nav button')[3])">Accéder au TIG →</button></div>
-    </div>
-    <div class="divider"></div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-label">TIG Actifs</div><div class="stat-value blue">3</div><div class="stat-change">↑ Opérationnel</div></div>
-      <div class="stat-card"><div class="stat-label">Détenus Assignés</div><div class="stat-value">24</div><div class="stat-change">↑ +3 cette semaine</div></div>
-      <div class="stat-card"><div class="stat-label">Soupes Craftées</div><div class="stat-value green">187</div><div class="stat-change">↑ +12 aujourd'hui</div></div>
-      <div class="stat-card"><div class="stat-label">Agents Actifs</div><div class="stat-value">8</div><div class="stat-change">↑ Tous en service</div></div>
-    </div>
-  </div>
-</div>
+  <!-- ============ DÉFINITIONS SVG PARTAGÉES ============ -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gradRose" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffd3e6"/>
+        <stop offset="45%" stop-color="#ff7fa8"/>
+        <stop offset="100%" stop-color="#e63969"/>
+      </linearGradient>
+      <linearGradient id="gradLavande" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#efe3fb"/>
+        <stop offset="50%" stop-color="#c9a7eb"/>
+        <stop offset="100%" stop-color="#9a6fd1"/>
+      </linearGradient>
+      <linearGradient id="gradOr" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fff3d6"/>
+        <stop offset="55%" stop-color="#ffd27a"/>
+        <stop offset="100%" stop-color="#f2a94a"/>
+      </linearGradient>
+      <linearGradient id="gradBlanc" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#ffe3ee"/>
+      </linearGradient>
+      <radialGradient id="gradShine" cx="35%" cy="28%" r="65%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="3.2" result="b"/>
+        <feMerge>
+          <feMergeNode in="b"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="softGlowBig" x="-120%" y="-120%" width="340%" height="340%">
+        <feGaussianBlur stdDeviation="7" result="b"/>
+        <feMerge>
+          <feMergeNode in="b"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <symbol id="heartShape" viewBox="0 0 100 90">
+        <path d="M50 87 C 21 65.5, 3 44.5, 3 24.5 C 3 8.5, 16.5 -1.5, 31.5 4 C 41 7.5, 47 15, 50 21 C 53 15, 59 7.5, 68.5 4 C 83.5 -1.5, 97 8.5, 97 24.5 C 97 44.5, 79 65.5, 50 87 Z"/>
+      </symbol>
+    </defs>
+  </svg>
 
-<!-- CUISINE -->
-<div class="page" id="page-cuisine">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">Travaux d'Intérêt Général</div><div class="page-title">🍲 La <span>Cuisine</span></div></div><span class="badge">TIG N°01</span></div>
-    <div class="info-panel"><strong>Objectif :</strong> Produire une soupe complète en collectant des ingrédients bruts, en effectuant les échanges nécessaires et en craftant le plat final dans la cuisine pénitentiaire.</div>
-    <div class="tig-layout">
-      <div>
-        <div class="section-label">Processus complet</div>
-        <div class="section-title">Étapes du TIG Cuisine</div>
-        <div class="steps">
-          <div class="step"><div style="position:relative"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Collecte des ressources brutes</div><div class="step-desc">Récupérer les légumes disponibles ainsi que l'eau dans les zones désignées de la cuisine pénitentiaire.</div><div class="step-tags"><span class="step-tag collect">🥕 Carottes</span><span class="step-tag collect">🍅 Tomates</span><span class="step-tag collect">🧅 Oignon</span><span class="step-tag collect">🧄 Ail</span><span class="step-tag collect">💧 Eau</span></div></div></div>
-          <div class="step"><div style="position:relative"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Échange — Tomates contre Viande</div><div class="step-desc">Apporter les tomates au point d'échange officiel. Elles sont trocquées contre de la viande crue nécessaire à la recette finale.</div><div class="step-tags"><span class="step-tag trade">🍅 Tomates (entrée)</span><span class="step-tag trade">🥩 Viande (sortie)</span></div><div class="arrow-step">→ Troc au point d'échange désigné</div></div></div>
-          <div class="step"><div style="position:relative"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Préparation des Carottes</div><div class="step-desc">Couper les carottes brutes sur le plan de travail pour obtenir des carottes préparées, indispensables au craft.</div><div class="step-tags"><span class="step-tag transform">🥕 Carotte brute (entrée)</span><span class="step-tag craft">✂️ Carotte préparée (sortie)</span></div></div></div>
-          <div class="step"><div><div class="step-num">4</div></div><div class="step-body"><div class="step-name">Craft de la Soupe</div><div class="step-desc">Assembler tous les ingrédients dans la table de craft de la cuisine. Respecter scrupuleusement les quantités indiquées.</div><div class="step-tags"><span class="step-tag craft">🍲 Soupe complète</span></div></div></div>
-        </div>
+  <!-- ============ BARRE DE PROGRESSION ============ -->
+  <header class="progress-wrap" id="progress-wrap" hidden>
+    <div class="progress-ribbon" aria-hidden="false" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" id="progress-bar-el">
+      <div class="progress-track"></div>
+      <div class="progress-fill" id="progress-fill"></div>
+      <div class="progress-nodes">
+        <div class="progress-node" data-node="1"><svg class="node-heart" viewBox="0 0 100 90"><use href="#heartShape"/></svg></div>
+        <div class="progress-node" data-node="2"><svg class="node-heart" viewBox="0 0 100 90"><use href="#heartShape"/></svg></div>
+        <div class="progress-node" data-node="3"><svg class="node-heart" viewBox="0 0 100 90"><use href="#heartShape"/></svg></div>
       </div>
-      <div>
-        <div class="recipe-card">
-          <div class="recipe-header"><div class="recipe-header-icon">📋</div><div><div class="recipe-header-title">Recette — Soupe</div><div class="recipe-header-sub">Table de Craft · Cuisine</div></div></div>
-          <div class="recipe-body">
-            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Carotte Préparée</div><div class="ing-icon">🥕</div></div>
-            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Viande</div><div class="ing-icon">🥩</div></div>
-            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Ail</div><div class="ing-icon">🧄</div></div>
-            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Eau</div><div class="ing-icon">💧</div></div>
-            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Oignon</div><div class="ing-icon">🧅</div></div>
+    </div>
+    <span class="progress-label" id="progress-label">0/3 défis terminés</span>
+  </header>
+
+  <!-- ============ TOAST MESSAGES ROMANTIQUES ============ -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <!-- ============ BADGE SECRETS TROUVÉS ============ -->
+  <div class="secrets-badge" id="secrets-badge" hidden>
+    <span class="secrets-badge-icon" aria-hidden="true">🤍</span>
+    <span><span id="secrets-count">0</span>/4 secrets trouvés</span>
+  </div>
+
+  <main id="app">
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 1 — INTRODUCTION                                        -->
+    <!-- ============================================================ -->
+    <section class="screen screen-intro active" id="screen-intro">
+      <div class="intro-decor" aria-hidden="true">
+        <svg class="deco-heart deco-h1" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradRose)" filter="url(#softGlow)"/></svg>
+        <svg class="deco-heart deco-h2" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradLavande)" filter="url(#softGlow)"/></svg>
+        <svg class="deco-heart deco-h3" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradOr)" filter="url(#softGlow)"/></svg>
+      </div>
+
+      <div class="intro-card">
+        <span class="eyebrow">Pour toi, avec amour</span>
+        <h1 class="intro-title">Une petite surprise<br>pour toi <span class="heart-inline">❤️</span></h1>
+        <p class="intro-subtitle">J'ai préparé 3 petites épreuves… et chacune te rapprochera d'un message important.</p>
+
+        <button class="btn-primary btn-start" id="btn-start">
+          <span class="btn-glow" aria-hidden="true"></span>
+          <span class="btn-label">Commencer <span aria-hidden="true">❤️</span></span>
+          <span class="btn-sparkle s1" aria-hidden="true"></span>
+          <span class="btn-sparkle s2" aria-hidden="true"></span>
+          <span class="btn-sparkle s3" aria-hidden="true"></span>
+        </button>
+
+        <div class="intro-hint">3 défis · quelques minutes · 1 message à découvrir</div>
+
+        <button class="secret-heart" data-secret="1" style="top:16px;right:18px" aria-label="?" title="?">
+          <svg viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradOr)"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 2 — SÉLECTION DES MINI-JEUX                              -->
+    <!-- ============================================================ -->
+    <section class="screen" id="screen-selection">
+      <button class="secret-heart" data-secret="2" style="bottom:14px;left:16px" aria-label="?" title="?">
+        <svg viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradLavande)"/></svg>
+      </button>
+
+      <div class="selection-head">
+        <span class="eyebrow">Ta petite chasse au trésor</span>
+        <h2 class="section-title">Choisis une épreuve</h2>
+        <div class="message-preview" id="message-preview" aria-live="polite"></div>
+      </div>
+
+      <div class="cards-grid">
+
+        <!-- Carte Jeu 1 -->
+        <button class="game-card" id="card-game1" data-game="1" data-status="available">
+          <span class="card-status-pill" id="status-pill-1">À jouer</span>
+          <div class="card-icon-wrap">
+            <svg class="card-icon" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="icon-ring" cx="60" cy="60" r="46"/>
+              <use href="#heartShape" x="24" y="30" width="46" height="42" fill="url(#gradRose)" filter="url(#softGlow)"/>
+              <use href="#heartShape" x="8" y="46" width="20" height="18" fill="url(#gradRose)" opacity="0.35"/>
+              <use href="#heartShape" x="70" y="22" width="16" height="15" fill="url(#gradOr)" opacity="0.55"/>
+              <circle class="icon-spark" cx="88" cy="70" r="2.4"/>
+              <circle class="icon-spark" cx="30" cy="86" r="1.8"/>
+            </svg>
           </div>
-        </div>
-        <div class="info-panel" style="margin-top:1rem"><strong>Rappel :</strong> Les tomates doivent être échangées <strong>avant</strong> de lancer le craft. Vérifier les quantités pour éviter toute perte.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LINGE -->
-<div class="page" id="page-linge">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">Travaux d'Intérêt Général</div><div class="page-title">👕 Le <span>Linge</span></div></div><span class="badge">TIG N°02</span></div>
-    <div class="info-panel"><strong>Objectif :</strong> Traiter le linge de l'établissement en passant par les étapes de collecte, lavage et repassage pour finalement confectionner du linge propre prêt à être distribué.</div>
-    <div class="tig-layout">
-      <div>
-        <div class="section-label">Processus complet</div>
-        <div class="section-title">Étapes du TIG Linge</div>
-        <div class="steps">
-          <div class="step"><div style="position:relative"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Collecte des fournitures</div><div class="step-desc">Récupérer le linge sale dans les cellules, ainsi que les produits nettoyants, chimiques et la brosse dans la réserve.</div><div class="step-tags"><span class="step-tag collect">👕 Linge Sale</span><span class="step-tag collect">🧴 Produit Nettoyant</span><span class="step-tag collect">🧪 Produit Chimique</span><span class="step-tag collect">🪥 Brosse</span><span class="step-tag collect">💧 Eau</span></div></div></div>
-          <div class="step"><div style="position:relative"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Lavage — Linge Mouillé</div><div class="step-desc">Apporter le linge sale au point de lavage pour le troquer contre du linge mouillé. Étape obligatoire avant le repassage.</div><div class="step-tags"><span class="step-tag trade">👕 Linge Sale (entrée)</span><span class="step-tag trade">💦 Linge Mouillé (sortie)</span></div><div class="arrow-step">→ Troc au poste de lavage</div></div></div>
-          <div class="step"><div style="position:relative"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Repassage — Linge Repassé</div><div class="step-desc">Apporter le linge mouillé à la table de repassage pour obtenir du linge repassé, prêt pour le craft final.</div><div class="step-tags"><span class="step-tag transform">💦 Linge Mouillé (entrée)</span><span class="step-tag craft">🔥 Linge Repassé (sortie)</span></div><div class="arrow-step">→ Troc à la table de repassage</div></div></div>
-          <div class="step"><div><div class="step-num">4</div></div><div class="step-body"><div class="step-name">Craft du Linge Propre</div><div class="step-desc">Assembler tous les éléments dans la table de craft pour produire le linge propre final prêt à être livré.</div><div class="step-tags"><span class="step-tag craft">✅ Linge Propre</span></div></div></div>
-        </div>
-      </div>
-      <div>
-        <div class="recipe-card">
-          <div class="recipe-header"><div class="recipe-header-icon">📋</div><div><div class="recipe-header-title">Recette — Linge Propre</div><div class="recipe-header-sub">Table de Craft · Buanderie</div></div></div>
-          <div class="recipe-body">
-            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Produit Chimique</div><div class="ing-icon">🧪</div></div>
-            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Produit Nettoyant</div><div class="ing-icon">🧴</div></div>
-            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Brosse</div><div class="ing-icon">🪥</div></div>
-            <div class="ingredient"><div class="ing-qty">4</div><div class="ing-name">Linge Repassé</div><div class="ing-icon">🔥</div></div>
-            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Eau</div><div class="ing-icon">💧</div></div>
+          <span class="card-number">Défi 01</span>
+          <h3 class="card-title">Attrape mon amour</h3>
+          <p class="card-desc">Attrape 10 cœurs qui flottent avant qu'ils ne s'échappent.</p>
+          <div class="card-reward locked-reward" id="reward-1">
+            <span class="reward-icon">🔒</span> Récompense cachée…
           </div>
-        </div>
-        <div class="info-panel" style="margin-top:1rem"><strong>Important :</strong> Le linge doit impérativement passer par le lavage <strong>puis</strong> le repassage dans cet ordre strict avant le craft.</div>
-      </div>
-    </div>
-  </div>
-</div>
+        </button>
 
-<!-- FERRAILLE -->
-<div class="page" id="page-ferraille">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">Travaux d'Intérêt Général</div><div class="page-title">⛏ La <span>Ferraille</span></div></div><span class="badge">TIG N°03</span></div>
-    <div class="info-panel"><strong>Objectif :</strong> Travailler dans la mine pour extraire des matériaux bruts, les transformer en composants et fabriquer une pioche à l'atelier. Présence d'un agent obligatoire en tout temps.</div>
-    <div class="tig-layout">
-      <div>
-        <div class="section-label">Processus complet</div>
-        <div class="section-title">Étapes du TIG Ferraille</div>
-        <div class="steps">
-          <div class="step"><div style="position:relative"><div class="step-num">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Extraction Minière</div><div class="step-desc">Se rendre dans la mine sous escorte et extraire les matières premières disponibles. Récupérer le marteau sur place.</div><div class="step-tags"><span class="step-tag collect">🪨 Pierre</span><span class="step-tag collect">🔩 Ferraille</span><span class="step-tag collect">🪵 Bout de Bois</span><span class="step-tag collect">🔨 Marteau</span></div></div></div>
-          <div class="step"><div style="position:relative"><div class="step-num">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Fonte — Plaques de Métal</div><div class="step-desc">Amener la ferraille au four de fonderie. Elle est transformée par fusion en plaques de métal utilisables pour la fabrication.</div><div class="step-tags"><span class="step-tag transform">🔩 Ferraille (entrée)</span><span class="step-tag craft">🔧 Plaque de Métal (sortie)</span></div><div class="arrow-step">→ Fonderie de l'atelier</div></div></div>
-          <div class="step"><div style="position:relative"><div class="step-num">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-name">Sciage — Planches</div><div class="step-desc">Transformer les bouts de bois bruts en planches au poste de sciage. Les planches servent de manche à la pioche.</div><div class="step-tags"><span class="step-tag transform">🪵 Bout de Bois (entrée)</span><span class="step-tag craft">🪵 Planche (sortie)</span></div><div class="arrow-step">→ Poste de sciage de l'atelier</div></div></div>
-          <div class="step"><div><div class="step-num">4</div></div><div class="step-body"><div class="step-name">Craft de la Pioche</div><div class="step-desc">Assembler tous les composants dans la table de craft de l'atelier. La pioche est remise à l'agent superviseur en fin de session.</div><div class="step-tags"><span class="step-tag craft">⛏ Pioche</span></div></div></div>
-        </div>
-      </div>
-      <div>
-        <div class="recipe-card">
-          <div class="recipe-header"><div class="recipe-header-icon">📋</div><div><div class="recipe-header-title">Recette — Pioche</div><div class="recipe-header-sub">Table de Craft · Atelier Mine</div></div></div>
-          <div class="recipe-body">
-            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Planche</div><div class="ing-icon">🪵</div></div>
-            <div class="ingredient"><div class="ing-qty">2</div><div class="ing-name">Eau</div><div class="ing-icon">💧</div></div>
-            <div class="ingredient"><div class="ing-qty">1</div><div class="ing-name">Marteau</div><div class="ing-icon">🔨</div></div>
-            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Plaque de Métal</div><div class="ing-icon">🔧</div></div>
-            <div class="ingredient"><div class="ing-qty">3</div><div class="ing-name">Pierre</div><div class="ing-icon">🪨</div></div>
+        <!-- Carte Jeu 2 -->
+        <button class="game-card is-locked" id="card-game2" data-game="2" data-status="locked">
+          <span class="card-status-pill" id="status-pill-2">Verrouillé</span>
+          <div class="card-icon-wrap">
+            <svg class="card-icon" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="icon-ring" cx="60" cy="60" r="46"/>
+              <rect class="card-shape-back" x="34" y="30" width="40" height="52" rx="9" fill="url(#gradLavande)" transform="rotate(-8 60 60)"/>
+              <rect class="card-shape-front" x="46" y="34" width="40" height="52" rx="9" fill="url(#gradBlanc)" transform="rotate(6 60 60)" filter="url(#softGlow)"/>
+              <use href="#heartShape" x="58" y="52" width="16" height="15" fill="url(#gradRose)" transform="rotate(6 60 60)"/>
+            </svg>
           </div>
-        </div>
-        <div class="info-panel" style="margin-top:1rem"><strong>Sécurité :</strong> L'accès à la mine est <strong>conditionné par la présence d'un agent</strong>. Aucun détenu ne peut entrer seul. Le marteau est récupéré sur place.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- GARDES -->
-<div class="page" id="page-gardes">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">Personnel de l'établissement</div><div class="page-title">🛡 Gardes &amp; <span>Hiérarchie</span></div></div></div>
-
-    <div class="section-label">Organigramme</div>
-    <div class="section-title">Structure de Commandement</div>
-
-    <div class="hierarchy-wrap">
-      <!-- DIRECTION -->
-      <div class="dir-block">
-        <div class="dir-card">
-          <div class="dir-avatar">DG</div>
-          <div class="dir-name">Direction Générale</div>
-          <div class="dir-rank">Administration Pénitentiaire</div>
-          <div class="dir-badge">Commandement Suprême</div>
-        </div>
-      </div>
-
-      <!-- Vertical drop -->
-      <div class="v-drop"><div class="v-drop-line"></div></div>
-      <!-- Horizontal bar -->
-      <div class="h-bar-wrap"><div class="h-bar"></div></div>
-
-      <!-- 4 GUARDS SAME LEVEL -->
-      <div class="guards-row">
-        <div class="guard-col">
-          <div class="guard-v-top"></div>
-          <div class="guard-card">
-            <div class="guard-avatar">SA</div>
-            <div class="guard-name">Elijah Clark</div>
-            <div class="guard-rank">Officier Principal</div>
-            <div class="guard-sub-badge">TIG Cuisine</div>
+          <span class="card-number">Défi 02</span>
+          <h3 class="card-title">Nos petits souvenirs</h3>
+          <p class="card-desc">Retrouve les paires cachées, comme nos petits moments.</p>
+          <div class="card-reward locked-reward" id="reward-2">
+            <span class="reward-icon">🔒</span> Récompense cachée…
           </div>
-        </div>
-        <div class="guard-col">
-          <div class="guard-v-top"></div>
-          <div class="guard-card">
-            <div class="guard-avatar">MS</div>
-            <div class="guard-name">Mathew Smith</div>
-            <div class="guard-rank">Officier Principal</div>
-            <div class="guard-sub-badge">TIG Linge</div>
+        </button>
+
+        <!-- Carte Jeu 3 -->
+        <button class="game-card is-locked" id="card-game3" data-game="3" data-status="locked">
+          <span class="card-status-pill" id="status-pill-3">Verrouillé</span>
+          <div class="card-icon-wrap">
+            <svg class="card-icon" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="icon-ring" cx="60" cy="60" r="46"/>
+              <g transform="translate(-4,0)">
+                <use href="#heartShape" x="20" y="34" width="34" height="30" fill="url(#gradOr)" filter="url(#softGlow)"/>
+              </g>
+              <g transform="translate(6,2)">
+                <use href="#heartShape" x="54" y="46" width="34" height="30" fill="url(#gradRose)" filter="url(#softGlow)"/>
+              </g>
+              <line class="icon-seam" x1="60" y1="34" x2="60" y2="86"/>
+            </svg>
           </div>
-        </div>
-        <div class="guard-col">
-          <div class="guard-v-top"></div>
-          <div class="guard-card">
-            <div class="guard-avatar">EW</div>
-            <div class="guard-name">Emma Winter</div>
-            <div class="guard-rank">Officier Principal</div>
-            <div class="guard-sub-badge">TIG Ferraille</div>
+          <span class="card-number">Défi 03</span>
+          <h3 class="card-title">La dernière pièce</h3>
+          <p class="card-desc">Une dernière question t'attend… réponds honnêtement ❤️</p>
+          <div class="card-reward locked-reward" id="reward-3">
+            <span class="reward-icon">🔒</span> Récompense cachée…
           </div>
-        </div>
-        <div class="guard-col">
-          <div class="guard-v-top"></div>
-          <div class="guard-card">
-            <div class="guard-avatar">BK</div>
-            <div class="guard-name">Bob Kayak</div>
-            <div class="guard-rank">Officier Principal</div>
-            <div class="guard-sub-badge">Ronde Générale</div>
+        </button>
+
+        <!-- Carte Jeu bonus (secrète, révélée après les 3 défis) -->
+        <button class="game-card card-secret" id="card-game4" data-game="4" data-status="locked" hidden>
+          <span class="card-status-pill" id="status-pill-4">Secret</span>
+          <div class="card-icon-wrap">
+            <svg class="card-icon" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="icon-ring" cx="60" cy="60" r="46"/>
+              <rect x="26" y="50" width="18" height="20" rx="4" fill="url(#gradRose)"/>
+              <rect x="51" y="50" width="18" height="20" rx="4" fill="url(#gradLavande)"/>
+              <rect x="76" y="50" width="18" height="20" rx="4" fill="url(#gradOr)"/>
+              <use href="#heartShape" x="46" y="16" width="28" height="25" fill="url(#gradRose)" filter="url(#softGlow)"/>
+            </svg>
           </div>
+          <span class="card-number">Défi bonus</span>
+          <h3 class="card-title">Le mot secret</h3>
+          <p class="card-desc">Devine le mot caché en 6 essais, lettre par lettre.</p>
+          <div class="card-reward locked-reward" id="reward-4">
+            <span class="reward-icon">✨</span> Une petite surprise en plus…
+          </div>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 3 — MINI-JEU 1 : ATTRAPE MON AMOUR                       -->
+    <!-- ============================================================ -->
+    <section class="screen" id="screen-game1">
+      <div class="game-topbar">
+        <button class="btn-back" data-back>← Retour aux défis</button>
+        <div class="game-heading">
+          <span class="eyebrow">Défi 01</span>
+          <h2 class="section-title">Attrape mon amour</h2>
+        </div>
+        <div class="game-counter">
+          <span class="counter-label">Cœurs attrapés</span>
+          <span class="counter-value"><span id="g1-count">0</span> / 10</span>
+        </div>
+      </div>
+      <p class="game-instructions">Clique sur les cœurs avant qu'ils ne s'envolent ✨</p>
+      <div class="game1-area" id="game1-area"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 4 — MINI-JEU 2 : NOS PETITS SOUVENIRS                    -->
+    <!-- ============================================================ -->
+    <section class="screen" id="screen-game2">
+      <button class="secret-heart" data-secret="3" style="top:76px;right:18px" aria-label="?" title="?">
+        <svg viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradRose)"/></svg>
+      </button>
+      <div class="game-topbar">
+        <button class="btn-back" data-back>← Retour aux défis</button>
+        <div class="game-heading">
+          <span class="eyebrow">Défi 02</span>
+          <h2 class="section-title">Nos petits souvenirs</h2>
+        </div>
+        <div class="game-counter">
+          <span class="counter-label">Paires trouvées</span>
+          <span class="counter-value"><span id="g2-count">0</span> / 6</span>
+        </div>
+      </div>
+      <p class="game-instructions">Retourne deux cartes à la fois pour trouver les paires 🌸</p>
+      <div class="game2-grid" id="game2-grid"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 5 — MINI-JEU 3 : LA DERNIÈRE PIÈCE                       -->
+    <!-- ============================================================ -->
+    <section class="screen" id="screen-game3">
+      <div class="game-topbar">
+        <button class="btn-back" data-back>← Retour aux défis</button>
+        <div class="game-heading">
+          <span class="eyebrow">Défi 03</span>
+          <h2 class="section-title">La dernière question ❤️</h2>
         </div>
       </div>
 
-      <!-- Vertical drop to staff -->
-      <div class="v-drop2" style="margin-top:0"><div class="v-drop2-line"></div></div>
-      <div class="h-bar2-wrap"><div class="h-bar2"></div></div>
-
-      <!-- SUB STAFF -->
-      <div class="staff-row">
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">RC</div><div class="staff-name">R. Castellano</div><div class="staff-rank">Agent de Surveillance</div></div></div>
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">LM</div><div class="staff-name">L. Moretti</div><div class="staff-rank">Agent de Surveillance</div></div></div>
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">JD</div><div class="staff-name">J. Devereux</div><div class="staff-rank">Agent de Surveillance</div></div></div>
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">KR</div><div class="staff-name">K. Reyes</div><div class="staff-rank">Stagiaire</div></div></div>
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">PT</div><div class="staff-name">P. Torres</div><div class="staff-rank">Stagiaire</div></div></div>
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">NB</div><div class="staff-name">N. Bauer</div><div class="staff-rank">Stagiaire</div></div></div>
-        <div class="staff-col"><div class="staff-v"></div><div class="staff-card"><div class="staff-avatar">VG</div><div class="staff-name">V. Granger</div><div class="staff-rank">Stagiaire</div></div></div>
+      <!-- Étape 1 : la question -->
+      <div class="love-question-stage" id="love-question-stage">
+        <p class="love-question-text" id="love-question-text">Est-ce que tu m'aimes ?</p>
+        <div class="love-question-buttons" id="love-question-buttons">
+          <button class="btn-primary btn-love-yes" id="btn-love-yes">Oui <span aria-hidden="true">❤️</span></button>
+          <button class="btn-love-no" id="btn-love-no" type="button">Non</button>
+        </div>
       </div>
-    </div>
 
-    <div class="divider"></div>
-    <div class="section-label">Fiches agents</div>
-    <div class="section-title">Officiers Principaux</div>
-    <div class="cards-grid">
-      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">SA</div><div><div class="card-title" style="font-size:18px;margin:0">Elijah Clark</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — TIG Cuisine</div></div></div><div class="card-desc">Supervise le TIG Cuisine. Valide les échanges de tomates et contrôle les crafts de soupe remis en fin de session.</div></div>
-      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">MS</div><div><div class="card-title" style="font-size:18px;margin:0">Mathew Smith</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — TIG Linge</div></div></div><div class="card-desc">Responsable du TIG Linge. Contrôle les étapes de lavage, repassage et valide le linge propre produit en fin de session.</div></div>
-      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">EW</div><div><div class="card-title" style="font-size:18px;margin:0">Emma Winter</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — TIG Ferraille</div></div></div><div class="card-desc">Responsable du TIG Ferraille. Accompagne les détenus dans la mine, gère l'accès à la fonderie et valide les pioches craftées.</div></div>
-      <div class="card"><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div class="guard-avatar" style="width:44px;height:44px;font-size:17px">BK</div><div><div class="card-title" style="font-size:18px;margin:0">Bob Kayak</div><div style="color:var(--accent2);font-family:'Barlow Condensed';font-size:11px;letter-spacing:2px;text-transform:uppercase">Officier Principal — Ronde Générale</div></div></div><div class="card-desc">Effectue les rondes générales sur tous les secteurs TIG. Peut intervenir en soutien sur n'importe quel secteur et signale les anomalies.</div></div>
+      <!-- Étape 2 : la barre d'amour -->
+      <div class="love-meter-stage" id="love-meter-stage" hidden>
+        <p class="love-meter-text">À combien tu m'aimes ? Mets la barre au bon endroit…</p>
+        <div class="love-meter-wrap" id="love-meter-wrap">
+          <div class="love-meter-track">
+            <div class="love-meter-fill" id="love-meter-fill"></div>
+            <span class="love-meter-heart" id="love-meter-heart" aria-hidden="true">❤️</span>
+          </div>
+          <input type="range" min="0" max="100" value="0" step="1" id="love-meter-range" class="love-meter-range" aria-label="Pourcentage d'amour">
+          <span class="love-meter-value"><span id="love-meter-percent">0</span>%</span>
+        </div>
+        <p class="g3-feedback" id="g3-feedback"></p>
+        <button class="btn-secondary enabled" id="btn-check-love">Valider ❤️</button>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 5bis — MINI-JEU BONUS : LE MOT SECRET                    -->
+    <!-- ============================================================ -->
+    <section class="screen" id="screen-game4">
+      <div class="game-topbar">
+        <button class="btn-back" data-back>← Retour aux défis</button>
+        <div class="game-heading">
+          <span class="eyebrow">Défi bonus</span>
+          <h2 class="section-title">Le mot secret</h2>
+        </div>
+        <div class="game-counter">
+          <span class="counter-label">Essais</span>
+          <span class="counter-value"><span id="g4-attempt">0</span> / 6</span>
+        </div>
+      </div>
+      <p class="game-instructions">
+        Devine le mot en 5 lettres.
+        <span class="legend-chip legend-correct">Vert</span> = bien placée ·
+        <span class="legend-chip legend-present">Orange</span> = mal placée ·
+        <span class="legend-chip legend-absent">Gris</span> = absente.
+      </p>
+
+      <div class="word-grid" id="word-grid"></div>
+      <p class="word-feedback" id="word-feedback"></p>
+      <div class="word-keyboard" id="word-keyboard"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ÉCRAN 6 — FINAL                                                -->
+    <!-- ============================================================ -->
+    <section class="screen" id="screen-final">
+      <button class="secret-heart" data-secret="4" style="bottom:34px;right:22px" aria-label="?" title="?">
+        <svg viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradOr)"/></svg>
+      </button>
+      <div class="final-decor" aria-hidden="true" id="final-decor"></div>
+      <div class="final-content">
+        <div class="final-message" id="final-message">
+          <span class="final-word" data-word="0">JE</span>
+          <span class="final-word" data-word="1">T'</span><span class="final-word" data-word="2">AIME</span>
+          <span class="final-word final-emoji" data-word="3">❤️</span>
+        </div>
+        <p class="final-paragraph" id="final-paragraph">
+          Et maintenant que tu as réussi tous les défis… tu connais enfin le message que je voulais te donner depuis le début. Je t'aime, tout simplement. ❤️
+        </p>
+        <div class="final-heart-zone" aria-hidden="true">
+          <svg class="final-big-heart" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradRose)" filter="url(#softGlowBig)"/></svg>
+        </div>
+        <button class="btn-primary btn-replay" id="btn-replay">Rejouer depuis le début <span aria-hidden="true">❤️</span></button>
+        <button class="btn-link" id="btn-back-to-defis">Retourner aux défis</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ ÉCRAN DE VICTOIRE (superposition réutilisable) ============ -->
+  <div class="victory-overlay" id="victory-overlay">
+    <div class="victory-backdrop" id="victory-backdrop"></div>
+    <div class="victory-card">
+      <div class="victory-hearts" aria-hidden="true">
+        <svg class="v-heart v1" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradRose)" filter="url(#softGlow)"/></svg>
+        <svg class="v-heart v2" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradLavande)" filter="url(#softGlow)"/></svg>
+        <svg class="v-heart v3" viewBox="0 0 100 90"><use href="#heartShape" fill="url(#gradOr)" filter="url(#softGlow)"/></svg>
+      </div>
+      <h2 class="victory-title" id="victory-title">Premier défi réussi ! ❤️</h2>
+      <p class="victory-subtitle" id="victory-subtitle">Tu viens de débloquer la première partie du message…</p>
+
+      <div class="reveal-zone">
+        <div class="reveal-letter" id="reveal-letter">JE</div>
+      </div>
+
+      <div class="message-preview victory-message-preview" id="victory-message-preview"></div>
+
+      <button class="btn-primary btn-victory-continue" id="victory-continue-btn">Continuer vers le prochain jeu →</button>
     </div>
   </div>
-</div>
 
-<!-- STATS -->
-<div class="page" id="page-stats">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">Données de la saison</div><div class="page-title">📊 <span>Statistiques</span></div></div></div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-label">Soupes Produites</div><div class="stat-value blue">187</div><div class="stat-change">↑ +12 ce jour</div></div>
-      <div class="stat-card"><div class="stat-label">Linge Propre</div><div class="stat-value">143</div><div class="stat-change">↑ +8 ce jour</div></div>
-      <div class="stat-card"><div class="stat-label">Pioches Craftées</div><div class="stat-value green">96</div><div class="stat-change">↑ +5 ce jour</div></div>
-      <div class="stat-card"><div class="stat-label">Incidents</div><div class="stat-value red">3</div><div class="stat-change neg">↑ +1 ce jour</div></div>
-      <div class="stat-card"><div class="stat-label">Détenus Actifs</div><div class="stat-value">24</div><div class="stat-change">↑ Stable</div></div>
-      <div class="stat-card"><div class="stat-label">Heures TIG</div><div class="stat-value blue">842</div><div class="stat-change">↑ Saison courante</div></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-      <div class="chart-section"><div class="chart-title">Production par TIG — semaine courante</div>
-        <div class="bar-row"><div class="bar-label">🍲 Cuisine</div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><div class="bar-val">78%</div></div>
-        <div class="bar-row"><div class="bar-label">👕 Linge</div><div class="bar-track"><div class="bar-fill" style="width:61%"></div></div><div class="bar-val">61%</div></div>
-        <div class="bar-row"><div class="bar-label">⛏ Ferraille</div><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><div class="bar-val">44%</div></div>
-      </div>
-      <div class="chart-section"><div class="chart-title">Répartition détenus par TIG</div>
-        <div class="bar-row"><div class="bar-label">🍲 Cuisine</div><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div><div class="bar-val">12</div></div>
-        <div class="bar-row"><div class="bar-label">👕 Linge</div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><div class="bar-val">8</div></div>
-        <div class="bar-row"><div class="bar-label">⛏ Ferraille</div><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><div class="bar-val">4</div></div>
-      </div>
-    </div>
-    <div class="chart-section" style="margin-top:1.5rem">
-      <div class="chart-title">Sessions complétées — 7 derniers jours</div>
-      <div style="display:flex;align-items:flex-end;gap:8px;height:80px;margin-top:.5rem">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:46px;opacity:.7"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">LUN</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:56px;opacity:.8"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">MAR</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:38px;opacity:.7"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">MER</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent2);border-radius:2px 2px 0 0;height:64px"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">JEU</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:49px;opacity:.8"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">VEN</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent2);border-radius:2px 2px 0 0;height:68px"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">SAM</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;background:var(--accent);border-radius:2px 2px 0 0;height:35px;opacity:.6"></div><div style="font-size:10px;color:var(--text3);font-family:'Barlow Condensed'">DIM</div></div>
-      </div>
-    </div>
-  </div>
-</div>
+  <script>
+/* ============================================================
+   UNE PETITE SURPRISE POUR TOI — script.js
+   ============================================================ */
+(() => {
+  'use strict';
 
-<!-- REGLEMENT -->
-<div class="page" id="page-regles">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">À respecter obligatoirement</div><div class="page-title">📋 <span>Règlement</span></div></div></div>
-    <div class="info-panel"><strong>Avertissement :</strong> Le non-respect du règlement peut entraîner la suspension ou l'annulation immédiate du TIG, ainsi que des sanctions supplémentaires à l'appréciation de l'agent superviseur.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1rem">
-      <div>
-        <div class="section-label">Règles générales</div>
-        <ul class="rules-list">
-          <li class="rule-item"><div class="rule-num">01</div><div><div class="rule-title">Présence d'un agent obligatoire</div><div class="rule-desc">Aucun TIG ne peut démarrer sans la supervision d'un agent habilité. Toute activité non supervisée est invalide et sanctionnée.</div></div></li>
-          <li class="rule-item"><div class="rule-num">02</div><div><div class="rule-title">Respect de l'ordre des étapes</div><div class="rule-desc">Chaque TIG doit être réalisé dans l'ordre strict des étapes définies. Aucun raccourci n'est toléré.</div></div></li>
-          <li class="rule-item"><div class="rule-num">03</div><div><div class="rule-title">Quantités exactes pour le craft</div><div class="rule-desc">Les recettes doivent être respectées à la lettre. Vérifier les quantités avant de lancer le craft pour éviter la perte de matériaux.</div></div></li>
-          <li class="rule-item"><div class="rule-num">04</div><div><div class="rule-title">Interdiction de fuite</div><div class="rule-desc">Toute tentative de fuite pendant un TIG entraîne l'annulation immédiate de la session et un retour en cellule avec sanctions.</div></div></li>
-          <li class="rule-item"><div class="rule-num">05</div><div><div class="rule-title">Remise des produits finaux</div><div class="rule-desc">Les items craftés doivent obligatoirement être remis à l'agent superviseur à la fin de chaque session sans exception.</div></div></li>
-        </ul>
-      </div>
-      <div>
-        <div class="section-label">Règles spécifiques</div>
-        <ul class="rules-list">
-          <li class="rule-item"><div class="rule-num">06</div><div><div class="rule-title">Accès mine — escorte obligatoire</div><div class="rule-desc">L'accès à la zone minière est conditionné à la présence d'un officier principal. Aucune entrée non accompagnée autorisée.</div></div></li>
-          <li class="rule-item"><div class="rule-num">07</div><div><div class="rule-title">Trocs aux points officiels uniquement</div><div class="rule-desc">Les échanges doivent être effectués aux points officiels désignés sous contrôle d'un agent pénitentiaire.</div></div></li>
-          <li class="rule-item"><div class="rule-num">08</div><div><div class="rule-title">Interdiction de stockage personnel</div><div class="rule-desc">Les ressources collectées durant un TIG appartiennent à l'établissement. Toute rétention de matériaux constitue un vol.</div></div></li>
-          <li class="rule-item"><div class="rule-num">09</div><div><div class="rule-title">Signalement immédiat des incidents</div><div class="rule-desc">Tout incident ou anomalie doit immédiatement être signalé à l'agent présent. Le détenu ne doit pas intervenir seul.</div></div></li>
-          <li class="rule-item"><div class="rule-num">10</div><div><div class="rule-title">Comportement et respect</div><div class="rule-desc">L'irrespect envers le personnel entraîne la suspension immédiate du TIG. Le TIG est un privilège accordé, pas un droit acquis.</div></div></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+  const svgNS = 'http://www.w3.org/2000/svg';
 
-<!-- REGISTRE -->
-<div class="page" id="page-logs">
-  <div class="container">
-    <div class="page-header"><div><div class="page-subtitle">Historique des sessions</div><div class="page-title">📁 <span>Registre</span></div></div></div>
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden">
-      <table class="log-table">
-        <thead><tr><th>Date / Heure</th><th>TIG</th><th>Détenu</th><th>Agent Superviseur</th><th>Items Craftés</th><th>Statut</th></tr></thead>
-        <tbody>
-          <tr><td>11/05 — 14:32</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0042</td><td>Elijah Clark</td><td style="color:var(--text)">3x Soupe</td><td><span class="log-ok">✓ Complété</span></td></tr>
-          <tr><td>11/05 — 13:15</td><td><span class="log-type ferraille">Ferraille</span></td><td style="color:var(--text)">Détenu #0017</td><td>Emma Winter</td><td style="color:var(--text)">2x Pioche</td><td><span class="log-ok">✓ Complété</span></td></tr>
-          <tr><td>11/05 — 11:50</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0031</td><td>Mathew Smith</td><td style="color:var(--text)">5x Linge Propre</td><td><span class="log-ok">✓ Complété</span></td></tr>
-          <tr><td>11/05 — 10:05</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0008</td><td>Bob Kayak</td><td style="color:var(--text)">—</td><td><span class="log-fail">✗ Incident</span></td></tr>
-          <tr><td>10/05 — 17:40</td><td><span class="log-type ferraille">Ferraille</span></td><td style="color:var(--text)">Détenu #0055</td><td>Emma Winter</td><td style="color:var(--text)">1x Pioche</td><td><span class="log-ok">✓ Complété</span></td></div></tr>
-          <tr><td>10/05 — 15:20</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0022</td><td>Elijah Clark</td><td style="color:var(--text)">3x Linge Propre</td><td><span class="log-ok">✓ Complété</span></td></tr>
-          <tr><td>10/05 — 12:00</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0037</td><td>Mathew Smith</td><td style="color:var(--text)">4x Soupe</td><td><span class="log-ok">✓ Complété</span></td></tr>
-          <tr><td>10/05 — 09:15</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0013</td><td>Bob Kayak</td><td style="color:var(--text)">—</td><td><span class="log-pending">⏳ En cours</span></td></tr>
-          <tr><td>09/05 — 16:10</td><td><span class="log-type ferraille">Ferraille</span></td><td style="color:var(--text)">Détenu #0011</td><td>Emma Winter</td><td style="color:var(--text)">—</td><td><span class="log-fail">✗ Abandon</span></td></tr>
-          <tr><td>09/05 — 09:30</td><td><span class="log-type linge">Linge</span></td><td style="color:var(--text)">Détenu #0048</td><td>Mathew Smith</td><td style="color:var(--text)">6x Linge Propre</td><td><span class="log-ok">✓ Complété</span></td></tr>
-          <tr><td>08/05 — 14:00</td><td><span class="log-type cuisine">Cuisine</span></td><td style="color:var(--text)">Détenu #0003</td><td>Elijah Clark</td><td style="color:var(--text)">2x Soupe</td><td><span class="log-ok">✓ Complété</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+  /* ---------------------------------------------------------
+     Utilitaires
+  --------------------------------------------------------- */
+  function $(sel, ctx = document) { return ctx.querySelector(sel); }
+  function $$(sel, ctx = document) { return Array.from(ctx.querySelectorAll(sel)); }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+  const prefersReducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<script>
-function goto(id, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  if(btn) btn.classList.add('active');
-}
+  function createHeartSVG(gradientId) {
+    gradientId = gradientId || 'gradRose';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 90');
+    const use = document.createElementNS(svgNS, 'use');
+    use.setAttribute('href', '#heartShape');
+    use.setAttribute('fill', 'url(#' + gradientId + ')');
+    use.setAttribute('filter', 'url(#softGlow)');
+    svg.appendChild(use);
+    return svg;
+  }
+
+  /* ---------------------------------------------------------
+     État & sauvegarde (localStorage)
+  --------------------------------------------------------- */
+  const STORAGE_KEY = 'jetaime_progress_v1';
+
+  function defaultState() {
+    return { game1: 'available', game2: 'locked', game3: 'locked', game4: 'locked', unlockedParts: 0, secretsFound: [] };
+  }
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed.unlockedParts !== 'number') return defaultState();
+      return Object.assign(defaultState(), parsed);
+    } catch (e) { return defaultState(); }
+  }
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* silencieux */ }
+  }
+
+  let state = loadState();
+
+  function unlockPart(n) {
+    state.unlockedParts = Math.max(state.unlockedParts, n);
+  }
+
+  /* ---------------------------------------------------------
+     Fond animé : particules (canvas)
+  --------------------------------------------------------- */
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let vw = window.innerWidth, vh = window.innerHeight;
+
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    vw = window.innerWidth; vh = window.innerHeight;
+    canvas.width = vw * dpr;
+    canvas.height = vh * dpr;
+    canvas.style.width = vw + 'px';
+    canvas.style.height = vh + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  const AMBIENT_COLORS = ['rgba(255,143,180,', 'rgba(201,167,235,', 'rgba(255,210,122,'];
+  const AMBIENT_MAX = prefersReducedMotion ? 8 : 26;
+
+  function makeAmbient() {
+    return {
+      x: Math.random() * vw,
+      y: vh + 20 + Math.random() * 120,
+      size: 6 + Math.random() * 11,
+      speed: 0.22 + Math.random() * 0.45,
+      sway: 18 + Math.random() * 30,
+      swaySpeed: 0.4 + Math.random() * 0.6,
+      phase: Math.random() * Math.PI * 2,
+      color: pick(AMBIENT_COLORS),
+      opacity: 0.22 + Math.random() * 0.3,
+      shape: Math.random() < 0.72 ? 'heart' : 'dot'
+    };
+  }
+  let ambientParticles = [];
+  for (let i = 0; i < AMBIENT_MAX; i++) {
+    const p = makeAmbient();
+    p.y = Math.random() * vh;
+    ambientParticles.push(p);
+  }
+  let burstParticles = [];
+
+  function drawHeartShape(x, y, size, rotDeg, color, opacity) {
+    if (opacity <= 0) return;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotDeg * Math.PI / 180);
+    const s = size / 20;
+    ctx.scale(s, s);
+    ctx.beginPath();
+    ctx.moveTo(0, 7);
+    ctx.bezierCurveTo(-11, -3, -11, -15, 0, -9.5);
+    ctx.bezierCurveTo(11, -15, 11, -3, 0, 7);
+    ctx.closePath();
+    ctx.fillStyle = color + opacity + ')';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, vw, vh);
+
+    ambientParticles.forEach((p) => {
+      p.y -= p.speed;
+      p.phase += p.swaySpeed * 0.02;
+      const x = p.x + Math.sin(p.phase) * p.sway * 0.35;
+      if (p.shape === 'heart') {
+        drawHeartShape(x, p.y, p.size, Math.sin(p.phase) * 14, p.color, p.opacity);
+      } else {
+        ctx.beginPath();
+        ctx.arc(x, p.y, p.size * 0.26, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + (p.opacity + 0.15) + ')';
+        ctx.fill();
+      }
+      if (p.y < -30) {
+        Object.assign(p, makeAmbient());
+        p.y = vh + 20;
+      }
+    });
+
+    if (burstParticles.length) {
+      burstParticles = burstParticles.filter((p) => p.life > 0);
+      burstParticles.forEach((p) => {
+        p.x += p.vx; p.y += p.vy; p.vy += p.gravity;
+        p.life -= p.decay;
+        const life = Math.max(p.life, 0);
+        if (p.shape === 'heart') {
+          drawHeartShape(p.x, p.y, p.size * (0.5 + life * 0.7), p.rot, p.color, life);
+        } else {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 0.3 * life, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + life + ')';
+          ctx.fill();
+        }
+      });
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  function burstAt(x, y, opts) {
+    if (prefersReducedMotion) return;
+    opts = opts || {};
+    const count = opts.count || 16;
+    const spread = !!opts.spread;
+    for (let i = 0; i < count; i++) {
+      const angle = spread ? Math.random() * Math.PI * 2 : (Math.PI * 2 * i / count) + (Math.random() * 0.4 - 0.2);
+      const speed = 1.4 + Math.random() * 3.4;
+      burstParticles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.2,
+        gravity: 0.055,
+        size: 6 + Math.random() * 11,
+        color: pick(AMBIENT_COLORS),
+        life: 1,
+        decay: 0.011 + Math.random() * 0.015,
+        shape: Math.random() < 0.6 ? 'heart' : 'dot',
+        rot: Math.random() * 360
+      });
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Messages romantiques (toast)
+  --------------------------------------------------------- */
+  const ROMANTIC_MESSAGES = [
+    'Encore un petit effort ❤️',
+    'Tu te rapproches du message…',
+    'Je savais que tu réussirais.',
+    'Plus qu’un petit défi…',
+    'Chaque étape cache quelque chose d’important. ❤️'
+  ];
+  let toastTimer = null;
+  function showToast(text) {
+    const el = $('#toast');
+    el.textContent = text;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+  }
+  function showRandomToast() { showToast(pick(ROMANTIC_MESSAGES)); }
+
+  let ambientToastInterval = null;
+  function startAmbientToasts() {
+    clearInterval(ambientToastInterval);
+    ambientToastInterval = setInterval(() => {
+      if (document.hidden) return;
+      if (currentScreenId === 'screen-intro' || currentScreenId === 'screen-final') return;
+      showRandomToast();
+    }, 15000);
+  }
+
+  /* ---------------------------------------------------------
+     Cœurs secrets cachés
+  --------------------------------------------------------- */
+  const TOTAL_SECRETS = 4;
+  const SECRET_MESSAGES = [
+    'Tu as l’œil ❤️ Un secret de plus…',
+    'Bien vu… je savais que tu chercherais partout.',
+    'Encore un petit trésor caché pour toi ❤️',
+    'Le dernier secret… tu as tout trouvé !'
+  ];
+
+  function initSecrets() {
+    $$('.secret-heart').forEach((el) => {
+      const id = el.dataset.secret;
+      if (state.secretsFound.indexOf(id) !== -1) el.classList.add('found');
+      el.addEventListener('click', () => foundSecret(el, id));
+    });
+    updateSecretsBadge();
+  }
+
+  function foundSecret(el, id) {
+    if (state.secretsFound.indexOf(id) !== -1) return;
+    state.secretsFound.push(id);
+    saveState();
+    el.classList.add('found');
+    const r = el.getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 16 });
+    const idx = Math.min(state.secretsFound.length - 1, SECRET_MESSAGES.length - 1);
+    showToast(SECRET_MESSAGES[idx]);
+    updateSecretsBadge();
+  }
+
+  function updateSecretsBadge() {
+    const badge = $('#secrets-badge');
+    const count = state.secretsFound.length;
+    $('#secrets-count').textContent = String(count);
+    if (count > 0) {
+      badge.hidden = false;
+      requestAnimationFrame(() => badge.classList.add('show'));
+    } else {
+      badge.classList.remove('show');
+      badge.hidden = true;
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Gestion des écrans
+  --------------------------------------------------------- */
+  let currentScreenId = 'screen-intro';
+
+  function transitionToScreen(id) {
+    const current = $('#' + currentScreenId);
+    const next = $('#' + id);
+    if (!next || current === next) return;
+    current.classList.add('screen-exit');
+    setTimeout(() => {
+      current.classList.remove('active', 'screen-exit');
+      next.classList.add('active');
+      currentScreenId = id;
+      $('#progress-wrap').hidden = (id === 'screen-intro' || id === 'screen-final');
+      window.scrollTo(0, 0);
+    }, prefersReducedMotion ? 0 : 320);
+  }
+
+  /* ---------------------------------------------------------
+     Aperçu du message & barre de progression
+  --------------------------------------------------------- */
+  const MESSAGE_PARTS = [
+    { text: 'JE', hiddenLen: 2 },
+    { text: 'T’', hiddenLen: 2 },
+    { text: 'AIME', hiddenLen: 4 }
+  ];
+
+  function renderMessagePreview(container, unlockedCount) {
+    if (!container) return;
+    container.innerHTML = '';
+    MESSAGE_PARTS.forEach((part, idx) => {
+      const span = document.createElement('span');
+      const revealed = idx < unlockedCount;
+      span.className = 'mp-part ' + (revealed ? 'revealed' : 'locked');
+      span.textContent = revealed ? part.text : Array(part.hiddenLen).fill('_').join(' ');
+      container.appendChild(span);
+    });
+    if (unlockedCount >= 3) {
+      const h = document.createElement('span');
+      h.className = 'mp-part revealed';
+      h.textContent = '❤️';
+      container.appendChild(h);
+    }
+  }
+
+  function updateProgressBar() {
+    const pct = (state.unlockedParts / 3) * 100;
+    $('#progress-fill').style.width = pct + '%';
+    $('#progress-bar-el').setAttribute('aria-valuenow', String(state.unlockedParts));
+    $$('.progress-node').forEach((node) => {
+      const n = parseInt(node.dataset.node, 10);
+      node.classList.toggle('reached', n <= state.unlockedParts);
+    });
+    $('#progress-label').textContent = state.unlockedParts + '/3 défis terminés';
+  }
+
+  /* ---------------------------------------------------------
+     Écran de sélection des mini-jeux
+  --------------------------------------------------------- */
+  function shakeCard(card) {
+    card.style.animation = 'none';
+    // force reflow pour relancer l'animation
+    void card.offsetWidth;
+    card.style.animation = 'zoneShake .45s';
+    setTimeout(() => { card.style.animation = ''; }, 480);
+  }
+
+  function renderSelection() {
+    const map = { 1: state.game1, 2: state.game2, 3: state.game3 };
+    for (let i = 1; i <= 3; i++) {
+      const card = $('#card-game' + i);
+      const pill = $('#status-pill-' + i);
+      const reward = $('#reward-' + i);
+      const status = map[i];
+      card.dataset.status = status;
+      card.classList.toggle('is-locked', status === 'locked');
+      card.classList.toggle('is-completed', status === 'completed');
+      pill.textContent = status === 'locked' ? 'Verrouillé' : (status === 'available' ? 'À jouer' : 'Terminé ✓');
+      if (status === 'completed') {
+        reward.classList.add('unlocked');
+        reward.classList.remove('locked-reward');
+        reward.innerHTML = '<span class="reward-icon">❤️</span> Partie du message débloquée';
+      } else {
+        reward.classList.remove('unlocked');
+        reward.classList.add('locked-reward');
+        reward.innerHTML = '<span class="reward-icon">🔒</span> Récompense cachée…';
+      }
+    }
+    renderMessagePreview($('#message-preview'), state.unlockedParts);
+    updateProgressBar();
+
+    // Défi bonus — révélé uniquement après les 3 défis principaux
+    const card4 = $('#card-game4');
+    if (state.unlockedParts >= 3) {
+      if (card4.hidden) {
+        card4.hidden = false;
+        card4.classList.add('reveal');
+      }
+      card4.dataset.status = state.game4;
+      card4.classList.toggle('is-completed', state.game4 === 'completed');
+      $('#status-pill-4').textContent = state.game4 === 'completed' ? 'Terminé ✓' : 'Secret';
+      const reward4 = $('#reward-4');
+      if (state.game4 === 'completed') {
+        reward4.classList.add('unlocked');
+        reward4.classList.remove('locked-reward');
+        reward4.innerHTML = '<span class="reward-icon">✨</span> Mot secret découvert';
+      } else {
+        reward4.classList.remove('unlocked');
+        reward4.classList.add('locked-reward');
+        reward4.innerHTML = '<span class="reward-icon">✨</span> Une petite surprise en plus…';
+      }
+    } else {
+      card4.hidden = true;
+      card4.classList.remove('reveal');
+    }
+  }
+
+  function goToGame(n) {
+    transitionToScreen('screen-game' + n);
+    if (n === 1) initGame1();
+    if (n === 2) initGame2();
+    if (n === 3) initGame3();
+    if (n === 4) initGame4();
+  }
+
+  $$('.game-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const n = parseInt(card.dataset.game, 10);
+      const status = card.dataset.status;
+      if (status === 'locked') {
+        shakeCard(card);
+        showToast('Termine le défi précédent d’abord ❤️');
+        return;
+      }
+      if (status === 'completed') {
+        showToast('Ce défi est déjà terminé ❤️');
+        return;
+      }
+      goToGame(n);
+    });
+  });
+
+  $$('[data-back]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      stopGame1();
+      stopGame4();
+      renderSelection();
+      transitionToScreen('screen-selection');
+    });
+  });
+
+  /* ---------------------------------------------------------
+     MINI-JEU 1 — Attrape mon amour
+  --------------------------------------------------------- */
+  const HEART_VARIANTS = ['gradRose', 'gradLavande', 'gradOr'];
+  const G1_TARGET = 10;
+  const G1_MAX_CONCURRENT = 5;
+  let heartIdCounter = 0;
+  const game1 = { caught: 0, finished: false, active: new Set(), spawnInterval: null };
+
+  function initGame1() {
+    game1.caught = 0;
+    game1.finished = false;
+    game1.active.clear();
+    $('#g1-count').textContent = '0';
+    $('#game1-area').innerHTML = '';
+    clearInterval(game1.spawnInterval);
+    game1.spawnInterval = setInterval(spawnHeart, 850);
+    // quelques cœurs dès le départ pour ne pas laisser la zone vide
+    spawnHeart(); spawnHeart();
+  }
+  function stopGame1() {
+    clearInterval(game1.spawnInterval);
+  }
+
+  function spawnHeart() {
+    if (game1.finished) return;
+    if (game1.active.size >= G1_MAX_CONCURRENT) return;
+    const area = $('#game1-area');
+    if (!area) return;
+    const id = 'h' + (heartIdCounter++);
+    const btn = document.createElement('button');
+    btn.className = 'float-heart';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Attraper un cœur');
+    btn.appendChild(createHeartSVG(pick(HEART_VARIANTS)));
+
+    const size = 34 + Math.random() * 22;
+    btn.style.width = size + 'px';
+    btn.style.height = (size * 0.9) + 'px';
+    btn.style.left = (6 + Math.random() * 82) + '%';
+    btn.style.top = (8 + Math.random() * 70) + '%';
+    btn.style.setProperty('--float-dur', (3 + Math.random() * 2.4) + 's');
+    btn.style.setProperty('--rot-a', (-10 + Math.random() * 8) + 'deg');
+    btn.style.setProperty('--rot-b', (2 + Math.random() * 10) + 'deg');
+    btn.dataset.id = id;
+
+    btn.addEventListener('click', () => catchHeart(btn, id), { once: true });
+    area.appendChild(btn);
+    game1.active.add(id);
+
+    btn._timeout = setTimeout(() => {
+      if (btn.isConnected && !btn.classList.contains('popping')) {
+        btn.remove();
+        game1.active.delete(id);
+      }
+    }, 3400 + Math.random() * 1400);
+  }
+
+  function spawnPlusOne(btn) {
+    const area = $('#game1-area');
+    const areaRect = area.getBoundingClientRect();
+    const r = btn.getBoundingClientRect();
+    const span = document.createElement('span');
+    span.className = 'plus-one';
+    span.textContent = '+1';
+    span.style.left = (r.left - areaRect.left + r.width / 2 - 10) + 'px';
+    span.style.top = (r.top - areaRect.top) + 'px';
+    area.appendChild(span);
+    setTimeout(() => span.remove(), 1000);
+  }
+
+  function catchHeart(btn, id) {
+    if (game1.finished || btn.classList.contains('popping')) return;
+    clearTimeout(btn._timeout);
+    btn.classList.add('popping');
+    const r = btn.getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 14 });
+    spawnPlusOne(btn);
+
+    game1.caught++;
+    $('#g1-count').textContent = String(game1.caught);
+
+    setTimeout(() => { btn.remove(); game1.active.delete(id); }, 460);
+
+    if (game1.caught >= G1_TARGET) {
+      finishGame1();
+    }
+  }
+
+  function finishGame1() {
+    game1.finished = true;
+    stopGame1();
+    setTimeout(() => { $('#game1-area').innerHTML = ''; }, 550);
+
+    unlockPart(1);
+    state.game1 = 'completed';
+    state.game2 = 'available';
+    saveState();
+
+    setTimeout(() => {
+      showVictory({
+        title: 'Premier défi réussi ! ❤️',
+        subtitle: 'Tu viens de débloquer la première partie du message…',
+        letter: 'JE',
+        continueLabel: 'Continuer vers le prochain jeu →',
+        onContinue: () => {
+          hideVictory();
+          renderSelection();
+          transitionToScreen('screen-selection');
+        }
+      });
+    }, 700);
+  }
+
+  /* ---------------------------------------------------------
+     MINI-JEU 2 — Nos petits souvenirs
+  --------------------------------------------------------- */
+  const G2_ICONS = ['heart', 'flower', 'star', 'ring', 'envelope', 'gift'];
+  const game2 = { first: null, second: null, lock: false, matches: 0 };
+
+  function starPath(cx, cy, spikes, outerR, innerR) {
+    let rot = Math.PI / 2 * 3;
+    const step = Math.PI / spikes;
+    let d = 'M ' + cx + ' ' + (cy - outerR) + ' ';
+    for (let i = 0; i < spikes; i++) {
+      let x = cx + Math.cos(rot) * outerR, y = cy + Math.sin(rot) * outerR;
+      d += 'L ' + x + ' ' + y + ' '; rot += step;
+      x = cx + Math.cos(rot) * innerR; y = cy + Math.sin(rot) * innerR;
+      d += 'L ' + x + ' ' + y + ' '; rot += step;
+    }
+    d += 'Z';
+    return d;
+  }
+
+  function buildIconSVG(type) {
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    if (type === 'heart') {
+      const use = document.createElementNS(svgNS, 'use');
+      use.setAttribute('href', '#heartShape');
+      use.setAttribute('x', '8'); use.setAttribute('y', '14');
+      use.setAttribute('width', '84'); use.setAttribute('height', '76');
+      use.setAttribute('fill', 'url(#gradRose)');
+      svg.appendChild(use);
+    } else if (type === 'flower') {
+      const g = document.createElementNS(svgNS, 'g');
+      g.setAttribute('transform', 'translate(50,52)');
+      for (let i = 0; i < 5; i++) {
+        const petal = document.createElementNS(svgNS, 'ellipse');
+        petal.setAttribute('cx', '0'); petal.setAttribute('cy', '-23');
+        petal.setAttribute('rx', '13'); petal.setAttribute('ry', '21');
+        petal.setAttribute('fill', 'url(#gradLavande)');
+        petal.setAttribute('opacity', '0.92');
+        petal.setAttribute('transform', 'rotate(' + (i * 72) + ')');
+        g.appendChild(petal);
+      }
+      const center = document.createElementNS(svgNS, 'circle');
+      center.setAttribute('r', '9');
+      center.setAttribute('fill', 'url(#gradOr)');
+      g.appendChild(center);
+      svg.appendChild(g);
+    } else if (type === 'star') {
+      const path = document.createElementNS(svgNS, 'path');
+      path.setAttribute('d', starPath(50, 50, 5, 32, 14));
+      path.setAttribute('fill', 'url(#gradOr)');
+      svg.appendChild(path);
+    } else if (type === 'ring') {
+      const g = document.createElementNS(svgNS, 'g');
+      const band = document.createElementNS(svgNS, 'circle');
+      band.setAttribute('cx', '50'); band.setAttribute('cy', '60'); band.setAttribute('r', '25');
+      band.setAttribute('fill', 'none');
+      band.setAttribute('stroke', 'url(#gradOr)');
+      band.setAttribute('stroke-width', '9');
+      g.appendChild(band);
+      const gem = document.createElementNS(svgNS, 'use');
+      gem.setAttribute('href', '#heartShape');
+      gem.setAttribute('x', '35'); gem.setAttribute('y', '8');
+      gem.setAttribute('width', '30'); gem.setAttribute('height', '27');
+      gem.setAttribute('fill', 'url(#gradRose)');
+      gem.setAttribute('filter', 'url(#softGlow)');
+      g.appendChild(gem);
+      svg.appendChild(g);
+    } else if (type === 'envelope') {
+      const g = document.createElementNS(svgNS, 'g');
+      const body = document.createElementNS(svgNS, 'rect');
+      body.setAttribute('x', '9'); body.setAttribute('y', '24');
+      body.setAttribute('width', '82'); body.setAttribute('height', '58');
+      body.setAttribute('rx', '8');
+      body.setAttribute('fill', 'url(#gradLavande)');
+      g.appendChild(body);
+      const flap = document.createElementNS(svgNS, 'path');
+      flap.setAttribute('d', 'M11 27 L50 60 L89 27');
+      flap.setAttribute('fill', 'none');
+      flap.setAttribute('stroke', '#ffffff');
+      flap.setAttribute('stroke-width', '5');
+      flap.setAttribute('stroke-linecap', 'round');
+      flap.setAttribute('stroke-linejoin', 'round');
+      g.appendChild(flap);
+      const seal = document.createElementNS(svgNS, 'use');
+      seal.setAttribute('href', '#heartShape');
+      seal.setAttribute('x', '37'); seal.setAttribute('y', '50');
+      seal.setAttribute('width', '26'); seal.setAttribute('height', '23');
+      seal.setAttribute('fill', 'url(#gradRose)');
+      g.appendChild(seal);
+      svg.appendChild(g);
+    } else if (type === 'gift') {
+      const g = document.createElementNS(svgNS, 'g');
+      const box = document.createElementNS(svgNS, 'rect');
+      box.setAttribute('x', '15'); box.setAttribute('y', '42');
+      box.setAttribute('width', '70'); box.setAttribute('height', '46');
+      box.setAttribute('rx', '6');
+      box.setAttribute('fill', 'url(#gradOr)');
+      g.appendChild(box);
+      const lid = document.createElementNS(svgNS, 'rect');
+      lid.setAttribute('x', '11'); lid.setAttribute('y', '32');
+      lid.setAttribute('width', '78'); lid.setAttribute('height', '16');
+      lid.setAttribute('rx', '5');
+      lid.setAttribute('fill', 'url(#gradRose)');
+      g.appendChild(lid);
+      const ribbon = document.createElementNS(svgNS, 'rect');
+      ribbon.setAttribute('x', '44'); ribbon.setAttribute('y', '32');
+      ribbon.setAttribute('width', '12'); ribbon.setAttribute('height', '56');
+      ribbon.setAttribute('fill', '#ffffff'); ribbon.setAttribute('opacity', '0.85');
+      g.appendChild(ribbon);
+      [40, 60].forEach((cx) => {
+        const loop = document.createElementNS(svgNS, 'circle');
+        loop.setAttribute('cx', String(cx)); loop.setAttribute('cy', '23'); loop.setAttribute('r', '10');
+        loop.setAttribute('fill', 'url(#gradRose)');
+        g.appendChild(loop);
+      });
+      svg.appendChild(g);
+    }
+    return svg;
+  }
+
+  function initGame2() {
+    game2.first = null; game2.second = null; game2.lock = false; game2.matches = 0;
+    $('#g2-count').textContent = '0';
+    const pairTypes = shuffle(G2_ICONS.concat(G2_ICONS));
+    const grid = $('#game2-grid');
+    grid.innerHTML = '';
+    pairTypes.forEach((type, idx) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'mem-card';
+      card.dataset.type = type;
+      card.dataset.idx = String(idx);
+      card.setAttribute('aria-label', 'Carte souvenir');
+      const inner = document.createElement('div');
+      inner.className = 'mem-card-inner';
+      const back = document.createElement('div');
+      back.className = 'mem-face mem-face-back';
+      const front = document.createElement('div');
+      front.className = 'mem-face mem-face-front';
+      front.appendChild(buildIconSVG(type));
+      inner.appendChild(back);
+      inner.appendChild(front);
+      card.appendChild(inner);
+      card.addEventListener('click', () => flipCard(card));
+      grid.appendChild(card);
+    });
+  }
+
+  function resetTurn() { game2.first = null; game2.second = null; game2.lock = false; }
+
+  function flipCard(card) {
+    if (game2.lock) return;
+    if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+    card.classList.add('flipped');
+    if (!game2.first) { game2.first = card; return; }
+    game2.second = card;
+    game2.lock = true;
+
+    if (game2.first.dataset.type === game2.second.dataset.type) {
+      setTimeout(() => {
+        game2.first.classList.add('matched');
+        game2.second.classList.add('matched');
+        const r = game2.first.getBoundingClientRect();
+        burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 12 });
+        game2.matches++;
+        $('#g2-count').textContent = String(game2.matches);
+        resetTurn();
+        if (game2.matches >= 6) finishGame2();
+      }, 420);
+    } else {
+      const first = game2.first, second = game2.second;
+      setTimeout(() => {
+        first.classList.add('shake');
+        second.classList.add('shake');
+        setTimeout(() => {
+          first.classList.remove('flipped', 'shake');
+          second.classList.remove('flipped', 'shake');
+          resetTurn();
+        }, 420);
+      }, 700);
+    }
+  }
+
+  function finishGame2() {
+    unlockPart(2);
+    state.game2 = 'completed';
+    state.game3 = 'available';
+    saveState();
+    setTimeout(() => {
+      showVictory({
+        title: 'Tu as trouvé toutes les paires… comme si on était faits pour aller ensemble ❤️',
+        subtitle: 'Une nouvelle partie du message vient de s’éclairer…',
+        letter: 'T’',
+        continueLabel: 'Continuer vers le prochain jeu →',
+        onContinue: () => {
+          hideVictory();
+          renderSelection();
+          transitionToScreen('screen-selection');
+        }
+      });
+    }, 500);
+  }
+
+  /* ---------------------------------------------------------
+     MINI-JEU 3 — Est-ce que tu m'aimes ?
+  --------------------------------------------------------- */
+  const LOVE_QUESTIONS = [
+    'Est-ce que tu m\u2019aimes ?',
+    'Tu es sûre ?',
+    'Vraiment sûre ?',
+    'Tu ne veux pas y réfléchir encore un peu ?',
+    'Dernière chance de changer d\u2019avis…',
+    'Bon, je crois que le bouton Non a abandonné 😅'
+  ];
+  const LOVE_TARGET = 100;
+  const loveQuestion = { dodgeCount: 0 };
+  let lastDodgeTime = 0;
+
+  function initGame3() {
+    loveQuestion.dodgeCount = 0;
+    lastDodgeTime = 0;
+    $('#love-question-text').textContent = LOVE_QUESTIONS[0];
+    $('#love-question-stage').hidden = false;
+    $('#love-meter-stage').hidden = true;
+    resetNoButtonPosition();
+    $('#love-meter-range').value = '0';
+    updateLoveMeterUI(0);
+    $('#g3-feedback').textContent = '';
+  }
+
+  function resetNoButtonPosition() {
+    const btn = $('#btn-love-no');
+    btn.style.left = '';
+    btn.style.top = '';
+    btn.style.transform = '';
+    $('#love-question-buttons').style.removeProperty('--yes-scale');
+    $('#love-question-buttons').style.removeProperty('--no-scale');
+  }
+
+  function attemptNo(e) {
+    e.preventDefault();
+    const now = Date.now();
+    if (now - lastDodgeTime < 180) return;
+    lastDodgeTime = now;
+
+    loveQuestion.dodgeCount++;
+    const qIdx = Math.min(loveQuestion.dodgeCount, LOVE_QUESTIONS.length - 1);
+    $('#love-question-text').textContent = LOVE_QUESTIONS[qIdx];
+
+    const yesScale = Math.min(1 + loveQuestion.dodgeCount * 0.08, 1.6);
+    const noScale = Math.max(1 - loveQuestion.dodgeCount * 0.12, 0.35);
+    const wrap = $('#love-question-buttons');
+    wrap.style.setProperty('--yes-scale', String(yesScale));
+    wrap.style.setProperty('--no-scale', String(noScale));
+
+    const btn = $('#btn-love-no');
+    const padX = 16, padY = 16;
+    const x = padX + Math.random() * (100 - padX * 2);
+    const y = padY + Math.random() * (100 - padY * 2);
+    btn.style.left = x + '%';
+    btn.style.top = y + '%';
+    btn.style.transform = 'translate(-50%, -50%) scale(var(--no-scale, 1))';
+
+    if (loveQuestion.dodgeCount === 3) {
+      showToast('Le bouton Non n’a aucune chance 😉');
+    }
+  }
+  $('#btn-love-no').addEventListener('pointerenter', attemptNo);
+  $('#btn-love-no').addEventListener('pointerdown', attemptNo);
+  $('#btn-love-no').addEventListener('click', attemptNo);
+
+  $('#btn-love-yes').addEventListener('click', () => {
+    const r = $('#btn-love-yes').getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 18 });
+    $('#love-question-stage').hidden = true;
+    $('#love-meter-stage').hidden = false;
+    showToast('Alors montre-moi à quel point ❤️');
+  });
+
+  function updateLoveMeterUI(val) {
+    $('#love-meter-fill').style.width = val + '%';
+    $('#love-meter-percent').textContent = String(val);
+    $('#love-meter-heart').style.left = val + '%';
+  }
+  $('#love-meter-range').addEventListener('input', (e) => {
+    updateLoveMeterUI(parseInt(e.target.value, 10));
+  });
+
+  $('#btn-check-love').addEventListener('click', () => {
+    const val = parseInt($('#love-meter-range').value, 10);
+    if (val >= LOVE_TARGET) {
+      finishGame3();
+    } else {
+      $('#g3-feedback').textContent = 'Il en manque un peu… vas jusqu’au bout ❤️';
+      $('#love-meter-wrap').classList.add('shake');
+      setTimeout(() => $('#love-meter-wrap').classList.remove('shake'), 420);
+    }
+  });
+
+  function finishGame3() {
+    unlockPart(3);
+    state.game3 = 'completed';
+    if (state.game4 === 'locked') state.game4 = 'available';
+    saveState();
+    const r = $('#love-meter-wrap').getBoundingClientRect();
+    burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 24 });
+
+    setTimeout(() => {
+      showVictory({
+        title: 'Le message est complet… ❤️',
+        subtitle: 'Tu m’aimes à 100%… ça se sent ❤️',
+        letter: 'AIME',
+        continueLabel: 'Découvrir le message complet →',
+        onContinue: () => {
+          hideVictory();
+          goFinalScreen();
+        }
+      });
+    }, 500);
+  }
+
+  /* ---------------------------------------------------------
+     MINI-JEU BONUS — Le mot secret (façon Wordle)
+  --------------------------------------------------------- */
+  const G4_WORD = 'AMOUR';
+  const G4_MAX_ATTEMPTS = 6;
+  const KEYBOARD_ROWS = [
+    ['A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+    ['Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M'],
+    ['ENTER', 'W', 'X', 'C', 'V', 'B', 'N', '⌫']
+  ];
+  const game4 = { attempts: 0, currentGuess: '', finished: false, letterStates: {} };
+
+  function initGame4() {
+    game4.attempts = 0;
+    game4.currentGuess = '';
+    game4.finished = false;
+    game4.letterStates = {};
+    $('#g4-attempt').textContent = '0';
+    $('#word-feedback').textContent = '';
+    buildWordGrid();
+    buildKeyboard();
+    document.addEventListener('keydown', onPhysicalKeydown);
+  }
+
+  function stopGame4() {
+    document.removeEventListener('keydown', onPhysicalKeydown);
+  }
+
+  function buildWordGrid() {
+    const grid = $('#word-grid');
+    grid.innerHTML = '';
+    for (let r = 0; r < G4_MAX_ATTEMPTS; r++) {
+      const row = document.createElement('div');
+      row.className = 'word-row';
+      row.dataset.row = String(r);
+      for (let c = 0; c < G4_WORD.length; c++) {
+        const tile = document.createElement('div');
+        tile.className = 'word-tile';
+        tile.dataset.col = String(c);
+        row.appendChild(tile);
+      }
+      grid.appendChild(row);
+    }
+  }
+
+  function buildKeyboard() {
+    const kb = $('#word-keyboard');
+    kb.innerHTML = '';
+    KEYBOARD_ROWS.forEach((rowKeys) => {
+      const row = document.createElement('div');
+      row.className = 'kb-row';
+      rowKeys.forEach((k) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'kb-key' + (k === 'ENTER' || k === '⌫' ? ' key-wide' : '');
+        btn.textContent = k === 'ENTER' ? 'Entrée' : k;
+        btn.dataset.key = k;
+        btn.addEventListener('click', () => handleKey(k));
+        row.appendChild(btn);
+      });
+      kb.appendChild(row);
+    });
+  }
+
+  function onPhysicalKeydown(e) {
+    if (game4.finished || e.ctrlKey || e.metaKey || e.altKey) return;
+    const key = e.key.toUpperCase();
+    if (key === 'ENTER') { e.preventDefault(); handleKey('ENTER'); }
+    else if (key === 'BACKSPACE') { e.preventDefault(); handleKey('⌫'); }
+    else if (/^[A-Z]$/.test(key)) { e.preventDefault(); handleKey(key); }
+  }
+
+  function handleKey(k) {
+    if (game4.finished) return;
+    if (k === 'ENTER') { submitGuess(); return; }
+    if (k === '⌫') {
+      game4.currentGuess = game4.currentGuess.slice(0, -1);
+      renderCurrentGuess();
+      return;
+    }
+    if (game4.currentGuess.length < G4_WORD.length) {
+      game4.currentGuess += k;
+      renderCurrentGuess();
+    }
+  }
+
+  function renderCurrentGuess() {
+    const row = $('.word-row[data-row="' + game4.attempts + '"]');
+    if (!row) return;
+    $$('.word-tile', row).forEach((tile, i) => {
+      tile.textContent = game4.currentGuess[i] || '';
+      tile.classList.toggle('filled', !!game4.currentGuess[i]);
+    });
+  }
+
+  function evaluateGuess(guess) {
+    const target = G4_WORD.split('');
+    const guessArr = guess.split('');
+    const result = new Array(guessArr.length).fill('absent');
+    const used = new Array(target.length).fill(false);
+
+    guessArr.forEach((letter, i) => {
+      if (letter === target[i]) { result[i] = 'correct'; used[i] = true; }
+    });
+    guessArr.forEach((letter, i) => {
+      if (result[i] === 'correct') return;
+      const idx = target.findIndex((t, ti) => t === letter && !used[ti]);
+      if (idx !== -1) { result[i] = 'present'; used[idx] = true; }
+    });
+    return result;
+  }
+
+  function paintRow(rowIndex, result) {
+    const row = $('.word-row[data-row="' + rowIndex + '"]');
+    $$('.word-tile', row).forEach((tile, i) => {
+      setTimeout(() => { tile.classList.add(result[i]); }, i * 120);
+    });
+  }
+
+  function updateKeyboardColors(guess, result) {
+    const priority = { absent: 0, present: 1, correct: 2 };
+    guess.split('').forEach((letter, i) => {
+      const current = game4.letterStates[letter];
+      if (!current || priority[result[i]] >= priority[current]) {
+        game4.letterStates[letter] = result[i];
+      }
+      const key = $('.kb-key[data-key="' + letter + '"]');
+      if (key) {
+        key.classList.remove('key-correct', 'key-present', 'key-absent');
+        key.classList.add('key-' + game4.letterStates[letter]);
+      }
+    });
+  }
+
+  function submitGuess() {
+    if (game4.currentGuess.length < G4_WORD.length) {
+      const row = $('.word-row[data-row="' + game4.attempts + '"]');
+      row.classList.add('shake');
+      setTimeout(() => row.classList.remove('shake'), 420);
+      $('#word-feedback').textContent = 'Complète les 5 lettres avant de valider ❤️';
+      return;
+    }
+    const guess = game4.currentGuess;
+    const result = evaluateGuess(guess);
+    paintRow(game4.attempts, result);
+    updateKeyboardColors(guess, result);
+
+    const finishedRow = game4.attempts;
+    game4.attempts++;
+    $('#g4-attempt').textContent = String(game4.attempts);
+    game4.currentGuess = '';
+    $('#word-feedback').textContent = '';
+
+    const won = result.every((r) => r === 'correct');
+    if (won) {
+      finishGame4(true, finishedRow);
+    } else if (game4.attempts >= G4_MAX_ATTEMPTS) {
+      setTimeout(() => finishGame4(false, finishedRow), 650);
+    }
+  }
+
+  function finishGame4(won, lastRowIndex) {
+    game4.finished = true;
+    stopGame4();
+
+    if (won) {
+      const row = $('.word-row[data-row="' + lastRowIndex + '"]');
+      setTimeout(() => {
+        row.classList.add('win');
+        $$('.word-tile', row).forEach((t, i) => { t.style.animationDelay = (i * 80) + 'ms'; });
+      }, 650);
+
+      state.game4 = 'completed';
+      saveState();
+
+      setTimeout(() => {
+        const r = row.getBoundingClientRect();
+        burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 26 });
+        showVictory({
+          title: 'Tu as trouvé le mot secret ! ❤️',
+          subtitle: 'AMOUR… un mot qui résume tout le reste.',
+          letter: 'AMOUR',
+          continueLabel: 'Retourner aux défis →',
+          onContinue: () => {
+            hideVictory();
+            renderSelection();
+            transitionToScreen('screen-selection');
+          }
+        });
+      }, 1300);
+    } else {
+      $('#word-feedback').textContent = 'Pas grave… l’amour ne se devine pas toujours du premier coup 😉';
+      setTimeout(() => {
+        showToast('Tu peux réessayer quand tu veux ❤️');
+        initGame4();
+      }, 1500);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Superposition de victoire (réutilisée par les 3 jeux)
+  --------------------------------------------------------- */
+  function showVictory(opts) {
+    $('#victory-title').textContent = opts.title;
+    $('#victory-subtitle').textContent = opts.subtitle;
+
+    const revealEl = $('#reveal-letter');
+    revealEl.textContent = opts.letter;
+    revealEl.classList.remove('pop');
+    void revealEl.offsetWidth;
+
+    const btn = $('#victory-continue-btn');
+    btn.textContent = opts.continueLabel;
+    btn.onclick = () => { if (opts.onContinue) opts.onContinue(); };
+
+    renderMessagePreview($('#victory-message-preview'), Math.max(state.unlockedParts - 1, 0));
+    $('#victory-overlay').classList.add('show');
+
+    setTimeout(() => {
+      revealEl.classList.add('pop');
+      updateProgressBar();
+      renderMessagePreview($('#victory-message-preview'), state.unlockedParts);
+      const r = revealEl.getBoundingClientRect();
+      burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 20 });
+    }, 380);
+  }
+
+  function hideVictory() {
+    $('#victory-overlay').classList.remove('show');
+  }
+
+  /* ---------------------------------------------------------
+     Écran final
+  --------------------------------------------------------- */
+  function goFinalScreen() {
+    transitionToScreen('screen-final');
+
+    $$('.final-word').forEach((w) => w.classList.remove('reveal'));
+    $('#final-paragraph').classList.remove('show');
+    $('.final-heart-zone').classList.remove('show');
+    $('#btn-replay').classList.remove('show');
+    $('#btn-back-to-defis').classList.remove('show');
+
+    const words = $$('.final-word');
+    const stagger = prefersReducedMotion ? 0 : 450;
+    const startDelay = prefersReducedMotion ? 0 : 500;
+
+    words.forEach((w, i) => {
+      setTimeout(() => {
+        w.classList.add('reveal');
+        const r = w.getBoundingClientRect();
+        burstAt(r.left + r.width / 2, r.top + r.height / 2, { count: 10 });
+      }, startDelay + i * stagger);
+    });
+
+    const afterWords = startDelay + words.length * stagger;
+    setTimeout(() => { $('.final-heart-zone').classList.add('show'); }, afterWords + 200);
+    setTimeout(() => {
+      burstAt(window.innerWidth / 2, window.innerHeight * 0.4, { count: 46, spread: true });
+    }, afterWords + 250);
+    setTimeout(() => { $('#final-paragraph').classList.add('show'); }, afterWords + 700);
+    setTimeout(() => { $('#btn-replay').classList.add('show'); }, afterWords + 1300);
+    setTimeout(() => { $('#btn-back-to-defis').classList.add('show'); }, afterWords + 1550);
+  }
+
+  /* ---------------------------------------------------------
+     Rejouer depuis le début
+  --------------------------------------------------------- */
+  function resetAll() {
+    stopGame1();
+    stopGame4();
+    hideVictory();
+    state = defaultState();
+    saveState();
+
+    $('#game1-area').innerHTML = '';
+    $('#game2-grid').innerHTML = '';
+    $('#love-question-stage').hidden = false;
+    $('#love-meter-stage').hidden = true;
+    resetNoButtonPosition();
+    $('#love-meter-range').value = '0';
+    updateLoveMeterUI(0);
+    $('#love-question-text').textContent = LOVE_QUESTIONS[0];
+    $('#g3-feedback').textContent = '';
+    $('#word-grid').innerHTML = '';
+    $('#word-keyboard').innerHTML = '';
+    $('#word-feedback').textContent = '';
+    $('#card-game4').hidden = true;
+    $('#card-game4').classList.remove('reveal');
+    $$('.secret-heart').forEach((el) => el.classList.remove('found'));
+    updateSecretsBadge();
+    $('#btn-back-to-defis').classList.remove('show');
+
+    renderSelection();
+    transitionToScreen('screen-intro');
+  }
+  $('#btn-replay').addEventListener('click', resetAll);
+  $('#btn-back-to-defis').addEventListener('click', () => {
+    renderSelection();
+    transitionToScreen('screen-selection');
+  });
+
+  /* ---------------------------------------------------------
+     Initialisation
+  --------------------------------------------------------- */
+  $('#btn-start').addEventListener('click', () => {
+    renderSelection();
+    transitionToScreen('screen-selection');
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSelection();
+    initSecrets();
+    startAmbientToasts();
+
+    // Reprendre la progression si l'utilisateur a déjà commencé
+    if (state.unlockedParts > 0 || state.game1 === 'completed') {
+      $('#screen-intro').classList.remove('active');
+      $('#screen-selection').classList.add('active');
+      currentScreenId = 'screen-selection';
+      $('#progress-wrap').hidden = false;
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
